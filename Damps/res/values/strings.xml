@@ -68,6 +68,10 @@
 
     <!-- Headlines -->
     <string name="posten">Posten</string>
+    <!-- Messages -->
+    <string name="send_message">Send Message</string>
+    <string name="new_message">New Message</string>
+
 
     <!-- Options -->
     <string name="nflteam">NFL</string>
@@ -81,5 +85,8 @@
     <string name="score">Score</string>
     <string name="gameday">Gamedays</string>
     <string name="domain">"http://test.dampsfootball.com"</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_messages">MessagesActivity</string>
 
 </resources>

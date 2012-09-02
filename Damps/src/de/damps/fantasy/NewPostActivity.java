@@ -36,7 +36,7 @@ public class NewPostActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.newpost);
+		setContentView(R.layout.new_post);
 		final Bundle extra = getIntent().getExtras();
 
 		id = extra.getString("ID");

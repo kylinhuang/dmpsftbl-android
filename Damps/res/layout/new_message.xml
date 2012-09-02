@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/rl_newm_layout1"
+        style="@style/titlebar" >
+
+        <TextView
+            style="@style/title"
+            android:text="@string/new_message" />
+
+        <ProgressBar
+            android:id="@+id/pb_newm_bar1"
+            style="@style/progressbar"
+            android:layout_alignParentRight="false"
+            android:layout_toLeftOf="@+id/iv_newm_accept" />
+
+        <ImageView
+            android:id="@+id/iv_newm_accept"
+            style="@style/pic_title_right"
+            android:contentDescription="@string/pic_acc"
+            android:onClick="sendMessage"
+            android:src="@drawable/accept" />
+    </RelativeLayout>
+
+    <Spinner
+        android:id="@+id/spi_mewm_dest"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_newm_layout1"
+        android:drawSelectorOnTop="true" />
+
+    <TextView
+        android:id="@+id/tv_newm_title"
+        style="@style/desc_edittext"
+        android:layout_below="@+id/spi_mewm_dest"
+        android:text="@string/title"
+        android:paddingLeft="5dp" />
+
+    <EditText
+        android:id="@+id/et_newm_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_newm_title"
+        android:inputType="text" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/tv_newm_msg"
+        style="@style/desc_edittext"
+        android:layout_below="@+id/et_newm_title"
+        android:text="@string/message"
+        android:paddingLeft="5dp" />
+
+    <EditText
+        android:id="@+id/et_newm_msg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_newm_msg"
+        android:inputType="textMultiLine" />
+
+</RelativeLayout>

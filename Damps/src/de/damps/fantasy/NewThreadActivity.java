@@ -43,7 +43,7 @@ public class NewThreadActivity extends Activity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.newthread);
+		setContentView(R.layout.new_thread);
 		SharedPreferences pref = de.damps.fantasy.HomeActivity.preferences;
 		url = de.damps.fantasy.HomeActivity.URL + "/openthread";
 		token = pref.getString("token", "");
