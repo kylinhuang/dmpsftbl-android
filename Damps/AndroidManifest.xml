@@ -36,6 +36,8 @@
         <activity android:name=".NewThreadActivity" />
         <activity android:name=".NewPostActivity" />
         <activity android:name=".MessagesActivity" />
+        <activity android:name=".InboxActivity" />
+        <activity android:name=".OutboxActivity" />
         <activity android:name=".NewMessageActivity" />
     </application>
 

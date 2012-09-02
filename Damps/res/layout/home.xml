@@ -160,8 +160,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="startMessages"
-            android:text="@string/messages"
-            android:enabled="false" />
+            android:text="@string/messages" />
     </LinearLayout>
 
 </RelativeLayout>
