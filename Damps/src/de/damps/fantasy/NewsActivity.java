@@ -1,9 +1,7 @@
-package fantasyApp;
+package de.damps.fantasy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import de.damps.fantasy.R;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -27,7 +25,7 @@ public class NewsActivity extends Activity {
 		setContentView(R.layout.news);
 		final Bundle extra = getIntent().getExtras();
 		String news_id = extra.getString("ID");
-		url = fantasyApp.HomeActivity.URL + "/story/" + news_id;
+		url = de.damps.fantasy.HomeActivity.URL + "/story/" + news_id;
 		titleView = (TextView) findViewById(R.id.tv_news_title);
 		newsView = (TextView) findViewById(R.id.tv_news_news);
 

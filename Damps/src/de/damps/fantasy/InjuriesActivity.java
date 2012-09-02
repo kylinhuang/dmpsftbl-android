@@ -1,4 +1,4 @@
-package fantasyApp;
+package de.damps.fantasy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,8 +7,6 @@ import java.util.Comparator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import de.damps.fantasy.R;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -29,7 +27,7 @@ public class InjuriesActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.injuries);
-		url = fantasyApp.HomeActivity.URL + "/injuries";
+		url = de.damps.fantasy.HomeActivity.URL + "/injuries";
 		tbl = (TableLayout) findViewById(R.id.tl_inj_injuries);
 
 		new GetInjuries().execute(url);

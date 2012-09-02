@@ -1,4 +1,4 @@
-package fantasyApp;
+package de.damps.fantasy;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.damps.fantasy.R;
+
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -25,8 +25,8 @@ public class HeadlinesActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.headlines);
-		String number = fantasyApp.HomeActivity.preferences.getString("news", "25");
-		url = fantasyApp.HomeActivity.URL + "/news/" + number;
+		String number = de.damps.fantasy.HomeActivity.preferences.getString("news", "25");
+		url = de.damps.fantasy.HomeActivity.URL + "/news/" + number;
 
 		new GetHeadlines().execute(url);
 	}

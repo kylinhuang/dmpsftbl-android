@@ -1,4 +1,4 @@
-package fantasyApp;
+package de.damps.fantasy;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.damps.fantasy.R;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -28,13 +27,14 @@ public class ForumActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.forum);
-		String number = fantasyApp.HomeActivity.preferences.getString(
+		String number = de.damps.fantasy.HomeActivity.preferences.getString(
 				"threads", "25");
-		url = fantasyApp.HomeActivity.URL + "/forum/" + number;
+		url = de.damps.fantasy.HomeActivity.URL + "/forum/" + number;
 
 		new GetThreads().execute(url);
 	}
 	
+	//Threads refreshen
 	public void refresh(View view){
 		new GetThreads().execute(url);
 	}
@@ -79,7 +79,7 @@ public class ForumActivity extends ListActivity {
 		}
 	}
 
-	//
+	//Bestimmten Thhread auswählen
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 
@@ -91,7 +91,7 @@ public class ForumActivity extends ListActivity {
 		startActivity(intent);
 	}
 
-	// fills ListView with Teams
+	//Anzeigen der Threads
 	private void showThreads() {
 		threadadapter = new ThreadAdapter(this,
 				R.layout.threaditem, threads);
@@ -102,7 +102,7 @@ public class ForumActivity extends ListActivity {
 	
 	//Methode um neuen Thread zu erstellen
 	public void newThread(View view){
-		if(fantasyApp.HomeActivity.preferences.contains("token")){
+		if(de.damps.fantasy.HomeActivity.preferences.contains("token")){
 			Intent intent = new Intent(getApplicationContext(),
 					NewThreadActivity.class);
 			startActivity(intent);

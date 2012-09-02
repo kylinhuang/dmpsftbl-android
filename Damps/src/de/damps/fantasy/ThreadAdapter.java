@@ -1,8 +1,6 @@
-package fantasyApp;
+package de.damps.fantasy;
 
 import java.util.ArrayList;
-
-import de.damps.fantasy.R;
 
 import android.content.Context;
 import android.view.LayoutInflater;

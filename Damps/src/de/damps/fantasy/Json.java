@@ -1,4 +1,4 @@
-package fantasyApp;
+package de.damps.fantasy;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package fantasyApp;
+package de.damps.fantasy;
 
 public class Injury {
 

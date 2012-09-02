@@ -1,10 +1,8 @@
-package fantasyApp;
+package de.damps.fantasy;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import de.damps.fantasy.R;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -35,7 +33,7 @@ public class StartersActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.starters);
-		url = fantasyApp.HomeActivity.URL + "/starter/2011/17";
+		url = de.damps.fantasy.HomeActivity.URL + "/starter/2011/17";
 		constructStarters();
 
 		new GetStarters().execute(url);
@@ -110,7 +108,7 @@ public class StartersActivity extends Activity {
 				if (y_init) {
 					int gd = sp_gd.getSelectedItemPosition() + 1;
 					String year = (String) parent.getItemAtPosition(position);
-					url = fantasyApp.HomeActivity.URL + "/starter/"
+					url = de.damps.fantasy.HomeActivity.URL + "/starter/"
 							+ year + "/" + gd;
 					new GetStarters().execute(url);
 				}
@@ -138,7 +136,7 @@ public class StartersActivity extends Activity {
 					int position, long id) {
 				if (gd_init) {
 					String year = (String) sp_ye.getSelectedItem();
-					url = fantasyApp.HomeActivity.URL + "/starter/"
+					url = de.damps.fantasy.HomeActivity.URL + "/starter/"
 							+ year + "/" + (position + 1);
 					new GetStarters().execute(url);
 				}

@@ -1,4 +1,4 @@
-package fantasyApp;
+package de.damps.fantasy;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -16,7 +16,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.damps.fantasy.R;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -165,6 +164,23 @@ public class HomeActivity extends Activity {
 		Intent intent = new Intent(getApplicationContext(),
 				OptionsActivity.class);
 		startActivity(intent);
+	}
+	
+	public void startTeammanagement(View view) {
+		//Intent intent = new Intent(getApplicationContext(), ForumActivity.class);
+		//startActivity(intent);
+	}
+
+	public void startMessages(View view) {
+		if(de.damps.fantasy.HomeActivity.preferences.contains("token")){
+			Intent intent = new Intent(getApplicationContext(),
+					MessagesActivity.class);
+			startActivity(intent);
+		}else{
+			Toast toast = Toast.makeText(getApplicationContext(), "Bitte einloggen.", Toast.LENGTH_LONG);
+			toast.setGravity(Gravity.CENTER, 0, 0);
+			toast.show();
+		}
 	}
 
 	/** select log */

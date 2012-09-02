@@ -23,6 +23,8 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="save">angemeldet bleiben</string>
+    <string name="membersection">Membersection:</string>
+    <string name="messages">Nachrichten</string>
 
     <!-- Options -->
     <string name="leaguedomain">League Domain</string>

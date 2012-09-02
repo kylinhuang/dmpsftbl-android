@@ -1,6 +1,5 @@
-package fantasyApp;
+package de.damps.fantasy;
 
-import de.damps.fantasy.R;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -27,8 +26,8 @@ public class OptionsActivity extends Activity {
 	}
 
 	private void initialise() {
-		pref = fantasyApp.HomeActivity.preferences;
-		editor = fantasyApp.HomeActivity.editor;
+		pref = de.damps.fantasy.HomeActivity.preferences;
+		editor = de.damps.fantasy.HomeActivity.editor;
 		domain = (EditText) findViewById(R.id.et_opt_Text1);
 		news = (EditText) findViewById(R.id.et_opt_Text2);
 		threads = (EditText) findViewById(R.id.et_opt_Text3);

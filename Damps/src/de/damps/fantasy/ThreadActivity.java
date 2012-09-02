@@ -1,12 +1,10 @@
-package fantasyApp;
+package de.damps.fantasy;
 
 import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import de.damps.fantasy.R;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -36,8 +34,8 @@ public class ThreadActivity extends ListActivity {
 
 		id = extra.getString("ID");
 		title = extra.getString("title");
-		url = fantasyApp.HomeActivity.URL + "/thread/" + id;
-		chron = fantasyApp.HomeActivity.preferences.getBoolean("chron",
+		url = de.damps.fantasy.HomeActivity.URL + "/thread/" + id;
+		chron = de.damps.fantasy.HomeActivity.preferences.getBoolean("chron",
 				false);
 
 		titleview = (TextView) findViewById(R.id.tv_thr_title);
@@ -110,7 +108,7 @@ public class ThreadActivity extends ListActivity {
 	}
 
 	public void reply(View view) {
-		if (fantasyApp.HomeActivity.preferences.contains("token")) {
+		if (de.damps.fantasy.HomeActivity.preferences.contains("token")) {
 			Intent intent = new Intent(getApplicationContext(),
 					NewPostActivity.class);
 			intent.putExtra("ID",id);

@@ -1,6 +1,5 @@
-package fantasyApp;
+package de.damps.fantasy;
 
-import de.damps.fantasy.R;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,7 +31,7 @@ public class TeamsActivity extends ListActivity {
 	private void zeigeTeams() {
 		final ArrayAdapter<String> Teamadapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1,
-				fantasyApp.HomeActivity.TEAMS);
+				de.damps.fantasy.HomeActivity.TEAMS);
 		setListAdapter(Teamadapter);
 	}
 

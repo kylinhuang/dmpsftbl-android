@@ -135,4 +135,35 @@
         -->
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_hom_member"
+        style="@style/desc_edittext"
+        android:layout_below="@+id/ll_hom_layout4"
+        android:text="@string/membersection" />
+    
+    <LinearLayout
+        android:id="@+id/ll_hom_layout5"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tv_hom_member" >
+
+        <Button
+            android:id="@+id/bu_hom_team"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="startTeammanagement"
+            android:text="@string/teammanagement" />
+
+            
+        <Button
+            android:id="@+id/bu_hom_nachrichten"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="startMessages"
+            android:text="@string/messages" />
+        </LinearLayout>
+
 </RelativeLayout>

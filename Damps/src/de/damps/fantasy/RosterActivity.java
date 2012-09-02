@@ -1,4 +1,4 @@
-package fantasyApp;
+package de.damps.fantasy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,8 +7,6 @@ import java.util.Comparator;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import de.damps.fantasy.R;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -40,11 +38,11 @@ public class RosterActivity extends Activity {
 		setContentView(R.layout.roster);
 		final Bundle extra = getIntent().getExtras();
 		position = extra.getInt("pos");
-		int id = fantasyApp.HomeActivity.ID[position];
-		url = fantasyApp.HomeActivity.URL + "/roster/2011/" + id;
+		int id = de.damps.fantasy.HomeActivity.ID[position];
+		url = de.damps.fantasy.HomeActivity.URL + "/roster/2011/" + id;
 		tbl = (TableLayout) findViewById(R.id.tl_rostertable);
 		team = (TextView) findViewById(R.id.tv_ros_view1);
-		team.setText(fantasyApp.HomeActivity.TEAMS[position]);
+		team.setText(de.damps.fantasy.HomeActivity.TEAMS[position]);
 
 		new GetRoster().execute(url);
 	}
