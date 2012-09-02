@@ -97,6 +97,7 @@ public class ForumActivity extends ListActivity {
 		setListAdapter(threadadapter);
 	}
 	
+	//Methode um neuen Thread zu erstellen
 	public void newThread(View view){
 		if(de.damps.fantasy.HomeActivity.preferences.contains("token")){
 			Intent intent = new Intent(getApplicationContext(),
