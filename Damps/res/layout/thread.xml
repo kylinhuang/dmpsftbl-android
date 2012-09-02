@@ -7,9 +7,14 @@
         android:id="@+id/rl_thr_layout1"
         style="@style/titlebar" >
 
+        <ImageView
+            android:id="@+id/iv_thr_back"
+            style="@style/pic_title_left" />
+
         <TextView
-            android:id="@+id/tv_thr_title"
-            style="@style/title" />
+            style="@style/title"
+            android:layout_toRightOf="@+id/iv_thr_back"
+            android:id="@+id/tv_thr_title" />
 
         <ProgressBar
             android:id="@+id/pb_thr_bar1"

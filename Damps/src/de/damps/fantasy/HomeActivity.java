@@ -173,9 +173,9 @@ public class HomeActivity extends Activity {
 
 	public void startMessages(View view) {
 		if(de.damps.fantasy.HomeActivity.preferences.contains("token")){
-			Intent intent = new Intent(getApplicationContext(),
-					MessagesActivity.class);
-			startActivity(intent);
+			//Intent intent = new Intent(getApplicationContext(),
+				//	MessagesActivity.class);
+			//startActivity(intent);
 		}else{
 			Toast toast = Toast.makeText(getApplicationContext(), "Bitte einloggen.", Toast.LENGTH_LONG);
 			toast.setGravity(Gravity.CENTER, 0, 0);

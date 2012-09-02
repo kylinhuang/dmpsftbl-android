@@ -7,8 +7,13 @@
         android:id="@+id/rl_tea_layout1"
         style="@style/titlebar" >
 
+        <ImageView
+            android:id="@+id/iv_tea_back"
+            style="@style/pic_title_left" />
+
         <TextView
             style="@style/title"
+            android:layout_toRightOf="@+id/iv_tea_back"
             android:text="@string/teamwahl" />
 
     </RelativeLayout>

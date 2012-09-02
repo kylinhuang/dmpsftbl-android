@@ -7,9 +7,14 @@
         android:id="@+id/rl_ros_layout1"
         style="@style/titlebar" >
 
+        <ImageView
+            android:id="@+id/iv_ros_back"
+            style="@style/pic_title_left" />
+
         <TextView
-            android:id="@+id/tv_ros_view1"
-            style="@style/title" />
+            style="@style/title"
+            android:layout_toRightOf="@+id/iv_ros_back"
+            android:id="@+id/tv_ros_view1" />
 
         <ProgressBar
             android:id="@+id/pb_ros_bar1"
