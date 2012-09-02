@@ -38,6 +38,10 @@ public class ForumActivity extends ListActivity {
 	public void refresh(View view){
 		new GetThreads().execute(url);
 	}
+	
+	public void back(View view){
+		finish();
+	}
 
 	private class GetThreads extends AsyncTask<String, Void, Void> {
 		ProgressBar pb;

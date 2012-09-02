@@ -3,11 +3,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+     <RelativeLayout
+        android:id="@+id/rl_mes_layout1"
+        style="@style/titlebar" >
+        
+        <ImageView
+            android:id="@+id/iv_mes_back"
+            style="@style/pic_title_left" />
+
+        <TextView
+            style="@style/title"
+            android:layout_toRightOf="@+id/iv_mes_back"
+            android:text="@string/messages" />
+
+        <ProgressBar
+            android:id="@+id/pb_mes_bar1"
+            style="@style/progressbar"
+            android:layout_alignParentRight="false"
+            android:layout_toLeftOf="@+id/iv_mes_accept" />
+
+        <ImageView
+            android:id="@+id/iv_mes_accept"
+            style="@style/pic_title_right"
+            android:contentDescription="@string/pic_new"
+            android:onClick="sendMessage"
+            android:src="@drawable/content_new" /> 
+    </RelativeLayout>
+    
     <Button
         android:id="@+id/bu_mes_new"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:onClick="Send Message"
+        android:onClick="SendMessage"
+        android:layout_below="@+id/rl_mes_layout1"
         android:text="@string/send_message" />
 
 </RelativeLayout>

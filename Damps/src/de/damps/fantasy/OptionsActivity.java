@@ -42,6 +42,10 @@ public class OptionsActivity extends Activity {
 			((RadioGroup) findViewById(R.id.rg_opt_Group1)).check(R.id.rb_opt_oben);
 		}
 	}
+	
+	public void back(View view){
+		finish();
+	}
 
 	public void setDomain(View view) {
 		String dom = domain.getText().toString();

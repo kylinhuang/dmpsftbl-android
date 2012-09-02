@@ -44,6 +44,10 @@ public class ThreadActivity extends ListActivity {
 		new GetThread().execute(url);
 
 	}
+	
+	public void back(View view){
+		finish();
+	}
 
 	public void refresh(View view) {
 		postadapter.clear();

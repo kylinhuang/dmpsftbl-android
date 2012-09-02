@@ -31,6 +31,10 @@ public class NewsActivity extends Activity {
 
 		new GetNews().execute(url);
 	}
+	
+	public void back(View view){
+		finish();
+	}
 
 	private class GetNews extends AsyncTask<String, Void, Void> {
 		ProgressBar pb;

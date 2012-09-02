@@ -62,6 +62,10 @@ public class NewPostActivity extends Activity {
 		}
 	}
 
+	public void back(View view) {
+		finish();
+	}
+
 	private class Reply extends AsyncTask<String, Void, Void> {
 		ProgressBar pb;
 

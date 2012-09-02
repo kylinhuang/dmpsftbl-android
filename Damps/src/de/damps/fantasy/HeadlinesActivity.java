@@ -53,6 +53,10 @@ public class HeadlinesActivity extends ListActivity {
 		}
 
 	}
+	
+	public void back(View view){
+		finish();
+	}
 
 	private void parse() {
 		Json data = new Json(url);

@@ -46,6 +46,10 @@ public class RosterActivity extends Activity {
 
 		new GetRoster().execute(url);
 	}
+	
+	public void back(View view){
+		finish();
+	}
 
 	private class GetRoster extends AsyncTask<String, Void, Void> {
 		ProgressBar pb;

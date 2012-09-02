@@ -38,6 +38,10 @@ public class StartersActivity extends Activity {
 
 		new GetStarters().execute(url);
 	}
+	
+	public void back(View view){
+		finish();
+	}
 
 	private class GetStarters extends AsyncTask<String, Void, Void> {
 		ProgressBar pb;

@@ -41,6 +41,10 @@ public class StandingsActivity extends Activity {
 		new GetScores().execute(url);
 
 	}
+	
+	public void back(View view){
+		finish();
+	}
 
 	private class GetScores extends AsyncTask<String, Void, Void> {
 		ProgressBar pb;

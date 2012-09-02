@@ -44,12 +44,17 @@ public class NewThreadActivity extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.new_thread);
-		SharedPreferences pref = de.damps.fantasy.HomeActivity.preferences;
 		url = de.damps.fantasy.HomeActivity.URL + "/openthread";
+		SharedPreferences pref = de.damps.fantasy.HomeActivity.preferences;
 		token = pref.getString("token", "");
 		hash = pref.getString("hash", "");
 	}
 	
+	public void back(View view){
+		finish();
+	}
+	
+	//posts the new thread
 	public void postThread(View view){
 		title = (EditText)findViewById(R.id.et_newt_title);
 		msg = (EditText)findViewById(R.id.et_newt_msg);
@@ -129,6 +134,7 @@ public class NewThreadActivity extends Activity{
 		return responsebody;
 	}
 	
+	//opens the new thread
 	public void openThread(String id){
 		Intent intent = new Intent(getApplicationContext(),
 				ThreadActivity.class);

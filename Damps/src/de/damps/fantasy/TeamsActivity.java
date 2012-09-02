@@ -34,5 +34,9 @@ public class TeamsActivity extends ListActivity {
 				de.damps.fantasy.HomeActivity.TEAMS);
 		setListAdapter(Teamadapter);
 	}
+	
+	public void back(View view){
+		finish();
+	}
 
 }

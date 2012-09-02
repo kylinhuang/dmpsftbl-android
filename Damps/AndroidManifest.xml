@@ -36,6 +36,8 @@
         <activity android:name=".ThreadActivity" />
         <activity android:name=".NewThreadActivity" />
         <activity android:name=".NewPostActivity" />
+        <activity android:name=".MessagesActivity" />
+        <activity android:name=".NewMessageActivity" />
     </application>
 
 </manifest>
