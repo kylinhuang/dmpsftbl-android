@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">DAMPS Fantasy</string>
+
+    <!-- Startseite -->
+    <string name="main">DAMPS Fantasy</string>
+    <string name="desc">DampsLogo</string>
+    <string name="pic_log">Log</string>
+    <string name="pic_opt">Options</string>
+    <string name="news">News</string>
+    <string name="roster">Roster</string>
+    <string name="scores">Scores</string>
+    <string name="standings">Standings</string>
+    <string name="starters">Starters</string>
+    <string name="injuries">Injuries</string>
+    <string name="forum">Forum</string>
+    <string name="teammanagement">Teammanagement</string>
+    <string name="exit">Beenden</string>
+    <string name="options">Optionen</string>
+    <string name="ok">OK</string>
+    <string name="cancel">abbrechen</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="save">angemeldet bleiben</string>
+
+    <!-- Options -->
+    <string name="leaguedomain">League Domain</string>
+    <string name="number_news">Anzahl der abzurufenden News</string>
+    <string name="number_threads">Anzahl der abzurufenden Threads</string>
+    <string name="posts">Neuesten Post oben/unten</string>
+    <string name="oben">oben</string>
+    <string name="unten">unten</string>
+    <string name="set">Set</string>
+    <string name="news_set">Anzahl der abzurufenden News auf</string>
+    <string name="domain_set">Domain auf</string>
+    <string name="posts_set">Neuester post wird</string>
+    <string name="threads_set">Anzahl der abzurufenden Threads auf</string>
+    <string name="setted">gesetzt</string>
+    <string name="show">angezeigt</string>
+
+    <!-- Headlines -->
+    <string name="News">News</string>
+
+    <!-- Forum -->
+    <string name="pic_new">New Thread</string>
+    <string name="pic_ref">Refresh</string>
+
+    <!-- New Thread -->
+    <string name="new_thread">New Thread</string>
+    <string name="pic_acc">Posten</string>
+    <string name="title">Title:</string>
+    <string name="message">Message:</string>
+    <string name="sticky">sticky</string>
+    <string name="member">members only</string>
+    <string name="pic_rep">Reply</string>
+
+    <!-- New Thread -->
+    <string name="new_post">Reply</string>
+
+    <!-- Weekly Scores -->
+    <string name="weekly">Weekly Scores</string>
+
+    <!-- Rosterstart -->
+    <string name="teamwahl">Bitte Team wählen</string>
+
+    <!-- Headlines -->
+    <string name="posten">Posten</string>
+
+    <!-- Options -->
+    <string name="nflteam">NFL</string>
+    <string name="fflteam">FL-Team</string>
+    <string name="status">Status</string>
+
+    <!-- Roster -->
+    <string name="team">Team</string>
+    <string name="pos">Pos</string>
+    <string name="name">Name</string>
+    <string name="score">Score</string>
+    <string name="gameday">Gamedays</string>
+    <string name="domain">"http://test.dampsfootball.com"</string>
+
+</resources>

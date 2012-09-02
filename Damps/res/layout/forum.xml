@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:id="@+id/rl_for_layout1"
+        style="@style/titlebar" >
+
+        <TextView
+            style="@style/title"
+            android:text="@string/forum" />
+
+        <ProgressBar
+            android:id="@+id/pb_for_bar1"
+            style="@style/progressbar"
+            android:layout_alignParentRight="false"
+            android:layout_toLeftOf="@+id/iv_for_refresh" />
+
+        <ImageView
+            android:id="@+id/iv_for_refresh"
+            style="@style/pic_title_mid"
+            android:layout_toLeftOf="@+id/iv_for_new"
+            android:contentDescription="@string/pic_ref"
+            android:onClick="refresh"
+            android:src="@drawable/refresh" />
+
+        <ImageView
+            android:id="@+id/iv_for_new"
+            style="@style/pic_title_right"
+            android:contentDescription="@string/pic_new"
+            android:onClick="newThread"
+            android:src="@drawable/content_new" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/android:list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_for_layout1" >
+    </ListView>
+
+</RelativeLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:id="@+id/rl_start_layout1"
+        style="@style/titlebar" >
+
+        <TextView
+            style="@style/title"
+            android:text="@string/starters" />
+
+        <ProgressBar
+            android:id="@+id/pb_start_bar1"
+            style="@style/progressbar" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_start_layout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rl_start_layout1" >
+
+        <Spinner
+            android:id="@+id/spi_start_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawSelectorOnTop="true" />
+
+        <Spinner
+            android:id="@+id/spi_start_gameday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawSelectorOnTop="true" />
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/spi_start_team"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_start_layout2"
+        android:drawSelectorOnTop="true" />
+
+    <ScrollView
+        android:id="@+id/sv_start_view1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spi_start_team" >
+
+        <TableLayout
+            android:id="@+id/tl_start_starting"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="2" >
+        </TableLayout>
+    </ScrollView>
+
+</RelativeLayout>

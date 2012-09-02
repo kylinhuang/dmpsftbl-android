@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:id="@+id/rl_news_layout1"
+        style="@style/titlebar" >
+
+        <TextView
+            style="@style/title"
+            android:text="@string/News" />
+
+        <ProgressBar
+            android:id="@+id/pb_news_bar1"
+            style="@style/progressbar" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_news_title"
+        style="@style/text_title"
+        android:layout_below="@+id/rl_news_layout1" />
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/tv_news_title" >
+
+        <TextView
+            android:id="@+id/tv_news_news"
+            style="@style/text" />
+    </ScrollView>
+
+</RelativeLayout>

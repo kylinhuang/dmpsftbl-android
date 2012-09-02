@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/rl_newp_layout1"
+        style="@style/titlebar" >
+
+        <TextView
+            style="@style/title"
+            android:text="@string/new_post" />
+
+        <ProgressBar
+            android:id="@+id/pb_newp_bar1"
+            style="@style/progressbar"
+            android:layout_alignParentRight="false"
+            android:layout_toLeftOf="@+id/iv_newp_accept" />
+
+        <ImageView
+            android:id="@+id/iv_newp_accept"
+            style="@style/pic_title_right"
+            android:contentDescription="@string/pic_acc"
+            android:onClick="post"
+            android:src="@drawable/accept" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_newp_msg"
+        style="@style/desc_edittext"
+        android:layout_below="@+id/rl_newp_layout1"
+        android:text="@string/message"
+        android:paddingLeft="5dp" />
+
+    <EditText
+        android:id="@+id/et_newp_msg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_newp_msg"
+        android:inputType="textMultiLine" />
+
+</RelativeLayout>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/rl_newt_layout1"
+        style="@style/titlebar" >
+
+        <TextView
+            style="@style/title"
+            android:text="@string/new_thread" />
+
+        <ProgressBar
+            android:id="@+id/pb_newt_bar1"
+            style="@style/progressbar"
+            android:layout_alignParentRight="false"
+            android:layout_toLeftOf="@+id/iv_newt_accept" />
+
+        <ImageView
+            android:id="@+id/iv_newt_accept"
+            style="@style/pic_title_right"
+            android:contentDescription="@string/pic_acc"
+            android:onClick="postThread"
+            android:src="@drawable/accept" />
+    </RelativeLayout>
+
+    <CheckBox
+        android:id="@+id/cb_newt_sticky"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rl_newt_layout1"
+        android:text="@string/sticky"
+        android:textSize="20dp" />
+
+    <CheckBox
+        android:id="@+id/cb_newt_member"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_newt_layout1"
+        android:layout_toRightOf="@+id/cb_newt_sticky"
+        android:text="@string/member"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/tv_newt_title"
+        style="@style/desc_edittext"
+        android:layout_below="@+id/cb_newt_sticky"
+        android:text="@string/title"
+        android:paddingLeft="5dp" />
+
+    <EditText
+        android:id="@+id/et_newt_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_newt_title"
+        android:inputType="text" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/tv_newt_msg"
+        style="@style/desc_edittext"
+        android:layout_below="@+id/et_newt_title"
+        android:text="@string/message"
+        android:paddingLeft="5dp" />
+
+    <EditText
+        android:id="@+id/et_newt_msg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_newt_msg"
+        android:inputType="textMultiLine" />
+
+</RelativeLayout>

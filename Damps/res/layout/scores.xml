@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/rl_sco_layout1"
+        style="@style/titlebar" >
+
+        <TextView
+            style="@style/title"
+            android:text="@string/weekly" />
+
+        <ProgressBar
+            android:id="@+id/pb_wee_bar1"
+            style="@style/progressbar" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_wee_layout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rl_sco_layout1" >
+
+        <Spinner
+            android:id="@+id/spi_sco_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawSelectorOnTop="true" />
+
+        <Spinner
+            android:id="@+id/spi_sco_gameday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawSelectorOnTop="true" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_wee_layout2" >
+
+        <TableLayout
+            android:id="@+id/tl_scores"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="2" >
+        </TableLayout>
+    </ScrollView>
+
+</RelativeLayout>

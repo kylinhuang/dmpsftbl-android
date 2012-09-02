@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/rl_hea_layout1"
+        style="@style/titlebar" >
+
+        <TextView
+            style="@style/title"
+            android:text="@string/options" />
+    </RelativeLayout>
+
+    <!-- Domain -->
+
+    <TextView
+        android:id="@+id/tv_opt_view1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rl_hea_layout1"
+        android:text="@string/leaguedomain"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/et_opt_Text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tv_opt_view1"
+        android:ems="12"
+        android:inputType="text" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/bu_opt_setDom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_opt_view1"
+        android:layout_toRightOf="@+id/et_opt_Text1"
+        android:onClick="setDomain"
+        android:text="@string/set" />
+
+    <!-- News -->
+
+    <TextView
+        android:id="@+id/tv_opt_view2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/et_opt_Text1"
+        android:text="@string/number_news"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/et_opt_Text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tv_opt_view2"
+        android:ems="12"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/bu_opt_setNews"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_opt_view2"
+        android:layout_toRightOf="@+id/et_opt_Text2"
+        android:onClick="setNewsNumber"
+        android:text="@string/set" />
+
+    <!-- Threads -->
+
+    <TextView
+        android:id="@+id/tv_opt_view3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/et_opt_Text2"
+        android:text="@string/number_threads"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/et_opt_Text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tv_opt_view3"
+        android:ems="12"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/bu_opt_setthreads"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_opt_view3"
+        android:layout_toRightOf="@+id/et_opt_Text3"
+        android:onClick="setThreadsNumber"
+        android:text="@string/set" />
+
+    <!-- Posts -->
+
+    <TextView
+        android:id="@+id/tv_opt_view4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/et_opt_Text3"
+        android:text="@string/posts"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <RadioGroup
+        android:id="@+id/rg_opt_Group1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tv_opt_view4"
+        android:orientation="horizontal" >
+
+
+        <RadioButton
+            android:id="@+id/rb_opt_oben"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/oben" />
+
+        <RadioButton
+            android:id="@+id/rb_opt_unten"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unten" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/bu_opt_setOri"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_opt_view4"
+        android:layout_toRightOf="@+id/rg_opt_Group1"
+        android:onClick="setOrientation"
+        android:text="@string/set" />
+
+    <!-- OK -->
+
+    <Button
+        android:id="@+id/bu_opt_ok"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="ok"
+        android:text="@string/ok" />
+
+    
+
+</RelativeLayout>

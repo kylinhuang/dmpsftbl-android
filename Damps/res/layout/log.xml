@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="wrap_content" 
+     android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_log_view1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/username"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/et_log_text1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:layout_below="@+id/tv_log_view1"
+            android:layout_alignParentLeft="true" />
+
+        <TextView
+            android:id="@+id/tv_log_view2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/et_log_text1"
+            android:text="@string/password"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/et_log_text2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:layout_below="@+id/tv_log_view2" />
+
+        <CheckBox
+            android:id="@+id/cb_log_Box1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/et_log_text2"
+            android:text="@string/save" />
+
+        <LinearLayout
+        android:id="@+id/ll_log_Layout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/cb_log_Box1" >
+
+        	<Button  
+   				android:id="@+id/bu_ok"
+   				android:text="@string/ok" 
+   				android:layout_width="0dip" 
+   				android:layout_height="wrap_content"
+   				android:layout_weight="1" />
+			<Button 
+   				android:text="@string/cancel" 
+   				android:id="@+id/bu_cancel" 
+   				android:layout_width="0dip" 
+   				android:layout_height="wrap_content"
+   				android:layout_weight="1" />
+
+    </LinearLayout>
+</RelativeLayout>

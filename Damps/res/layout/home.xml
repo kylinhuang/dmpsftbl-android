@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/rl_hom_layout1"
+        style="@style/titlebar" >
+
+        <TextView
+            style="@style/title"
+            android:text="@string/main" />
+
+        <ImageView
+            android:id="@+id/iv_hom_opt"
+            style="@style/pic_title_mid"
+            android:layout_toLeftOf="@+id/iv_hom_log"
+            android:contentDescription="@string/pic_opt"
+            android:onClick="options"
+            android:src="@drawable/options" />
+
+        <ImageView
+            android:id="@+id/iv_hom_log"
+            style="@style/pic_title_right"
+            android:contentDescription="@string/pic_log"
+            android:onClick="log" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_hom_view1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_hom_layout1"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/desc"
+        android:src="@drawable/dampsmain" />
+
+    <LinearLayout
+        android:id="@+id/ll_hom_layout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/iv_hom_view1" >
+
+        <Button
+            android:id="@+id/bu_hom_news"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="startNews"
+            android:text="@string/news" />
+
+        <!--
+    <Button
+            android:id="@+id/bu_home_injuries"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="startInjuries"
+            android:text="@string/injuries" />
+        -->
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_hom_layout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ll_hom_layout1" >
+
+        <Button
+            android:id="@+id/bu_hom_scores"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="startScores"
+            android:text="@string/scores" />
+
+        <Button
+            android:id="@+id/bu_hom_standings"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="startStandings"
+            android:text="@string/standings" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_hom_layout3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ll_hom_layout2" >
+
+        <Button
+            android:id="@+id/bu_hom_roster"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="startRoster"
+            android:text="@string/roster" />
+
+        <Button
+            android:id="@+id/bu_hom_starters"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="startStarters"
+            android:text="@string/starters" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_hom_layout4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ll_hom_layout3" >
+
+        <Button
+            android:id="@+id/bu_hom_forum"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="startForum"
+            android:text="@string/forum" />
+
+        <!--
+             <Button
+            android:id="@+id/bu_hom_starters"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="startStarters"
+            android:text="@string/starters" />
+        -->
+    </LinearLayout>
+
+</RelativeLayout>

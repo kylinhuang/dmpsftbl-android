@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:id="@+id/rl_ros_layout1"
+        style="@style/titlebar" >
+
+        <TextView
+            android:id="@+id/tv_ros_view1"
+            style="@style/title" />
+
+        <ProgressBar
+            android:id="@+id/pb_ros_bar1"
+            style="@style/progressbar" />
+    </RelativeLayout>
+
+    <TableLayout
+        android:id="@+id/tl_ros_table1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_ros_layout1"
+        android:orientation="vertical"
+        android:stretchColumns="2" >
+
+        <TableRow>
+
+            <!--
+                    <TextView
+    				android:layout_width="wrap_content"
+    				android:layout_height="wrap_content"
+    				android:padding="3px"
+    				android:text="@string/team"
+    				android:onClick="sortTeam"/>
+            -->
+
+            <TextView
+                style="@style/column"
+                android:onClick="sortPos"
+                android:padding="3dp"
+                android:text="@string/pos" />
+
+            <TextView
+                style="@style/column"
+                android:onClick="sortName"
+                android:padding="3dp"
+                android:text="@string/name" />
+
+            <TextView
+                style="@style/column"
+                android:text="@string/gameday" />
+
+            <TextView
+                style="@style/column"
+                android:onClick="sortScore"
+                android:text="@string/score" />
+        </TableRow>
+    </TableLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tl_ros_table1" >
+
+        <TableLayout
+            android:id="@+id/tl_rostertable"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:stretchColumns="2" >
+        </TableLayout>
+    </ScrollView>
+
+</RelativeLayout>

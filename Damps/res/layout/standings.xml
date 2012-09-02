@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:id="@+id/rl_sta_layout1"
+        style="@style/titlebar" >
+
+        <TextView
+            style="@style/title"
+            android:text="@string/standings" />
+
+        <ProgressBar
+            android:id="@+id/pb_sta_bar1"
+            style="@style/progressbar" />
+    </RelativeLayout>
+
+    <Spinner
+        android:id="@+id/spi_sta_year"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_sta_layout1"
+        android:drawSelectorOnTop="true" />
+
+    <ScrollView
+        android:id="@+id/sv_sta_view1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spi_sta_year" >
+
+        <TableLayout
+            android:id="@+id/tl_sta_standings"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="2" >
+        </TableLayout>
+    </ScrollView>
+
+</RelativeLayout>

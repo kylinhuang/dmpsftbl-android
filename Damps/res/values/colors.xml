@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	
+	<color name="hintergrund">#FFFFFF</color>
+	<color name="buttonfarbe">#004AFF</color>
+    <color name="schwarz">#000000</color>
+    <color name="banner">#0000FF</color>
+    <color name="damps_blau">#036CAE</color>
+    <color name="hellgrau">#B2B2B2</color>
+    <color name="hellhellgrau">#F0F0F0</color>
+    <color name="dunkelgrau">#4D4D4D</color>
+    
+</resources>
