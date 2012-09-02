@@ -39,7 +39,7 @@ public class RosterActivity extends Activity {
 		final Bundle extra = getIntent().getExtras();
 		position = extra.getInt("pos");
 		int id = de.damps.fantasy.HomeActivity.ID[position];
-		url = de.damps.fantasy.HomeActivity.URL + "/roster/2011/" + id;
+		url = de.damps.fantasy.HomeActivity.URL + "/roster/2012/" + id;
 		tbl = (TableLayout) findViewById(R.id.tl_rostertable);
 		team = (TextView) findViewById(R.id.tv_ros_view1);
 		team.setText(de.damps.fantasy.HomeActivity.TEAMS[position]);

@@ -20,8 +20,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class NewMessageActivity extends Activity {
@@ -33,6 +35,9 @@ public class NewMessageActivity extends Activity {
 	private String url;
 	private String token;
 	private String hash;
+	private Spinner spinner;
+	private ArrayAdapter<CharSequence> adapter;
+	private String receiver;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,11 +47,13 @@ public class NewMessageActivity extends Activity {
         SharedPreferences pref = de.damps.fantasy.HomeActivity.preferences;
         token = pref.getString("token", "");
 		hash = pref.getString("hash", "");
+		initializeSpinner();
     }
     
     public void sendMessage(View view){
-		title = (EditText)findViewById(R.id.et_newt_title);
-		msg = (EditText)findViewById(R.id.et_newt_msg);
+		title = (EditText)findViewById(R.id.et_newm_title);
+		msg = (EditText)findViewById(R.id.et_newm_msg);
+		receiver = spinner.getSelectedItem().toString();
 		
 		titletxt = title.getText().toString();
 		msgtxt = msg.getText().toString();
@@ -60,13 +67,21 @@ public class NewMessageActivity extends Activity {
 		}
 	}
     
+    private void initializeSpinner() {
+		spinner = (Spinner) findViewById(R.id.spi_mewm_dest);
+		adapter = ArrayAdapter.createFromResource(this, R.array.users,
+				android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+		spinner.setAdapter(adapter);
+
+	}
+    
     public void back(View view){
 		finish();
 	}
     
     private class Message extends AsyncTask<String, Void, Void> {
 		ProgressBar pb;
-		private String response;
 
 		@Override
 		protected void onPreExecute() {
@@ -76,7 +91,7 @@ public class NewMessageActivity extends Activity {
 
 		@Override
 		protected Void doInBackground(String... params) {
-			response = post();
+			post();
 			return null;
 		}
 
@@ -95,6 +110,7 @@ protected String post() {
 
 		postPara.add(new BasicNameValuePair("token", token));
 		postPara.add(new BasicNameValuePair("hash", hash));
+		postPara.add(new BasicNameValuePair("receiver", receiver));
 		postPara.add(new BasicNameValuePair("title", titletxt));
 		postPara.add(new BasicNameValuePair("message", msgtxt));
 

@@ -13,7 +13,7 @@ public class MessagesActivity extends Activity {
 		setContentView(R.layout.messages);
 	}
 
-	public void SendMessagereply(View view) {
+	public void sendMessage(View view) {
 		Intent intent = new Intent(getApplicationContext(),
 				NewMessageActivity.class);
 		startActivity(intent);

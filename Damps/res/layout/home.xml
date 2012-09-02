@@ -50,15 +50,13 @@
             android:onClick="startNews"
             android:text="@string/news" />
 
-        <!--
-    <Button
-            android:id="@+id/bu_home_injuries"
+        <Button
+            android:id="@+id/bu_hom_forum"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="startInjuries"
-            android:text="@string/injuries" />
-        -->
+            android:onClick="startForum"
+            android:text="@string/forum" />
     </LinearLayout>
 
     <LinearLayout
@@ -108,7 +106,7 @@
             android:onClick="startStarters"
             android:text="@string/starters" />
     </LinearLayout>
-
+    <!--
     <LinearLayout
         android:id="@+id/ll_hom_layout4"
         android:layout_width="fill_parent"
@@ -117,30 +115,29 @@
         android:layout_below="@+id/ll_hom_layout3" >
 
         <Button
-            android:id="@+id/bu_hom_forum"
+            android:id="@+id/bu_home_injuries"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="startForum"
-            android:text="@string/forum" />
+            android:onClick="startInjuries"
+            android:text="@string/injuries" />
 
-        <!--
-             <Button
+        <Button
             android:id="@+id/bu_hom_starters"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="startStarters"
-            android:text="@string/starters" />
-        -->
-    </LinearLayout>
+            android:text="@string/starters" />
+    </LinearLayout>
+    -->
 
     <TextView
         android:id="@+id/tv_hom_member"
         style="@style/desc_edittext"
-        android:layout_below="@+id/ll_hom_layout4"
+        android:layout_below="@+id/ll_hom_layout3"
         android:text="@string/membersection" />
-    
+
     <LinearLayout
         android:id="@+id/ll_hom_layout5"
         android:layout_width="fill_parent"
@@ -156,7 +153,6 @@
             android:onClick="startTeammanagement"
             android:text="@string/teammanagement" />
 
-            
         <Button
             android:id="@+id/bu_hom_nachrichten"
             android:layout_width="0dip"
@@ -164,6 +160,6 @@
             android:layout_weight="1"
             android:onClick="startMessages"
             android:text="@string/messages" />
-        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

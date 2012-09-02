@@ -30,12 +30,5 @@
             android:src="@drawable/content_new" /> 
     </RelativeLayout>
     
-    <Button
-        android:id="@+id/bu_mes_new"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:onClick="SendMessage"
-        android:layout_below="@+id/rl_mes_layout1"
-        android:text="@string/send_message" />
 
 </RelativeLayout>

@@ -1,116 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string-array name="gameday">
-    	<item>Gameday 1</item>
-    	<item>Gameday 2</item>
-    	<item>Gameday 3</item>
-    	<item>Gameday 4</item>
-    	<item>Gameday 5</item>
-    	<item>Gameday 6</item>
-    	<item>Gameday 7</item>
-    	<item>Gameday 8</item>
-    	<item>Gameday 9</item>
-    	<item>Gameday 10</item>
-    	<item>Gameday 11</item>
-    	<item>Gameday 12</item>
-    	<item>Gameday 13</item>
-    	<item>Gameday 14</item>
-    	<item>Gameday 15</item>
-    	<item>Gameday 16</item>
-    	<item>Gameday 17</item>
+        <item>Gameday 1</item>
+        <item>Gameday 2</item>
+        <item>Gameday 3</item>
+        <item>Gameday 4</item>
+        <item>Gameday 5</item>
+        <item>Gameday 6</item>
+        <item>Gameday 7</item>
+        <item>Gameday 8</item>
+        <item>Gameday 9</item>
+        <item>Gameday 10</item>
+        <item>Gameday 11</item>
+        <item>Gameday 12</item>
+        <item>Gameday 13</item>
+        <item>Gameday 14</item>
+        <item>Gameday 15</item>
+        <item>Gameday 16</item>
+        <item>Gameday 17</item>
     </string-array>
     <string-array name="year">
-    	<item>2005</item>
-    	<item>2006</item>
-    	<item>2007</item>
-    	<item>2008</item>
-    	<item>2009</item>
-    	<item>2010</item>
-    	<item>2011</item>
-    	<item>2012</item>
+        <item>2005</item>
+        <item>2006</item>
+        <item>2007</item>
+        <item>2008</item>
+        <item>2009</item>
+        <item>2010</item>
+        <item>2011</item>
+        <item>2012</item>
     </string-array>
     <string-array name="FFLTeams">
-		<item>Burnaz</item>
-		<item>C.R.E.A.M</item>
-		<item>Defenders</item>
-		<item>Dominators</item>
-		<item>DPNJC-Madness</item>
-		<item>Fantasy-Failure</item>
-		<item>Hookaz</item>
-		<item>Hustlaz</item>
-		<item>Iron-Duckz</item>
-		<item>P-Bodies</item>
-		<item>Playaz</item>
-		<item>Popimps</item>
-		<item>Robotz</item>
-		<item>Shockaz</item>	
-	</string-array>
-	<string-array name="NFLTeams">
-		<item>Buffalo Bills</item>
-		<item>Miami Dolphins</item>
-		<item>New England Patriots</item>
-		<item>New York Jets</item>
-		<item>Baltimore Ravens</item>
-		<item>Cincinnati Bengals</item>
-		<item>Cleveland Browns</item>
-		<item>Pittsburgh Steelers</item>
-		<item>Houston Texans</item>
-		<item>Indianapolis Colts</item>
-		<item>Jacksonville Jaguars</item>
-		<item>Tennesee Titans</item>
-		<item>Denver Broncos</item>
-		<item>Kansas City Chiefs</item>
-		<item>Oakland Raider</item>
-		<item>San Diego Chargers</item>
-		<item>Dallas Cowboys</item>
-		<item>New York Giants</item>
-		<item>Philadelphia Eagles</item>
-		<item>Washington Redskins</item>
-		<item>Chicago Bears</item>
-		<item>Detroit Lions</item>
-		<item>Green Bay Packers</item>
-		<item>Minnesota Vikings</item>
-		<item>Atlanta Falcons</item>
-		<item>Carolina Panthers</item>
-		<item>New Orleans Saints</item>
-		<item>Tampa Bay Buccaneers</item>
-		<item>Arizona Cardinals</item>
-		<item>Saint Louis Rams</item>
-		<item>San Francisco 49ers</item>
-		<item>Seattle Seahawks</item>
-	</string-array>
-	<string-array name="NFLNicks">
-		<item>BUF</item>
-		<item>MIA</item>
-		<item>NE</item>
-		<item>NYJ</item>
-		<item>BAL</item>
-		<item>CIN</item>
-		<item>CLE</item>
-		<item>PIT</item>
-		<item>HOU</item>
-		<item>IND</item>
-		<item>JAC</item>
-		<item>TEN</item>
-		<item>DEN</item>
-		<item>KC</item>
-		<item>OAK</item>
-		<item>SD</item>
-		<item>DAL</item>
-		<item>NYG</item>
-		<item>PHI</item>
-		<item>WAS</item>
-		<item>CHI</item>
-		<item>DET</item>
-		<item>GB</item>
-		<item>MIN</item>
-		<item>ATL</item>
-		<item>CAR</item>
-		<item>NO</item>
-		<item>TB</item>
-		<item>ARIs</item>
-		<item>STL</item>
-		<item>SF</item>
-		<item>SEA</item>
-	</string-array>
+        <item>Burnaz</item>
+        <item>C.R.E.A.M</item>
+        <item>Defenders</item>
+        <item>Dominators</item>
+        <item>DPNJC-Madness</item>
+        <item>Fantasy-Failure</item>
+        <item>Hookaz</item>
+        <item>Hustlaz</item>
+        <item>Iron-Duckz</item>
+        <item>P-Bodies</item>
+        <item>Playaz</item>
+        <item>Popimps</item>
+        <item>Robotz</item>
+        <item>Shockaz</item>
+    </string-array>
+    <string-array name="users">
+        <item>simon</item>
+        <item>Pavlos</item>
+        <item>Tino</item>
+        <item>icorn</item>
+        <item>Dennis</item>
+        <item>Cheetah</item>
+        <item>airT08</item>
+        <item>alex</item>
+        <item>duck</item>
+        <item>paddi</item>
+        <item>Danny</item>
+        <item>Mikel</item>
+        <item>christoph</item>
+        <item>sebastian</item>
+    </string-array>
+    <string-array name="NFLTeams">
+        <item>Buffalo Bills</item>
+        <item>Miami Dolphins</item>
+        <item>New England Patriots</item>
+        <item>New York Jets</item>
+        <item>Baltimore Ravens</item>
+        <item>Cincinnati Bengals</item>
+        <item>Cleveland Browns</item>
+        <item>Pittsburgh Steelers</item>
+        <item>Houston Texans</item>
+        <item>Indianapolis Colts</item>
+        <item>Jacksonville Jaguars</item>
+        <item>Tennesee Titans</item>
+        <item>Denver Broncos</item>
+        <item>Kansas City Chiefs</item>
+        <item>Oakland Raider</item>
+        <item>San Diego Chargers</item>
+        <item>Dallas Cowboys</item>
+        <item>New York Giants</item>
+        <item>Philadelphia Eagles</item>
+        <item>Washington Redskins</item>
+        <item>Chicago Bears</item>
+        <item>Detroit Lions</item>
+        <item>Green Bay Packers</item>
+        <item>Minnesota Vikings</item>
+        <item>Atlanta Falcons</item>
+        <item>Carolina Panthers</item>
+        <item>New Orleans Saints</item>
+        <item>Tampa Bay Buccaneers</item>
+        <item>Arizona Cardinals</item>
+        <item>Saint Louis Rams</item>
+        <item>San Francisco 49ers</item>
+        <item>Seattle Seahawks</item>
+    </string-array>
+    <string-array name="NFLNicks">
+        <item>BUF</item>
+        <item>MIA</item>
+        <item>NE</item>
+        <item>NYJ</item>
+        <item>BAL</item>
+        <item>CIN</item>
+        <item>CLE</item>
+        <item>PIT</item>
+        <item>HOU</item>
+        <item>IND</item>
+        <item>JAC</item>
+        <item>TEN</item>
+        <item>DEN</item>
+        <item>KC</item>
+        <item>OAK</item>
+        <item>SD</item>
+        <item>DAL</item>
+        <item>NYG</item>
+        <item>PHI</item>
+        <item>WAS</item>
+        <item>CHI</item>
+        <item>DET</item>
+        <item>GB</item>
+        <item>MIN</item>
+        <item>ATL</item>
+        <item>CAR</item>
+        <item>NO</item>
+        <item>TB</item>
+        <item>ARIs</item>
+        <item>STL</item>
+        <item>SF</item>
+        <item>SEA</item>
+    </string-array>
+
 </resources>
