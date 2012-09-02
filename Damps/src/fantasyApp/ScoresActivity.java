@@ -1,8 +1,10 @@
-package de.damps.fantasy;
+package fantasyApp;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import de.damps.fantasy.R;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -37,7 +39,7 @@ public class ScoresActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.scores);
-		url = de.damps.fantasy.HomeActivity.URL + "/weekly";
+		url = fantasyApp.HomeActivity.URL + "/weekly";
 		constructStandings();
 
 		new GetScores().execute(url);
@@ -88,7 +90,7 @@ public class ScoresActivity extends Activity {
 				if (y_init) {
 					int gd = sp_gd.getSelectedItemPosition() + 1;
 					String year = (String) parent.getItemAtPosition(position);
-					url = de.damps.fantasy.HomeActivity.URL + "/weekly/" + year
+					url = fantasyApp.HomeActivity.URL + "/weekly/" + year
 							+ "/" + gd;
 					new GetScores().execute(url);
 				}
@@ -116,7 +118,7 @@ public class ScoresActivity extends Activity {
 					int position, long id) {
 				if (gd_init) {
 					String year = (String) sp_ye.getSelectedItem();
-					url = de.damps.fantasy.HomeActivity.URL + "/weekly/" + year
+					url = fantasyApp.HomeActivity.URL + "/weekly/" + year
 							+ "/" + (position + 1);
 					new GetScores().execute(url);
 				}
@@ -132,7 +134,7 @@ public class ScoresActivity extends Activity {
 
 	private void constructStandings() {
 		tbl = (TableLayout) findViewById(R.id.tl_scores);
-		for (int i = 0; i < de.damps.fantasy.HomeActivity.NR; i++) {
+		for (int i = 0; i < fantasyApp.HomeActivity.NR; i++) {
 			TableRow newRow = new TableRow(getApplicationContext());
 			TextView pos = new TextView(getApplicationContext());
 			TextView team = new TextView(getApplicationContext());
@@ -155,7 +157,7 @@ public class ScoresActivity extends Activity {
 	}
 
 	private void fillTable() {
-		for (int i = 0; i < de.damps.fantasy.HomeActivity.NR; i++) {
+		for (int i = 0; i < fantasyApp.HomeActivity.NR; i++) {
 			((TextView) ((TableRow) tbl.getChildAt(i)).getVirtualChildAt(0))
 					.setText("");
 			((TextView) ((TableRow) tbl.getChildAt(i)).getVirtualChildAt(1))

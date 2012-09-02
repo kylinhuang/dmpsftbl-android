@@ -1,4 +1,4 @@
-package de.damps.fantasy;
+package fantasyApp;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -15,6 +15,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import de.damps.fantasy.R;
 
 import android.app.Activity;
 import android.app.Dialog;

@@ -1,4 +1,4 @@
-package de.damps.fantasy;
+package fantasyApp;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -11,6 +11,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+
+import de.damps.fantasy.R;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -41,8 +43,8 @@ public class NewPostActivity extends Activity {
 
 		id = extra.getString("ID");
 		title = extra.getString("title");
-		SharedPreferences pref = de.damps.fantasy.HomeActivity.preferences;
-		url = de.damps.fantasy.HomeActivity.URL + "/postforum";
+		SharedPreferences pref = fantasyApp.HomeActivity.preferences;
+		url = fantasyApp.HomeActivity.URL + "/postforum";
 		token = pref.getString("token", "");
 		hash = pref.getString("hash", "");
 	}

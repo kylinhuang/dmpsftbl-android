@@ -1,4 +1,4 @@
-package de.damps.fantasy;
+package fantasyApp;
 
 import org.json.JSONException;
 import org.json.JSONObject;

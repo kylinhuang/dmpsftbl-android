@@ -1,4 +1,4 @@
-package de.damps.fantasy;
+package fantasyApp;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -13,6 +13,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+
+import de.damps.fantasy.R;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -44,8 +46,8 @@ public class NewThreadActivity extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.newthread);
-		SharedPreferences pref = de.damps.fantasy.HomeActivity.preferences;
-		url = de.damps.fantasy.HomeActivity.URL + "/openthread";
+		SharedPreferences pref = fantasyApp.HomeActivity.preferences;
+		url = fantasyApp.HomeActivity.URL + "/openthread";
 		token = pref.getString("token", "");
 		hash = pref.getString("hash", "");
 	}
