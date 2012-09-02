@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -58,14 +54,7 @@ public class InjuriesActivity extends Activity {
 	}
 
 	private void parse() {
-		Json data = new Json(url);
-		JSONObject jo = data.data;
-		JSONArray joa = null;
-		try {
-			joa = jo.getJSONArray("News");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		//Json data = new Json(url);
 
 	}
 
