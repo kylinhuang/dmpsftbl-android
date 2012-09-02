@@ -62,6 +62,7 @@ public class ForumActivity extends ListActivity {
 
 	}
 
+	//holt die Daten und parst sie
 	private void parse() {
 		Json data = new Json(url);
 		JSONObject jo = data.data;
