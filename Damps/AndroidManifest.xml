@@ -5,7 +5,9 @@
     android:versionName="0.1" >
 
     <uses-sdk
-        android:minSdkVersion="7" />
+        android:minSdkVersion="7"
+        android:targetSdkVersion="16"
+        android:maxSdkVersion="16" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 
