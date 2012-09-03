@@ -7,17 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ThreadAdapter extends ArrayAdapter<MyThread> {
+public class MessageAdapter extends ArrayAdapter<Message> {
 
-	private ArrayList<MyThread> threads;
+	private ArrayList<Message> messages;
 
 	// Initialize adapter
-	public ThreadAdapter(Context context, int resource,
-			ArrayList<MyThread> items) {
+	public MessageAdapter(Context context, int resource,
+			ArrayList<Message> items) {
 		super(context, resource, items);
-		threads = items;
+		messages = items;
 
 	}
 
@@ -29,17 +30,23 @@ public class ThreadAdapter extends ArrayAdapter<MyThread> {
 		if (v == null) {
 			LayoutInflater vi = (LayoutInflater) this.getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			v = vi.inflate(R.layout.threaditem, null);
+			v = vi.inflate(R.layout.messageitem, null);
 		}
 
-		MyThread th = threads.get(position);
+		Message m = messages.get(position);
 		// Get the text boxes from the listitem.xml file
-		TextView title = (TextView) v.findViewById(R.id.tv_for_title);
-		TextView modified = (TextView) v.findViewById(R.id.tv_for_modi);
+		TextView title = (TextView) v.findViewById(R.id.tv_mes_title);
+		TextView sender = (TextView) v.findViewById(R.id.tv_mes_sender);
+		ImageView image = (ImageView) v.findViewById(R.id.iv_mes_read);
 
 		// Assign the appropriate data from our alert object above
-		title.setText(th.title);
-		modified.setText("Letzter Beitrag: " + th.last + " " + th.modified);
+		title.setText(m.title);
+		sender.setText(m.sender);
+		if(m.read){
+			image.setImageResource(R.drawable.content_read);
+		}else{
+			image.setImageResource(R.drawable.content_unread);
+		}
 		return v;
 	}
 

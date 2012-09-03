@@ -68,9 +68,11 @@
 
     <!-- Headlines -->
     <string name="posten">Posten</string>
+    
     <!-- Messages -->
     <string name="send_message">Send Message</string>
     <string name="new_message">New Message</string>
+    <string name="pic_read">Read</string>
 
     <!-- Options -->
     <string name="nflteam">NFL</string>

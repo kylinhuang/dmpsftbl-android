@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 public class MyThread {
 
-	public String id, title, created, modified;
+	public String id, title, created, modified, last;
 	public boolean members;
 
 	public MyThread(JSONObject jsonObject) {
@@ -16,6 +16,7 @@ public class MyThread {
 			members = jo.getBoolean("members");
 			created = parseDate(jo.getString("created"));
 			modified = parseDate(jo.getString("modified"));
+			last = jo.getJSONObject("lastpost").getJSONObject("User").getString("username");
 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

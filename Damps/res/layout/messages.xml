@@ -26,10 +26,18 @@
                 android:id="@+id/pb_mes_bar1"
                 style="@style/progressbar"
                 android:layout_alignParentRight="false"
-                android:layout_toLeftOf="@+id/iv_mes_accept" />
+                android:layout_toLeftOf="@+id/iv_mes_refresh" />
+            
+            <ImageView
+            android:id="@+id/iv_mes_refresh"
+            style="@style/pic_title_mid"
+            android:layout_toLeftOf="@+id/iv_mes_new"
+            android:contentDescription="@string/pic_ref"
+            android:onClick="refresh"
+            android:src="@drawable/refresh" />
 
             <ImageView
-                android:id="@+id/iv_mes_accept"
+                android:id="@+id/iv_mes_new"
                 style="@style/pic_title_right"
                 android:contentDescription="@string/pic_new"
                 android:onClick="sendMessage"
