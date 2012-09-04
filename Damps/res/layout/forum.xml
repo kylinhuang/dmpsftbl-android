@@ -4,34 +4,35 @@
     android:layout_height="wrap_content" >
 
     <RelativeLayout
-        android:id="@+id/rl_for_layout1"
+        android:id="@+id/rl_forum_layout1"
         style="@style/titlebar" >
 
         <ImageView
-            android:id="@+id/iv_for_back"
+            android:id="@+id/iv_forum_back"
             style="@style/pic_title_left" />
 
         <TextView
+            android:id="@+id/tv_forum_title"
             style="@style/title"
-            android:layout_toRightOf="@+id/iv_for_back"
+            android:layout_toRightOf="@+id/iv_forum_back"
             android:text="@string/forum" />
 
         <ProgressBar
-            android:id="@+id/pb_for_bar1"
+            android:id="@+id/pb_forum_bar1"
             style="@style/progressbar"
             android:layout_alignParentRight="false"
-            android:layout_toLeftOf="@+id/iv_for_refresh" />
+            android:layout_toLeftOf="@+id/iv_forum_refresh" />
 
         <ImageView
-            android:id="@+id/iv_for_refresh"
+            android:id="@+id/iv_forum_refresh"
             style="@style/pic_title_mid"
-            android:layout_toLeftOf="@+id/iv_for_new"
+            android:layout_toLeftOf="@+id/iv_forum_new"
             android:contentDescription="@string/pic_ref"
             android:onClick="refresh"
             android:src="@drawable/refresh" />
 
         <ImageView
-            android:id="@+id/iv_for_new"
+            android:id="@+id/iv_forum_new"
             style="@style/pic_title_right"
             android:contentDescription="@string/pic_new"
             android:onClick="newThread"
@@ -42,7 +43,7 @@
         android:id="@+id/android:list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_for_layout1" >
+        android:layout_below="@+id/rl_forum_layout1" >
     </ListView>
 
 </RelativeLayout>

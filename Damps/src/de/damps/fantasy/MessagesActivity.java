@@ -45,8 +45,6 @@ public class MessagesActivity extends TabActivity {
 	}
 	
 	public void refresh(View view){
-		tabHost.removeAllViews();
-		new GetMessages().execute();
 	}
 
 	private class GetMessages extends AsyncTask<Void, Void, Void> {

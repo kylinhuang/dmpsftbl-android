@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -40,11 +41,19 @@ public class ThreadActivity extends ListActivity {
 		chron = de.damps.fantasy.HomeActivity.preferences.getBoolean("chron",
 				false);
 
-		titleview = (TextView) findViewById(R.id.tv_thr_title);
-		titleview.setText(title);
-
+		
+		inititaliseApp();
 		setLongClickListener();
 		new GetThread().execute(url);
+
+	}
+	
+	private void inititaliseApp() {
+		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
+		((TextView) findViewById(R.id.tv_thread_title)).setTypeface(font);
+		
+		titleview = (TextView) findViewById(R.id.tv_thread_subject);
+		titleview.setText(title);
 
 	}
 
@@ -83,7 +92,7 @@ public class ThreadActivity extends ListActivity {
 
 		@Override
 		protected void onPreExecute() {
-			pb = (ProgressBar) findViewById(R.id.pb_thr_bar1);
+			pb = (ProgressBar) findViewById(R.id.pb_thread_bar1);
 			pb.setVisibility(View.VISIBLE);
 		};
 

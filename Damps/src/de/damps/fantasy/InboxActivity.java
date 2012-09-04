@@ -2,24 +2,18 @@ package de.damps.fantasy;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.ResponseCache;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -49,21 +43,32 @@ public class InboxActivity extends ListActivity {
 	// Anzeigen der Threads
 	private void showThreads() {
 		messageadapter = new MessageAdapter(this, R.layout.threaditem, messages);
-
 		setListAdapter(messageadapter);
 	}
 	
+	//back from reading
+	protected void onActivityResult(int requestCode, int resultCode,
+            Intent data) {
+        if (requestCode == 1) {
+        	int p = data.getExtras().getInt("pos");
+        	//ListView lv = getListView();
+        	messages.get(p).read[0]=true;
+        	
+        	messageadapter.notifyDataSetChanged();
+
+        }
+    }
+	
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		ImageView iv = (ImageView)findViewById(R.id.iv_mes_read);
-		iv.setImageResource(R.drawable.content_read);
 		new ReadMessage().execute();
 		// creates Intent and fills with local Data
 		Intent intent = new Intent(getApplicationContext(),
 				MessageActivity.class);
 		message = messages.get(position);
 		intent.putExtra("message", message);
-		startActivity(intent);
+		intent.putExtra("pos",position);
+		startActivityForResult(intent, 1);
 	}
 	
 	private class ReadMessage extends AsyncTask<Void, Void, Void> {

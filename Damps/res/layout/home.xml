@@ -8,6 +8,7 @@
         style="@style/titlebar" >
 
         <TextView
+            android:id="@+id/tv_hom_title"
             style="@style/title"
             android:text="@string/main" />
 

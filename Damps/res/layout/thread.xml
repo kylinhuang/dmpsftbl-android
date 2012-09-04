@@ -4,7 +4,7 @@
     android:layout_height="wrap_content" >
 
     <RelativeLayout
-        android:id="@+id/rl_thr_layout1"
+        android:id="@+id/rl_thread_layout1"
         style="@style/titlebar" >
 
         <ImageView
@@ -12,37 +12,43 @@
             style="@style/pic_title_left" />
 
         <TextView
+            android:id="@+id/tv_thread_title"
             style="@style/title"
             android:layout_toRightOf="@+id/iv_thr_back"
-            android:id="@+id/tv_thr_title" />
+            android:text="@string/forum" />
 
         <ProgressBar
-            android:id="@+id/pb_thr_bar1"
+            android:id="@+id/pb_thread_bar1"
             style="@style/progressbar"
             android:layout_alignParentRight="false"
-            android:layout_toLeftOf="@+id/iv_thr_refresh" />
+            android:layout_toLeftOf="@+id/iv_thread_refresh" />
 
         <ImageView
-            android:id="@+id/iv_thr_refresh"
+            android:id="@+id/iv_thread_refresh"
             style="@style/pic_title_mid"
-            android:layout_toLeftOf="@+id/iv_thr_reply"
+            android:layout_toLeftOf="@+id/iv_thread_reply"
             android:contentDescription="@string/pic_ref"
             android:onClick="refresh"
             android:src="@drawable/refresh" />
 
         <ImageView
-            android:id="@+id/iv_thr_reply"
+            android:id="@+id/iv_thread_reply"
             style="@style/pic_title_right"
             android:contentDescription="@string/pic_rep"
             android:onClick="reply"
             android:src="@drawable/edit" />
     </RelativeLayout>
 
+    <TextView
+            android:id="@+id/tv_thread_subject"
+            style="@style/text_title"
+             android:layout_below="@+id/rl_thread_layout1" />
+    
     <ListView
         android:id="@+id/android:list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/rl_thr_layout1"
+        android:layout_below="@+id/tv_thread_subject"
         android:longClickable="true" >
     </ListView>
 

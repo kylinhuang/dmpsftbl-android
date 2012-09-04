@@ -15,12 +15,14 @@ import org.apache.http.message.BasicNameValuePair;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class NewPostActivity extends Activity {
@@ -39,7 +41,7 @@ public class NewPostActivity extends Activity {
 		setContentView(R.layout.new_post);
 		final Bundle extra = getIntent().getExtras();
 
-		msg = (EditText) findViewById(R.id.et_newp_msg);
+		msg = (EditText) findViewById(R.id.et_newpost_msg);
 
 		id = extra.getString("ID");
 		title = extra.getString("title");
@@ -51,6 +53,14 @@ public class NewPostActivity extends Activity {
 		if (extra.containsKey("quote")) {
 			msg.setText(extra.getString("quote"));
 		}
+		
+		inititaliseApp();
+	}
+	
+	private void inititaliseApp() {
+		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
+		((TextView) findViewById(R.id.tv_newthread_title1)).setTypeface(font);
+
 	}
 
 	public void post(View view) {
@@ -76,7 +86,7 @@ public class NewPostActivity extends Activity {
 
 		@Override
 		protected void onPreExecute() {
-			pb = (ProgressBar) findViewById(R.id.pb_newp_bar1);
+			pb = (ProgressBar) findViewById(R.id.pb_newpost_bar1);
 			pb.setVisibility(View.VISIBLE);
 		};
 

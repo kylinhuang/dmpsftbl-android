@@ -30,10 +30,17 @@ public class Message implements Parcelable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(((Integer)id).toString().equals(pref.getString("id", "x"))){
+		if (((Integer) id).toString().equals(pref.getString("id", "x"))) {
 			read[1] = true;
 		}
-		
+
+	}
+
+	public Message(String t, String m, String to) {
+		read[1] = true;
+		title = t;
+		message = m;
+		this.to = to;
 	}
 
 	public Message(Parcel in) {

@@ -12,9 +12,9 @@
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:background">@drawable/button</item>
+        <item name="android:background">@drawable/button_selector</item>
         <item name="android:textColor">@color/weis</item>
-        <item name="android:textSize">23dp</item>
+        <item name="android:textSize">25dp</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:layout_margin">4dp</item>
     </style>

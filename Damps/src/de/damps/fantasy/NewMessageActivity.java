@@ -15,6 +15,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ import android.widget.Toast;
 
 public class NewMessageActivity extends Activity {
 
-    private EditText title;
+	private EditText title;
 	private EditText msg;
 	private String titletxt;
 	private String msgtxt;
@@ -40,34 +41,35 @@ public class NewMessageActivity extends Activity {
 	private String receiver;
 
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_message);
-        url = de.damps.fantasy.HomeActivity.URL + "/sendmessage";
-        SharedPreferences pref = de.damps.fantasy.HomeActivity.preferences;
-        token = pref.getString("token", "");
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.new_message);
+		url = de.damps.fantasy.HomeActivity.URL + "/sendmessage";
+		SharedPreferences pref = de.damps.fantasy.HomeActivity.preferences;
+		token = pref.getString("token", "");
 		hash = pref.getString("hash", "");
 		initializeSpinner();
-    }
-    
-    public void sendMessage(View view){
-		title = (EditText)findViewById(R.id.et_newm_title);
-		msg = (EditText)findViewById(R.id.et_newm_msg);
+	}
+
+	public void sendMessage(View view) {
+		title = (EditText) findViewById(R.id.et_newm_title);
+		msg = (EditText) findViewById(R.id.et_newm_msg);
 		receiver = spinner.getSelectedItem().toString();
-		
+
 		titletxt = title.getText().toString();
 		msgtxt = msg.getText().toString();
-		
-		if(titletxt.equals("") || msgtxt.equals("")){
-			Toast toast = Toast.makeText(getApplicationContext(), "Bitte Titel und Nachricht eingeben.", Toast.LENGTH_LONG);
+
+		if (titletxt.equals("") || msgtxt.equals("")) {
+			Toast toast = Toast.makeText(getApplicationContext(),
+					"Bitte Titel und Nachricht eingeben.", Toast.LENGTH_LONG);
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
-		}else{
-			new Message().execute(url);
+		} else {
+			new SendMessage().execute(url);
 		}
 	}
-    
-    private void initializeSpinner() {
+
+	private void initializeSpinner() {
 		spinner = (Spinner) findViewById(R.id.spi_mewm_dest);
 		adapter = ArrayAdapter.createFromResource(this, R.array.users,
 				android.R.layout.simple_spinner_item);
@@ -75,42 +77,62 @@ public class NewMessageActivity extends Activity {
 		spinner.setAdapter(adapter);
 
 	}
-    
-    public void back(View view){
+
+	public void back(View view) {
 		finish();
 	}
-    
-    private class Message extends AsyncTask<String, Void, Void> {
+
+	private class SendMessage extends AsyncTask<String, Void, Void> {
 		ProgressBar pb;
+		String response = null;
 
 		@Override
 		protected void onPreExecute() {
-			pb = (ProgressBar) findViewById(R.id.pb_newt_bar1);
+			pb = (ProgressBar) findViewById(R.id.pb_newm_bar1);
 			pb.setVisibility(View.VISIBLE);
 		};
 
 		@Override
 		protected Void doInBackground(String... params) {
-			post();
+			response = post();
 			return null;
 		}
 
 		@Override
 		protected void onPostExecute(Void v) {
+			back(response);
 			pb.setVisibility(View.INVISIBLE);
+
+		}
+
+		private void back(String response2) {
+			if (!response.equals("false")) {
+				Message m = new Message(titletxt, msgtxt, receiver);
+				Intent intent = new Intent();
+				intent.putExtra("message", m);
+				setResult(2, intent);
+				finish();
+			} else {
+				Toast toast = Toast.makeText(getApplicationContext(),
+						"Fehler beim senden",
+						Toast.LENGTH_LONG);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();
+			}
+
 		}
 
 	}
-    
-protected String post() {
-		
+
+	protected String post() {
+
 		final DefaultHttpClient client = new DefaultHttpClient();
 		final HttpPost httppost = new HttpPost(url);
 		final List<NameValuePair> postPara = new ArrayList<NameValuePair>();
 
 		postPara.add(new BasicNameValuePair("token", token));
 		postPara.add(new BasicNameValuePair("hash", hash));
-		postPara.add(new BasicNameValuePair("to", receiver));
+		postPara.add(new BasicNameValuePair("to", "248"));
 		postPara.add(new BasicNameValuePair("subject", titletxt));
 		postPara.add(new BasicNameValuePair("content", msgtxt));
 

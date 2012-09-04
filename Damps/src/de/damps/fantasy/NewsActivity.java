@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -28,11 +29,17 @@ public class NewsActivity extends Activity {
 		url = de.damps.fantasy.HomeActivity.URL + "/story/" + news_id;
 		titleView = (TextView) findViewById(R.id.tv_news_title);
 		newsView = (TextView) findViewById(R.id.tv_news_news);
-
+		inititaliseApp();
 		new GetNews().execute(url);
 	}
-	
-	public void back(View view){
+
+	private void inititaliseApp() {
+		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
+		((TextView) findViewById(R.id.tv_news_title1)).setTypeface(font);
+
+	}
+
+	public void back(View view) {
 		finish();
 	}
 

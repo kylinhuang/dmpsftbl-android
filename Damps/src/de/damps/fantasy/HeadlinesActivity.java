@@ -6,15 +6,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-
 import android.app.ListActivity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class HeadlinesActivity extends ListActivity {
 
@@ -25,9 +25,22 @@ public class HeadlinesActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.headlines);
-		String number = de.damps.fantasy.HomeActivity.preferences.getString("news", "25");
+		String number = de.damps.fantasy.HomeActivity.preferences.getString(
+				"news", "25");
 		url = de.damps.fantasy.HomeActivity.URL + "/news/" + number;
 
+		inititaliseApp();
+		new GetHeadlines().execute(url);
+	}
+
+	private void inititaliseApp() {
+		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
+		((TextView) findViewById(R.id.tv_hea_title)).setTypeface(font);
+
+	}
+
+	// News refreshen
+	public void refresh(View view) {
 		new GetHeadlines().execute(url);
 	}
 
@@ -53,8 +66,8 @@ public class HeadlinesActivity extends ListActivity {
 		}
 
 	}
-	
-	public void back(View view){
+
+	public void back(View view) {
 		finish();
 	}
 
@@ -68,15 +81,15 @@ public class HeadlinesActivity extends ListActivity {
 				News t = new News(joa.getJSONObject(i));
 				headlines.add(t);
 
-		}
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
 
 	private void showHeadlines() {
-		final NewsAdapter titleAdapter = new NewsAdapter(
-				this, android.R.layout.simple_list_item_1, headlines);
+		final NewsAdapter titleAdapter = new NewsAdapter(this,
+				android.R.layout.simple_list_item_1, headlines);
 		setListAdapter(titleAdapter);
 	}
 

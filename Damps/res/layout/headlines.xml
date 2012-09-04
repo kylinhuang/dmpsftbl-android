@@ -6,19 +6,29 @@
     <RelativeLayout
         android:id="@+id/rl_hea_layout1"
         style="@style/titlebar" >
-        
+
         <ImageView
             android:id="@+id/iv_hea_back"
             style="@style/pic_title_left" />
 
         <TextView
+            android:id="@+id/tv_hea_title"
             style="@style/title"
             android:layout_toRightOf="@+id/iv_hea_back"
             android:text="@string/News" />
 
         <ProgressBar
             android:id="@+id/pb_hea_bar1"
-            style="@style/progressbar" />
+            style="@style/progressbar"
+            android:layout_alignParentRight="false"
+            android:layout_toLeftOf="@+id/iv_hea_refresh" />
+
+        <ImageView
+            android:id="@+id/iv_hea_refresh"
+            style="@style/pic_title_right"
+            android:contentDescription="@string/pic_ref"
+            android:onClick="refresh"
+            android:src="@drawable/refresh" />
     </RelativeLayout>
 
     <ListView

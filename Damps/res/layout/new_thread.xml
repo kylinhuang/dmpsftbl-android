@@ -4,26 +4,27 @@
     android:layout_height="match_parent" >
 
     <RelativeLayout
-        android:id="@+id/rl_newt_layout1"
+        android:id="@+id/rl_newthread_layout1"
         style="@style/titlebar" >
 
         <ImageView
-            android:id="@+id/iv_newt_back"
+            android:id="@+id/iv_newthread_back"
             style="@style/pic_title_left" />
 
         <TextView
+            android:id="@+id/tv_newthread_title1"
             style="@style/title"
-            android:layout_toRightOf="@+id/iv_newt_back"
+            android:layout_toRightOf="@+id/iv_newthread_back"
             android:text="@string/new_thread" />
 
         <ProgressBar
-            android:id="@+id/pb_newt_bar1"
+            android:id="@+id/pb_newthread_bar1"
             style="@style/progressbar"
             android:layout_alignParentRight="false"
-            android:layout_toLeftOf="@+id/iv_newt_accept" />
+            android:layout_toLeftOf="@+id/iv_newthread_accept" />
 
         <ImageView
-            android:id="@+id/iv_newt_accept"
+            android:id="@+id/iv_newthread_accept"
             style="@style/pic_title_right"
             android:contentDescription="@string/pic_acc"
             android:onClick="postThread"
@@ -31,52 +32,52 @@
     </RelativeLayout>
 
     <CheckBox
-        android:id="@+id/cb_newt_sticky"
+        android:id="@+id/cb_newthread_sticky"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/rl_newt_layout1"
+        android:layout_below="@+id/rl_newthread_layout1"
         android:text="@string/sticky"
         android:textSize="20dp" />
 
     <CheckBox
-        android:id="@+id/cb_newt_member"
+        android:id="@+id/cb_newthread_member"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_newt_layout1"
-        android:layout_toRightOf="@+id/cb_newt_sticky"
+        android:layout_below="@+id/rl_newthread_layout1"
+        android:layout_toRightOf="@+id/cb_newthread_sticky"
         android:text="@string/member"
         android:textSize="20dp" />
 
     <TextView
-        android:id="@+id/tv_newt_title"
+        android:id="@+id/tv_newthread_title"
         style="@style/desc_edittext"
-        android:layout_below="@+id/cb_newt_sticky"
-        android:text="@string/title"
-        android:paddingLeft="5dp" />
+        android:layout_below="@+id/cb_newthread_sticky"
+        android:paddingLeft="5dp"
+        android:text="@string/title" />
 
     <EditText
-        android:id="@+id/et_newt_title"
+        android:id="@+id/et_newthread_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_newt_title"
+        android:layout_below="@+id/tv_newthread_title"
         android:inputType="text" >
 
         <requestFocus />
     </EditText>
 
     <TextView
-        android:id="@+id/tv_newt_msg"
+        android:id="@+id/tv_newthread_msg"
         style="@style/desc_edittext"
-        android:layout_below="@+id/et_newt_title"
-        android:text="@string/message"
-        android:paddingLeft="5dp" />
+        android:layout_below="@+id/et_newthread_title"
+        android:paddingLeft="5dp"
+        android:text="@string/message" />
 
     <EditText
-        android:id="@+id/et_newt_msg"
+        android:id="@+id/et_newthread_msg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tv_newt_msg"
+        android:layout_below="@+id/tv_newthread_msg"
         android:inputType="textMultiLine" />
 
 </RelativeLayout>

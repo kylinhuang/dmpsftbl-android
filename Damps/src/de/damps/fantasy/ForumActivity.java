@@ -9,12 +9,14 @@ import org.json.JSONObject;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ForumActivity extends ListActivity {
@@ -30,8 +32,14 @@ public class ForumActivity extends ListActivity {
 		String number = de.damps.fantasy.HomeActivity.preferences.getString(
 				"threads", "25");
 		url = de.damps.fantasy.HomeActivity.URL + "/forum/" + number;
-
+inititaliseApp();
 		new GetThreads().execute(url);
+	}
+	
+	private void inititaliseApp() {
+		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
+		((TextView) findViewById(R.id.tv_forum_title)).setTypeface(font);
+
 	}
 	
 	//Threads refreshen
@@ -48,7 +56,7 @@ public class ForumActivity extends ListActivity {
 
 		@Override
 		protected void onPreExecute() {
-			pb = (ProgressBar) findViewById(R.id.pb_for_bar1);
+			pb = (ProgressBar) findViewById(R.id.pb_forum_bar1);
 			pb.setVisibility(View.VISIBLE);
 		};
 

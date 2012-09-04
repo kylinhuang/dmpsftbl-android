@@ -17,6 +17,7 @@ import org.apache.http.util.EntityUtils;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -24,6 +25,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class NewThreadActivity extends Activity{
@@ -48,18 +50,26 @@ public class NewThreadActivity extends Activity{
 		SharedPreferences pref = de.damps.fantasy.HomeActivity.preferences;
 		token = pref.getString("token", "");
 		hash = pref.getString("hash", "");
+		
+		inititaliseApp();
 	}
 	
 	public void back(View view){
 		finish();
 	}
 	
+	private void inititaliseApp() {
+		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
+		((TextView) findViewById(R.id.tv_newthread_title1)).setTypeface(font);
+
+	}
+	
 	//posts the new thread
 	public void postThread(View view){
-		title = (EditText)findViewById(R.id.et_newt_title);
-		msg = (EditText)findViewById(R.id.et_newt_msg);
-		sticky = (CheckBox)findViewById(R.id.cb_newt_sticky);
-		member = (CheckBox)findViewById(R.id.cb_newt_member);
+		title = (EditText)findViewById(R.id.et_newthread_title);
+		msg = (EditText)findViewById(R.id.et_newthread_msg);
+		sticky = (CheckBox)findViewById(R.id.cb_newthread_sticky);
+		member = (CheckBox)findViewById(R.id.cb_newthread_member);
 		
 		titletxt = title.getText().toString();
 		msgtxt = msg.getText().toString();
@@ -85,7 +95,7 @@ public class NewThreadActivity extends Activity{
 
 		@Override
 		protected void onPreExecute() {
-			pb = (ProgressBar) findViewById(R.id.pb_newt_bar1);
+			pb = (ProgressBar) findViewById(R.id.pb_newthread_bar1);
 			pb.setVisibility(View.VISIBLE);
 		};
 

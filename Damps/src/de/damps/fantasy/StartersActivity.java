@@ -24,7 +24,7 @@ public class StartersActivity extends Activity {
 	private String url;
 	private boolean y_init = false,gd_init = false,initialised = false;
 	private Spinner sp_ye, sp_gd;
-	private Team[] starters = new Team[14];
+	private Team[] starters;
 	private int year;
 	private int gd;
 	private TableLayout tbl;
@@ -33,7 +33,7 @@ public class StartersActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.starters);
-		url = de.damps.fantasy.HomeActivity.URL + "/starter/2011/17";
+		url = de.damps.fantasy.HomeActivity.URL + "/starter/";
 		constructStarters();
 
 		new GetStarters().execute(url);
@@ -75,7 +75,9 @@ public class StartersActivity extends Activity {
 		JSONObject jo = data.data;
 		JSONArray joa = null;
 		try {
+			
 			joa = jo.getJSONArray("Starter");
+			starters = new Team[joa.length()];
 			year = jo.getJSONArray("Starter").getJSONObject(0)
 					.getJSONObject("Teamstarter").getInt("season");
 			gd = jo.getJSONArray("Starter").getJSONObject(0)
@@ -85,7 +87,7 @@ public class StartersActivity extends Activity {
 			e.printStackTrace();
 		}
 
-		for (int i = 0; i < 14; i++) {
+		for (int i = 0; i < joa.length(); i++) {
 			try {
 				starters[i] = new Team(joa.getJSONObject(i));
 			} catch (JSONException e) {
@@ -155,7 +157,7 @@ public class StartersActivity extends Activity {
 	}
 
 	public void fillTable() {
-		for (int i = 0; i < 14; i++) {
+		for (int i = 0; i < starters.length; i++) {
 			TextView text = (TextView) ((TableRow) tbl.getChildAt(i * 10))
 					.getVirtualChildAt(0);
 			text.setText((starters[i].team));

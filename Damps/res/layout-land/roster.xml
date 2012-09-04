@@ -21,6 +21,15 @@
             style="@style/progressbar" />
     </RelativeLayout>
 
+     <LinearLayout
+         android:id="@+id/ll_ros_table1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tl_ros_table1"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="26dp" >
+    </LinearLayout>
+    <!--
     <TableLayout
         android:id="@+id/tl_ros_table1"
         android:layout_width="fill_parent"
@@ -61,7 +70,122 @@
 
             <TextView
                 style="@style/column"
-                android:text="@string/gameday" />
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:text="@string/gd1" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:text="@string/gd2" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:text="@string/gd3" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:text="@string/gd4" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:text="@string/gd5" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:text="@string/gd6" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:text="@string/gd7" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:text="@string/gd8" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:text="@string/gd9" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:text="@string/gd10" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:text="@string/gd11" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:text="@string/gd12" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:text="@string/gd13" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:text="@string/gd14" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:text="@string/gd15" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:text="@string/gd16" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:text="@string/gd17" />
 
             <TextView
                 style="@style/column"
@@ -71,6 +195,7 @@
                 android:text="@string/score" />
         </TableRow>
     </TableLayout>
+    -->
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -85,5 +210,7 @@
             android:stretchColumns="2" >
         </TableLayout>
     </ScrollView>
+
+   
 
 </RelativeLayout>

@@ -12,6 +12,7 @@
             style="@style/pic_title_left" />
 
         <TextView
+            android:id="@+id/tv_news_title1"
             style="@style/title"
             android:layout_toRightOf="@+id/iv_news_back"
             android:text="@string/News" />

@@ -28,6 +28,19 @@ public class OutboxActivity extends ListActivity {
 		setListAdapter(messageadapter);
 	}
 	
+	//back from reading
+		protected void onActivityResult(int requestCode, int resultCode,
+	            Intent data) {
+	        if (requestCode == 2) {
+	        	Message m = data.getExtras().getParcelable("Message");
+	        	//ListView lv = getListView();
+	        	messages.add(0, m);
+	        	
+	        	messageadapter.notifyDataSetChanged();
+
+	        }
+	    }
+	
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 

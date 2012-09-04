@@ -33,6 +33,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
 
@@ -82,8 +83,7 @@ public class HomeActivity extends Activity {
 		
 		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
 		
-		Button news = (Button)findViewById(R.id.bu_hom_news);
-		
+		((Button)findViewById(R.id.bu_hom_news)).setTypeface(font);
 		((Button)findViewById(R.id.bu_hom_forum)).setTypeface(font);
 		((Button)findViewById(R.id.bu_hom_scores)).setTypeface(font);
 		((Button)findViewById(R.id.bu_hom_standings)).setTypeface(font);
@@ -91,8 +91,7 @@ public class HomeActivity extends Activity {
 		((Button)findViewById(R.id.bu_hom_starters)).setTypeface(font);
 		((Button)findViewById(R.id.bu_hom_team)).setTypeface(font);
 		((Button)findViewById(R.id.bu_hom_nachrichten)).setTypeface(font);
-		
-		news.setTypeface(font);
+		((TextView) findViewById(R.id.tv_hom_title)).setTypeface(font);
 
 	}
 
