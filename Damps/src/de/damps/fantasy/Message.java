@@ -21,7 +21,7 @@ public class Message implements Parcelable {
 			JSONObject to = jsonObject.getJSONObject("To");
 			title = message.getString("subject");
 			this.message = message.getString("content");
-			id = message.getInt("id");
+			id = from.getInt("id");
 			this.from = from.getString("username");
 			this.to = to.getString("username");
 			read[0] = message.getBoolean("read");

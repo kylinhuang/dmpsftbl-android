@@ -146,6 +146,8 @@
         <Button
             android:id="@+id/bu_hom_nachrichten"
             style="@style/button"
+            android:background="@drawable/button_inactive"
+            android:enabled="false"
             android:onClick="startMessages"
             android:text="@string/messages" />
     </LinearLayout>

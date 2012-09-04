@@ -8,21 +8,21 @@
         style="@style/titlebar" >
 
         <ImageView
-            android:id="@+id/iv_ros_back"
+            android:id="@+id/iv_roster_back"
             style="@style/pic_title_left" />
 
         <TextView
-            android:id="@+id/tv_ros_view1"
+            android:id="@+id/tv_roster_title"
             style="@style/title"
-            android:layout_toRightOf="@+id/iv_ros_back" />
+            android:layout_toRightOf="@+id/iv_roster_back" />
 
         <ProgressBar
-            android:id="@+id/pb_ros_bar1"
+            android:id="@+id/pb_roster_bar1"
             style="@style/progressbar" />
     </RelativeLayout>
 
     <TableLayout
-        android:id="@+id/tl_ros_table1"
+        android:id="@+id/tl_roster_table1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_ros_layout1"
@@ -71,10 +71,10 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tl_ros_table1" >
+        android:layout_below="@+id/tl_roster_table1" >
 
         <TableLayout
-            android:id="@+id/tl_rostertable"
+            android:id="@+id/tl_roster_roster"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="3dp"
