@@ -25,7 +25,7 @@
             android:contentDescription="@string/pic_log"
             android:onClick="log" />
     </RelativeLayout>
-        
+
     <ImageView
         android:id="@+id/iv_hom_view1"
         android:layout_width="wrap_content"
@@ -44,17 +44,13 @@
 
         <Button
             android:id="@+id/bu_hom_news"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/button"
             android:onClick="startNews"
             android:text="@string/news" />
 
         <Button
             android:id="@+id/bu_hom_forum"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/button"
             android:onClick="startForum"
             android:text="@string/forum" />
     </LinearLayout>
@@ -68,17 +64,13 @@
 
         <Button
             android:id="@+id/bu_hom_scores"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/button"
             android:onClick="startScores"
             android:text="@string/scores" />
 
         <Button
             android:id="@+id/bu_hom_standings"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/button"
             android:onClick="startStandings"
             android:text="@string/standings" />
     </LinearLayout>
@@ -92,17 +84,13 @@
 
         <Button
             android:id="@+id/bu_hom_roster"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/button"
             android:onClick="startRoster"
             android:text="@string/roster" />
 
         <Button
             android:id="@+id/bu_hom_starters"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/button"
             android:onClick="startStarters"
             android:text="@string/starters" />
     </LinearLayout>
@@ -129,12 +117,13 @@
             android:layout_weight="1"
             android:onClick="startStarters"
             android:text="@string/starters" />
-    </LinearLayout>
+    </LinearLayout>
     -->
 
     <TextView
         android:id="@+id/tv_hom_member"
         style="@style/desc_edittext"
+        android:textStyle="bold"
         android:layout_below="@+id/ll_hom_layout3"
         android:text="@string/membersection" />
 
@@ -147,18 +136,15 @@
 
         <Button
             android:id="@+id/bu_hom_team"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/button"
+            android:background="@drawable/button_inactive"
+            android:enabled="false"
             android:onClick="startTeammanagement"
-            android:text="@string/teammanagement"
-            android:enabled="false" />
+            android:text="@string/teammanagement" />
 
         <Button
             android:id="@+id/bu_hom_nachrichten"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            style="@style/button"
             android:onClick="startMessages"
             android:text="@string/messages" />
     </LinearLayout>

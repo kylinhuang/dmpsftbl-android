@@ -3,39 +3,71 @@ package de.damps.fantasy;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Message implements Parcelable{
+public class Message implements Parcelable {
 
-	public String title, message, sender;
-	public boolean read, inbound;
+	public String title, message, from, to;
+	public boolean[] read = new boolean[2];
+	public int id;
 
 	public Message(JSONObject jsonObject) {
+		SharedPreferences pref = de.damps.fantasy.HomeActivity.preferences;
 		try {
-			JSONObject jo = jsonObject.getJSONObject("Message");
-			title = jo.getString("title");
-			message = jo.getString("message");
-			sender = jo.getString("sender");
-			read = jo.getBoolean("read");
-			inbound = jo.getBoolean("inbound");
+			JSONObject message = jsonObject.getJSONObject("Message");
+			JSONObject from = jsonObject.getJSONObject("From");
+			JSONObject to = jsonObject.getJSONObject("To");
+			title = message.getString("subject");
+			this.message = message.getString("content");
+			id = message.getInt("id");
+			this.from = from.getString("username");
+			this.to = to.getString("username");
+			read[0] = message.getBoolean("read");
 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if(((Integer)id).toString().equals(pref.getString("id", "x"))){
+			read[1] = true;
+		}
+		
+	}
+
+	public Message(Parcel in) {
+		title = in.readString();
+		message = in.readString();
+		from = in.readString();
+		to = in.readString();
+		in.readBooleanArray(read);
 	}
 
 	@Override
 	public int describeContents() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		// TODO Auto-generated method stub
-		
+
+		dest.writeString(title);
+		dest.writeString(message);
+		dest.writeString(from);
+		dest.writeString(to);
+		dest.writeBooleanArray(read);
 	}
+
+	@SuppressWarnings("rawtypes")
+	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+		public Message createFromParcel(Parcel in) {
+			return new Message(in);
+		}
+
+		public Message[] newArray(int size) {
+			return new Message[size];
+		}
+	};
 
 }

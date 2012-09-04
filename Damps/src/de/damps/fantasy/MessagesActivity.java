@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -21,23 +22,34 @@ import android.widget.TextView;
 public class MessagesActivity extends TabActivity {
 
 	private TabHost tabHost;
-	private String url;
 	private ArrayList<Message> outbound = new ArrayList<Message>();
 	private ArrayList<Message> inbound = new ArrayList<Message>();
+	private String urlin;
+	private String urlout;
+	private String token;
+	private String hash;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.messages);
-		url = de.damps.fantasy.HomeActivity.URL;
-
+		urlin = de.damps.fantasy.HomeActivity.URL + "/messages/to";
+		urlout = de.damps.fantasy.HomeActivity.URL + "/messages/from";
+		SharedPreferences pref = de.damps.fantasy.HomeActivity.preferences;
+		token = pref.getString("token", "");
+		hash = pref.getString("hash", "");
 		tabHost = getTabHost();
 
-		new GetMessages().execute(url);
+		new GetMessages().execute();
 
 	}
+	
+	public void refresh(View view){
+		tabHost.removeAllViews();
+		new GetMessages().execute();
+	}
 
-	private class GetMessages extends AsyncTask<String, Void, Void> {
+	private class GetMessages extends AsyncTask<Void, Void, Void> {
 		ProgressBar pb;
 
 		@Override
@@ -47,8 +59,9 @@ public class MessagesActivity extends TabActivity {
 		};
 
 		@Override
-		protected Void doInBackground(String... params) {
-			parse();
+		protected Void doInBackground(Void... voids) {
+			inbound = parse(urlin);
+			outbound = parse(urlout);
 			return null;
 		}
 
@@ -61,24 +74,24 @@ public class MessagesActivity extends TabActivity {
 	}
 
 	// holt die Daten und parst sie
-	private void parse() {
-		Json data = new Json(url);
+	private ArrayList<Message> parse(String url) {
+		Json data = new Json(url, token, hash);
 		JSONObject jo = data.data;
 		JSONArray joa = null;
+		ArrayList<Message> list = new ArrayList<Message>();
 		try {
-			joa = jo.getJSONArray("Forum");
+			joa = jo.getJSONArray("Messages");
 
 			for (int i = 0; i < joa.length(); i++) {
 				Message m = new Message(joa.getJSONObject(i));
-				if (m.inbound) {
-					inbound.add(m);
-				} else {
-					outbound.add(m);
-				}
+
+				list.add(m);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		return list;
+
 	}
 
 	private void createTabs() {

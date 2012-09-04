@@ -6,8 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="7"
-        android:targetSdkVersion="16"
-        android:maxSdkVersion="16" />
+        android:debuggable="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -41,6 +40,7 @@
         <activity android:name=".InboxActivity" />
         <activity android:name=".OutboxActivity" />
         <activity android:name=".NewMessageActivity" />
+        <activity android:name=".MessageActivity" />
     </application>
 
 </manifest>

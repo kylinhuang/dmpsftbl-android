@@ -39,16 +39,21 @@ public class NewPostActivity extends Activity {
 		setContentView(R.layout.new_post);
 		final Bundle extra = getIntent().getExtras();
 
+		msg = (EditText) findViewById(R.id.et_newp_msg);
+
 		id = extra.getString("ID");
 		title = extra.getString("title");
 		SharedPreferences pref = de.damps.fantasy.HomeActivity.preferences;
 		url = de.damps.fantasy.HomeActivity.URL + "/postforum";
 		token = pref.getString("token", "");
 		hash = pref.getString("hash", "");
+
+		if (extra.containsKey("quote")) {
+			msg.setText(extra.getString("quote"));
+		}
 	}
 
 	public void post(View view) {
-		msg = (EditText) findViewById(R.id.et_newp_msg);
 
 		msgtxt = msg.getText().toString();
 

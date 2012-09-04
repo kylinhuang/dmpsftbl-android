@@ -41,8 +41,12 @@ public class MessageAdapter extends ArrayAdapter<Message> {
 
 		// Assign the appropriate data from our alert object above
 		title.setText(m.title);
-		sender.setText(m.sender);
-		if(m.read){
+		if(m.read[1]){
+			sender.setText(m.to);
+		}else{
+			sender.setText(m.from);
+		}
+		if(m.read[0]){
 			image.setImageResource(R.drawable.content_read);
 		}else{
 			image.setImageResource(R.drawable.content_unread);

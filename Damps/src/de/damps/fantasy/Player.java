@@ -39,10 +39,11 @@ public class Player {
 				scores[gd-1] = score.getJSONObject(i).getJSONObject("Starter").getInt("score");
 				total += scores[gd-1];
 			}
-			summary = ((Integer) total).toString();
+			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		summary = ((Integer) total).toString();
 	}
 
 	public Player(String s) {

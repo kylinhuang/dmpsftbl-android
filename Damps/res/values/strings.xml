@@ -9,7 +9,7 @@
     <string name="pic_log">Log</string>
     <string name="pic_opt">Options</string>
     <string name="news">News</string>
-    <string name="roster">Roster</string>
+    <string name="roster">Teams</string>
     <string name="scores">Scores</string>
     <string name="standings">Standings</string>
     <string name="starters">Starters</string>
@@ -73,6 +73,8 @@
     <string name="send_message">Send Message</string>
     <string name="new_message">New Message</string>
     <string name="pic_read">Read</string>
+    <string name="subject">Subject:</string>
+    <string name="mes">Message</string>
 
     <!-- Options -->
     <string name="nflteam">NFL</string>

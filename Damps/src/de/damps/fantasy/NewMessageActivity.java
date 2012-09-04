@@ -43,7 +43,7 @@ public class NewMessageActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_message);
-        url = de.damps.fantasy.HomeActivity.URL + "";
+        url = de.damps.fantasy.HomeActivity.URL + "/sendmessage";
         SharedPreferences pref = de.damps.fantasy.HomeActivity.preferences;
         token = pref.getString("token", "");
 		hash = pref.getString("hash", "");
@@ -110,9 +110,9 @@ protected String post() {
 
 		postPara.add(new BasicNameValuePair("token", token));
 		postPara.add(new BasicNameValuePair("hash", hash));
-		postPara.add(new BasicNameValuePair("receiver", receiver));
-		postPara.add(new BasicNameValuePair("title", titletxt));
-		postPara.add(new BasicNameValuePair("message", msgtxt));
+		postPara.add(new BasicNameValuePair("to", receiver));
+		postPara.add(new BasicNameValuePair("subject", titletxt));
+		postPara.add(new BasicNameValuePair("content", msgtxt));
 
 		String responsebody = null;
 		try {

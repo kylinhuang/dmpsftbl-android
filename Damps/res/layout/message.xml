@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/rl_rea_layout1"
+        style="@style/titlebar" >
+
+        <ImageView
+            android:id="@+id/iv_rea_back"
+            style="@style/pic_title_left" />
+
+        <TextView
+            android:id="@+id/tv_rea_title"
+            style="@style/title"
+            android:layout_toRightOf="@+id/iv_rea_back"
+            android:text="@string/mes" />
+
+        <ImageView
+            android:id="@+id/iv_rea_reply"
+            style="@style/pic_title_right"
+            android:contentDescription="@string/pic_rep"
+            android:onClick="reply"
+            android:src="@drawable/edit" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_rea_subtitle"
+        style="@style/desc_edittext"
+        android:layout_below="@+id/rl_rea_layout1"
+        android:text="@string/subject" />
+
+    <TextView
+        android:id="@+id/tv_rea_subject"
+        style="@style/text"
+        android:layout_below="@+id/tv_rea_subtitle" />
+
+    <TextView
+        android:id="@+id/tv_rea_mestitle"
+        style="@style/desc_edittext"
+        android:layout_below="@+id/tv_rea_subject"
+        android:text="@string/message" />
+
+    <TextView
+        android:id="@+id/tv_rea_message"
+        style="@style/text"
+        android:layout_below="@+id/tv_rea_mestitle" />
+
+</RelativeLayout>

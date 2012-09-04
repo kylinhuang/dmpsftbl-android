@@ -100,7 +100,6 @@ public class ForumActivity extends ListActivity {
 		threadadapter = new ThreadAdapter(this,
 				R.layout.threaditem, threads);
 
-		
 		setListAdapter(threadadapter);
 	}
 	

@@ -18,7 +18,6 @@ public class ThreadAdapter extends ArrayAdapter<MyThread> {
 			ArrayList<MyThread> items) {
 		super(context, resource, items);
 		threads = items;
-
 	}
 
 	@Override

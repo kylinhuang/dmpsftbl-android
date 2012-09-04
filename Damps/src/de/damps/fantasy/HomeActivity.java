@@ -22,6 +22,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Gravity;
@@ -78,6 +79,20 @@ public class HomeActivity extends Activity {
 		} else {
 			log.setImageResource(R.drawable.login);
 		}
+		
+		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
+		
+		Button news = (Button)findViewById(R.id.bu_hom_news);
+		
+		((Button)findViewById(R.id.bu_hom_forum)).setTypeface(font);
+		((Button)findViewById(R.id.bu_hom_scores)).setTypeface(font);
+		((Button)findViewById(R.id.bu_hom_standings)).setTypeface(font);
+		((Button)findViewById(R.id.bu_hom_roster)).setTypeface(font);
+		((Button)findViewById(R.id.bu_hom_starters)).setTypeface(font);
+		((Button)findViewById(R.id.bu_hom_team)).setTypeface(font);
+		((Button)findViewById(R.id.bu_hom_nachrichten)).setTypeface(font);
+		
+		news.setTypeface(font);
 
 	}
 
@@ -268,8 +283,10 @@ public class HomeActivity extends Activity {
 				JSONObject ret = (JSONObject) combo.get("return");
 				String token = (String) ret.get("token");
 				String hash = (String) ret.get("encrypted");
+				String userid = ((Integer) ret.getInt("id")).toString();
 				editor.putString("token", token);
 				editor.putString("hash", hash);
+				editor.putString("id", userid);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

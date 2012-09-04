@@ -12,9 +12,9 @@
             style="@style/pic_title_left" />
 
         <TextView
+            android:id="@+id/tv_ros_view1"
             style="@style/title"
-            android:layout_toRightOf="@+id/iv_ros_back"
-            android:id="@+id/tv_ros_view1" />
+            android:layout_toRightOf="@+id/iv_ros_back" />
 
         <ProgressBar
             android:id="@+id/pb_ros_bar1"
@@ -26,6 +26,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_ros_layout1"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="5dp"
         android:orientation="vertical"
         android:stretchColumns="2" >
 
@@ -35,21 +38,31 @@
 
             <TextView
                 style="@style/column"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_left"
                 android:onClick="sortTeam"
                 android:text="@string/team" />
 
             <TextView
                 style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
                 android:onClick="sortPos"
                 android:text="@string/pos" />
 
             <TextView
                 style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
                 android:onClick="sortName"
                 android:text="@string/name" />
 
             <TextView
                 style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:background="@drawable/column_right"
                 android:onClick="sortScore"
                 android:text="@string/score" />
         </TableRow>
@@ -64,6 +77,8 @@
             android:id="@+id/tl_rostertable"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
             android:orientation="vertical"
             android:stretchColumns="2" >
         </TableLayout>
