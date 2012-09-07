@@ -30,38 +30,6 @@
         <item>2011</item>
         <item>2012</item>
     </string-array>
-    <string-array name="FFLTeams">
-        <item>Burnaz</item>
-        <item>C.R.E.A.M</item>
-        <item>Defenders</item>
-        <item>Dominators</item>
-        <item>DPNJC IBEXS</item>
-        <item>Fantasy-Failure</item>
-        <item>Hookaz</item>
-        <item>Hustlaz</item>
-        <item>Iron-Duckz</item>
-        <item>P-Bodies</item>
-        <item>Playaz</item>
-        <item>Popimps</item>
-        <item>Robotz</item>
-        <item>Shockaz</item>
-    </string-array>
-    <string-array name="users">
-        <item>simon</item>
-        <item>Pavlos</item>
-        <item>Tino</item>
-        <item>icorn</item>
-        <item>Dennis</item>
-        <item>Cheetah</item>
-        <item>airT08</item>
-        <item>alex</item>
-        <item>duck</item>
-        <item>paddi</item>
-        <item>Danny</item>
-        <item>Mikel</item>
-        <item>christoph</item>
-        <item>sebastian</item>
-    </string-array>
     <string-array name="NFLTeams">
         <item>Buffalo Bills</item>
         <item>Miami Dolphins</item>

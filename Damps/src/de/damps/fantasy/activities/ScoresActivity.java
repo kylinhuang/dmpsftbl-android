@@ -139,7 +139,7 @@ public class ScoresActivity extends Activity {
 
 	private void constructStandings() {
 		tbl = (TableLayout) findViewById(R.id.tl_scores);
-		for (int i = 0; i < de.damps.fantasy.activities.HomeActivity.NR; i++) {
+		for (int i = 0; i < de.damps.fantasy.activities.HomeActivity.league.size; i++) {
 			TableRow newRow = new TableRow(getApplicationContext());
 			TextView pos = new TextView(getApplicationContext());
 			TextView team = new TextView(getApplicationContext());
@@ -162,7 +162,7 @@ public class ScoresActivity extends Activity {
 	}
 
 	private void fillTable() {
-		for (int i = 0; i < de.damps.fantasy.activities.HomeActivity.NR; i++) {
+		for (int i = 0; i < de.damps.fantasy.activities.HomeActivity.league.size; i++) {
 			((TextView) ((TableRow) tbl.getChildAt(i)).getVirtualChildAt(0))
 					.setText("");
 			((TextView) ((TableRow) tbl.getChildAt(i)).getVirtualChildAt(1))

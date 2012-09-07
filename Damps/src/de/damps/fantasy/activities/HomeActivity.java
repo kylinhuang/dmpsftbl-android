@@ -18,14 +18,15 @@ import org.json.JSONObject;
 
 
 import de.damps.fantasy.R;
-
-
+import de.damps.fantasy.data.Json;
+import de.damps.fantasy.data.League;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Gravity;
@@ -36,16 +37,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
 
 public class HomeActivity extends Activity {
 
-	public static final int[] ID = { 9, 1, 11, 10, 15, 16, 7, 3, 13, 6, 2, 4,
-			14, 5 };
-	public static int NR = ID.length;
-	public static String[] TEAMS;
+	public static League league;
 	public static String URL;
 	public static SharedPreferences preferences;
 	public static Editor editor;
@@ -72,7 +71,6 @@ public class HomeActivity extends Activity {
 	}
 
 	private void inititaliseApp() {
-		TEAMS = getResources().getStringArray(R.array.FFLTeams);
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		editor = preferences.edit();
 		URL = preferences.getString("domain", getString(R.string.domain))
@@ -95,6 +93,32 @@ public class HomeActivity extends Activity {
 		((Button)findViewById(R.id.bu_hom_team)).setTypeface(font);
 		((Button)findViewById(R.id.bu_hom_nachrichten)).setTypeface(font);
 		((TextView) findViewById(R.id.tv_hom_title)).setTypeface(font);
+
+		new GetLeague().execute();
+	}
+	
+	private class GetLeague extends AsyncTask<Void, Void, Void> {
+		String url = URL + "/teams";
+		ProgressBar pb;
+
+		@Override
+		protected void onPreExecute() {
+			pb = (ProgressBar) findViewById(R.id.pb_home_bar1);
+			pb.setVisibility(View.VISIBLE);
+		};
+
+		@Override
+		protected Void doInBackground(Void... voids) {
+			Json data = new Json(url);
+			JSONObject jo = data.data;
+			league  = new League(jo);
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void v) {
+			pb.setVisibility(View.INVISIBLE);
+		}
 
 	}
 

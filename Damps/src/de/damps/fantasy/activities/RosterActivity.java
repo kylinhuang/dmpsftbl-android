@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import de.damps.fantasy.R;
 import de.damps.fantasy.data.DDScroll;
 import de.damps.fantasy.data.Json;
+import de.damps.fantasy.data.League;
 import de.damps.fantasy.data.Player;
 
 import android.app.Activity;
@@ -33,7 +34,8 @@ public class RosterActivity extends Activity {
 
 	private String url;
 	private TextView team;
-	private int position;
+	private String dteam;
+	private String id;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -41,12 +43,12 @@ public class RosterActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.roster);
 		final Bundle extra = getIntent().getExtras();
-		position = extra.getInt("pos");
-		int id = de.damps.fantasy.activities.HomeActivity.ID[position];
+		dteam = extra.getString("team");
+		id = de.damps.fantasy.activities.HomeActivity.league.getTeamidByTeam(dteam);
 		url = de.damps.fantasy.activities.HomeActivity.URL + "/roster/2012/" + id;
 		tbl = (TableLayout) findViewById(R.id.tl_roster_roster);
 		team = (TextView) findViewById(R.id.tv_roster_title);
-		team.setText(de.damps.fantasy.activities.HomeActivity.TEAMS[position]);
+		team.setText(dteam);
 
 		new GetRoster().execute(url);
 	}

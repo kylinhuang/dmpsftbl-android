@@ -15,6 +15,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import de.damps.fantasy.R;
+import de.damps.fantasy.adapter.OwnerAdapter;
 import de.damps.fantasy.data.Message;
 
 import android.app.Activity;
@@ -24,7 +25,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -40,7 +40,6 @@ public class NewMessageActivity extends Activity {
 	private String token;
 	private String hash;
 	private Spinner spinner;
-	private ArrayAdapter<CharSequence> adapter;
 	private String receiver;
 
 	@Override
@@ -57,7 +56,8 @@ public class NewMessageActivity extends Activity {
 	public void sendMessage(View view) {
 		title = (EditText) findViewById(R.id.et_newm_title);
 		msg = (EditText) findViewById(R.id.et_newm_msg);
-		receiver = spinner.getSelectedItem().toString();
+		receiver = de.damps.fantasy.activities.HomeActivity.league
+				.getOwneridByOwner(spinner.getSelectedItem().toString());
 
 		titletxt = title.getText().toString();
 		msgtxt = msg.getText().toString();
@@ -74,10 +74,10 @@ public class NewMessageActivity extends Activity {
 
 	private void initializeSpinner() {
 		spinner = (Spinner) findViewById(R.id.spi_mewm_dest);
-		adapter = ArrayAdapter.createFromResource(this, R.array.users,
-				android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-		spinner.setAdapter(adapter);
+		OwnerAdapter ownerAdapter = new OwnerAdapter(this,
+				android.R.layout.simple_spinner_dropdown_item,
+				de.damps.fantasy.activities.HomeActivity.league.league);
+		spinner.setAdapter(ownerAdapter);
 
 	}
 
@@ -117,8 +117,7 @@ public class NewMessageActivity extends Activity {
 				finish();
 			} else {
 				Toast toast = Toast.makeText(getApplicationContext(),
-						"Fehler beim senden",
-						Toast.LENGTH_LONG);
+						"Fehler beim senden", Toast.LENGTH_LONG);
 				toast.setGravity(Gravity.CENTER, 0, 0);
 				toast.show();
 			}
@@ -135,7 +134,7 @@ public class NewMessageActivity extends Activity {
 
 		postPara.add(new BasicNameValuePair("token", token));
 		postPara.add(new BasicNameValuePair("hash", hash));
-		postPara.add(new BasicNameValuePair("to", "248"));
+		postPara.add(new BasicNameValuePair("to", receiver));
 		postPara.add(new BasicNameValuePair("subject", titletxt));
 		postPara.add(new BasicNameValuePair("content", msgtxt));
 

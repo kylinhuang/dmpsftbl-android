@@ -11,6 +11,12 @@
             android:id="@+id/tv_hom_title"
             style="@style/title"
             android:text="@string/main" />
+        
+        <ProgressBar
+            android:id="@+id/pb_home_bar1"
+            style="@style/progressbar"
+            android:layout_alignParentRight="false"
+            android:layout_toLeftOf="@+id/iv_hom_opt" />
 
         <ImageView
             android:id="@+id/iv_hom_opt"
