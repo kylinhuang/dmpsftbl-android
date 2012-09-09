@@ -47,25 +47,28 @@ public class NewThreadActivity extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.new_thread);
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/openthread";
-		SharedPreferences pref = de.damps.fantasy.activities.HomeActivity.preferences;
-		token = pref.getString("token", "");
-		hash = pref.getString("hash", "");
 		
-		inititaliseApp();
+		
+		inititalizeScreen();
 	}
 	
 	public void back(View view){
 		finish();
-	}
+	} 
 	
-	private void inititaliseApp() {
+	private void inititalizeScreen() {
 		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
 		((TextView) findViewById(R.id.tv_newthread_title1)).setTypeface(font);
 
+		url = de.damps.fantasy.activities.HomeActivity.URL + "/openthread";
+		SharedPreferences pref = de.damps.fantasy.activities.HomeActivity.preferences;
+		token = pref.getString("token", "");
+		hash = pref.getString("hash", "");
 	}
 	
-	//posts the new thread
+	/*
+	 * posts the new thread
+	 */
 	public void postThread(View view){
 		title = (EditText)findViewById(R.id.et_newthread_title);
 		msg = (EditText)findViewById(R.id.et_newthread_msg);
@@ -86,11 +89,14 @@ public class NewThreadActivity extends Activity{
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
 		}else{
-			new OpenThread().execute(url);
+			new CreateThread().execute();
 		}
 	}
 	
-	private class OpenThread extends AsyncTask<String, Void, Void> {
+	/*
+	 * create new thread
+	 */
+	private class CreateThread extends AsyncTask<Void, Void, Void> {
 		ProgressBar pb;
 		private String id;
 
@@ -101,7 +107,7 @@ public class NewThreadActivity extends Activity{
 		};
 
 		@Override
-		protected Void doInBackground(String... params) {
+		protected Void doInBackground(Void... params) {
 			id = post();
 			return null;
 		}
@@ -114,6 +120,9 @@ public class NewThreadActivity extends Activity{
 
 	}
 
+	/*
+	 * send new thread
+	 */
 	protected String post() {
 		
 		final DefaultHttpClient client = new DefaultHttpClient();
@@ -145,7 +154,9 @@ public class NewThreadActivity extends Activity{
 		return responsebody;
 	}
 	
-	//opens the new thread
+	/*
+	 * opens the new thread
+	 */
 	public void openThread(String id){
 		Intent intent = new Intent(getApplicationContext(),
 				ThreadActivity.class);
