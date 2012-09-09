@@ -40,32 +40,46 @@ public class NewPostActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.new_post);
-		final Bundle extra = getIntent().getExtras();
-
-		msg = (EditText) findViewById(R.id.et_newpost_msg);
-
-		id = extra.getString("ID");
-		title = extra.getString("title");
-		SharedPreferences pref = de.damps.fantasy.activities.HomeActivity.preferences;
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/postforum";
-		token = pref.getString("token", "");
-		hash = pref.getString("hash", "");
-
-		if (extra.containsKey("quote")) {
-			msg.setText(extra.getString("quote"));
-		}
 		
-		inititaliseApp();
-	}
+		
+		inititalizeScreen();
+	} 
 	
-	private void inititaliseApp() {
+	/*
+	 * initialize screen
+	 */
+	private void inititalizeScreen() {
 		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
 		((TextView) findViewById(R.id.tv_newthread_title1)).setTypeface(font);
 
+		final Bundle extra = getIntent().getExtras();
+
+		id = extra.getString("ID");
+		title = extra.getString("title");
+		
+		url = de.damps.fantasy.activities.HomeActivity.URL + "/postforum";
+		
+		SharedPreferences pref = de.damps.fantasy.activities.HomeActivity.preferences;
+		token = pref.getString("token", "");
+		hash = pref.getString("hash", "");
+
+		msg = (EditText) findViewById(R.id.et_newpost_msg);
+		if (extra.containsKey("quote")) {
+			msg.setText(extra.getString("quote"));
+		}
+	}
+	
+	/*
+	 * back to last screen
+	 */
+	public void back(View view) {
+		finish();
 	}
 
+	/*
+	 * post reply
+	 */
 	public void post(View view) {
-
 		msgtxt = msg.getText().toString();
 
 		if (msgtxt.equals("")) {
@@ -74,15 +88,15 @@ public class NewPostActivity extends Activity {
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
 		} else {
-			new Reply().execute(url);
+			new Reply().execute();
 		}
 	}
 
-	public void back(View view) {
-		finish();
-	}
-
-	private class Reply extends AsyncTask<String, Void, Void> {
+	
+	/*
+	 * send reply
+	 */
+	private class Reply extends AsyncTask<Void, Void, Void> {
 		ProgressBar pb;
 
 		@Override
@@ -92,7 +106,7 @@ public class NewPostActivity extends Activity {
 		};
 
 		@Override
-		protected Void doInBackground(String... params) {
+		protected Void doInBackground(Void... params) {
 			reply();
 			return null;
 		}
@@ -105,6 +119,9 @@ public class NewPostActivity extends Activity {
 
 	}
 
+	/*
+	 * send reply
+	 */
 	protected void reply() {
 		final DefaultHttpClient client = new DefaultHttpClient();
 		final HttpPost httppost = new HttpPost(url);
@@ -130,6 +147,9 @@ public class NewPostActivity extends Activity {
 
 	}
 
+	/*
+	 * open thread
+	 */
 	public void openThread() {
 		Intent intent = new Intent(getApplicationContext(),
 				ThreadActivity.class);
