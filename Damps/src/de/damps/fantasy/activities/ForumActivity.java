@@ -33,29 +33,32 @@ public class ForumActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.forum);
-		String number = de.damps.fantasy.activities.HomeActivity.preferences
-				.getString("threads", "25");
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/forum/" + number;
-		inititaliseApp();
-		new GetThreads().execute(url);
+
+		inititaliseScreen();
 	}
 
-	private void inititaliseApp() {
+	/*
+	 * initializes Screen
+	 */
+	private void inititaliseScreen() {
 		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
 		((TextView) findViewById(R.id.tv_forum_title)).setTypeface(font);
 
+		String number = de.damps.fantasy.activities.HomeActivity.preferences
+				.getString("threads", "25");
+		url = de.damps.fantasy.activities.HomeActivity.URL + "/forum/" + number;
+
+		new GetThreads().execute();
 	}
 
-	// Threads refreshen
+	/*
+	 * refresh thread
+	 */
 	public void refresh(View view) {
-		new GetThreads().execute(url);
+		new GetThreads().execute();
 	}
 
-	public void back(View view) {
-		finish();
-	}
-
-	private class GetThreads extends AsyncTask<String, Void, Void> {
+	private class GetThreads extends AsyncTask<Void, Void, Void> {
 		ProgressBar pb;
 
 		@Override
@@ -65,7 +68,7 @@ public class ForumActivity extends ListActivity {
 		};
 
 		@Override
-		protected Void doInBackground(String... params) {
+		protected Void doInBackground(Void... params) {
 			parse();
 			return null;
 		}
@@ -78,7 +81,13 @@ public class ForumActivity extends ListActivity {
 
 	}
 
-	// holt die Daten und parst sie
+	public void back(View view) {
+		finish();
+	}
+
+	/*
+	 * retrieves data
+	 */
 	private void parse() {
 		Json data = new Json(url);
 		JSONObject jo = data.data;
@@ -95,26 +104,32 @@ public class ForumActivity extends ListActivity {
 		}
 	}
 
-	// Bestimmten Thhread auswählen
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		super.onListItemClick(l, v, position, id);
-
-		// creates Intent and fills with local Data
-		Intent intent = new Intent(getApplicationContext(),
-				ThreadActivity.class);
-		intent.putExtra("ID", threads.get(position).id);
-		intent.putExtra("title", threads.get(position).title);
-		startActivity(intent);
-	}
-
-	// Anzeigen der Threads
+	/*
+	 * fill list
+	 */
 	private void showThreads() {
 		threadadapter = new ThreadAdapter(this, R.layout.threaditem, threads);
 
 		setListAdapter(threadadapter);
 	}
 
-	// Methode um neuen Thread zu erstellen
+	/*
+	 * click onlistitem
+	 */
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+
+		Intent intent = new Intent(getApplicationContext(),
+				ThreadActivity.class);
+		intent.putExtra("ID", threads.get(position).id);
+		intent.putExtra("title", threads.get(position).title);
+		
+		startActivity(intent);
+	}
+
+	/*
+	 * create new thread
+	 */
 	public void newThread(View view) {
 		if (de.damps.fantasy.activities.HomeActivity.preferences
 				.contains("token")) {
