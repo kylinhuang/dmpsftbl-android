@@ -136,6 +136,7 @@ public class ForumActivity extends ListActivity {
 	public void newThread(View view) {
 		if (de.damps.fantasy.activities.HomeActivity.preferences
 				.contains("token")) {
+			
 			Intent intent = new Intent(getApplicationContext(),
 					NewThreadActivity.class);
 			startActivity(intent);

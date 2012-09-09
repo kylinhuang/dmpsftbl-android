@@ -38,61 +38,52 @@ public class ThreadActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.thread);
+
+		inititalizeScreen();
+	}
+
+	/*
+	 * initialize screen
+	 */
+	private void inititalizeScreen() {
+		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
+		((TextView) findViewById(R.id.tv_thread_title)).setTypeface(font);
+
 		final Bundle extra = getIntent().getExtras();
 
 		id = extra.getString("ID");
 		title = extra.getString("title");
 		url = de.damps.fantasy.activities.HomeActivity.URL + "/thread/" + id;
-		chron = de.damps.fantasy.activities.HomeActivity.preferences.getBoolean("chron",
-				false);
+		chron = de.damps.fantasy.activities.HomeActivity.preferences
+				.getBoolean("chron", false);
 
-		
-		inititaliseApp();
-		setLongClickListener();
-		new GetThread().execute(url);
-
-	}
-	
-	private void inititaliseApp() {
-		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
-		((TextView) findViewById(R.id.tv_thread_title)).setTypeface(font);
-		
 		titleview = (TextView) findViewById(R.id.tv_thread_subject);
 		titleview.setText(title);
 
-	}
-
-	private void setLongClickListener() {
-		ListView lv = getListView();
-		lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> av, View v, int pos,
-					long id) {
-				String quote = "[quote]" + posts.get(pos).message + "[/quote]";
-				Intent intent = new Intent(getApplicationContext(),
-						NewPostActivity.class);
-				intent.putExtra("quote", quote);
-				startActivity(intent);
-				
-				return true;
-				// TODO Auto-generated method stub
-
-			}
-		});
+		setLongClickListener();
+		new GetThread().execute();
 
 	}
 
+	/*
+	 * refresh thread
+	 */
+	public void refresh(View view) {
+		postadapter.clear();
+		new GetThread().execute();
+	}
+
+	/*
+	 * return to last screen
+	 */
 	public void back(View view) {
 		finish();
 	}
 
-	public void refresh(View view) {
-		postadapter.clear();
-		new GetThread().execute(url);
-	}
-
-	private class GetThread extends AsyncTask<String, Void, Void> {
+	/*
+	 * retrieves the thread
+	 */
+	private class GetThread extends AsyncTask<Void, Void, Void> {
 		ProgressBar pb;
 
 		@Override
@@ -102,7 +93,7 @@ public class ThreadActivity extends ListActivity {
 		};
 
 		@Override
-		protected Void doInBackground(String... params) {
+		protected Void doInBackground(Void... params) {
 			parse();
 			return null;
 		}
@@ -115,6 +106,9 @@ public class ThreadActivity extends ListActivity {
 
 	}
 
+	/*
+	 * retrieves the data
+	 */
 	private void parse() {
 		Json data = new Json(url);
 		JSONObject jo = data.data;
@@ -137,7 +131,9 @@ public class ThreadActivity extends ListActivity {
 
 	}
 
-	// fills ListView with Teams
+	/*
+	 * fill list
+	 */
 	private void showPosts() {
 		postadapter = new PostAdapter(this, R.layout.threaditem, posts);
 		setListAdapter(postadapter);
@@ -147,8 +143,36 @@ public class ThreadActivity extends ListActivity {
 
 	}
 
+	/*
+	 * quote post
+	 */
+	private void setLongClickListener() {
+		ListView lv = getListView();
+		
+		lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> av, View v, int pos,
+					long id) {
+				String quote = "[quote]" + posts.get(pos).message + "[/quote]";
+				
+				Intent intent = new Intent(getApplicationContext(),
+						NewPostActivity.class);
+				intent.putExtra("quote", quote);
+				startActivity(intent);
+
+				return true;
+			}
+		});
+
+	}
+
+	/*
+	 * new post
+	 */
 	public void reply(View view) {
-		if (de.damps.fantasy.activities.HomeActivity.preferences.contains("token")) {
+		if (de.damps.fantasy.activities.HomeActivity.preferences
+				.contains("token")) {
+			
 			Intent intent = new Intent(getApplicationContext(),
 					NewPostActivity.class);
 			intent.putExtra("ID", id);
