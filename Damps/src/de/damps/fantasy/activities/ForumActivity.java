@@ -57,7 +57,7 @@ public class ForumActivity extends ListActivity {
 	public void refresh(View view) {
 		new GetThreads().execute();
 	}
-	
+
 	/*
 	 * return to last screen
 	 */
@@ -87,8 +87,6 @@ public class ForumActivity extends ListActivity {
 		}
 
 	}
-
-
 
 	/*
 	 * retrieves data
@@ -128,7 +126,7 @@ public class ForumActivity extends ListActivity {
 				ThreadActivity.class);
 		intent.putExtra("ID", threads.get(position).id);
 		intent.putExtra("title", threads.get(position).title);
-		
+
 		startActivity(intent);
 	}
 
