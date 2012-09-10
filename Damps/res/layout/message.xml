@@ -22,7 +22,7 @@
             style="@style/pic_title_right"
             android:contentDescription="@string/pic_rep"
             android:onClick="reply"
-            android:src="@drawable/edit" />
+            android:src="@drawable/reply" />
     </RelativeLayout>
 
     <TextView

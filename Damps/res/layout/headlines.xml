@@ -4,27 +4,27 @@
     android:layout_height="fill_parent" >
 
     <RelativeLayout
-        android:id="@+id/rl_hea_layout1"
+        android:id="@+id/rl_headlines_layout1"
         style="@style/titlebar" >
 
         <ImageView
-            android:id="@+id/iv_hea_back"
+            android:id="@+id/iv_headlines_back"
             style="@style/pic_title_left" />
 
         <TextView
-            android:id="@+id/tv_hea_title"
+            android:id="@+id/tv_headlines_title"
             style="@style/title"
-            android:layout_toRightOf="@+id/iv_hea_back"
+            android:layout_toRightOf="@+id/iv_headlines_back"
             android:text="@string/News" />
 
         <ProgressBar
-            android:id="@+id/pb_hea_bar1"
+            android:id="@+id/pb_headlines_bar1"
             style="@style/progressbar"
             android:layout_alignParentRight="false"
-            android:layout_toLeftOf="@+id/iv_hea_refresh" />
+            android:layout_toLeftOf="@+id/iv_headlines_refresh" />
 
         <ImageView
-            android:id="@+id/iv_hea_refresh"
+            android:id="@+id/iv_headlines_refresh"
             style="@style/pic_title_right"
             android:contentDescription="@string/pic_ref"
             android:onClick="refresh"
