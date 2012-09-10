@@ -12,6 +12,7 @@ public class MessageActivity extends Activity {
 
 	private String message;
 	private String title;
+	private String from;
 	private TextView titleView;
 	private TextView mesView;
 	private int pos;
@@ -20,37 +21,61 @@ public class MessageActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.message);
+
+		inititalizeScreen();
+	}
+
+	/*
+	 * init screen
+	 */
+	private void inititalizeScreen() {
 		final Bundle extra = getIntent().getExtras();
 		Message m = extra.getParcelable("message");
 		pos = extra.getInt("pos");
 		title = m.title;
 		message = m.message;
+		from = m.from;
+
 		titleView = (TextView) findViewById(R.id.tv_rea_subject);
 		mesView = (TextView) findViewById(R.id.tv_rea_message);
 
-		showMessage();
-	}
-	
-	public void back(View view){
-		Intent intent = new Intent();
-	    intent.putExtra("pos", pos);
-	    setResult(1, intent);
-		finish();
-	}
-	
-	@Override
-	public void onBackPressed() {
-
-	    Intent intent = new Intent();
-	    intent.putExtra("pos", pos);
-	    setResult(1, intent);
-	    super.onBackPressed();
-	}
-
-
-	private void showMessage() {
 		titleView.setText(title);
 		mesView.setText(message);
+	}
+
+	/*
+	 * return to last screen
+	 */
+	public void back(View view) {
+		Intent intent = new Intent();
+		intent.putExtra("pos", pos);
+		setResult(1, intent);
+		finish();
+	}
+
+	/*
+	 * return to last screen
+	 */
+	@Override
+	public void onBackPressed() {
+		Intent intent = new Intent();
+		intent.putExtra("pos", pos);
+		setResult(1, intent);
+		super.onBackPressed();
+	}
+
+	/*
+	 * answer message
+	 */
+	public void reply(View viev) {
+		Intent intent = new Intent(getApplicationContext(),
+				NewMessageActivity.class);
+		String t = "AW: " + title;
+		String m = from + ":\n\n" + message;
+		intent.putExtra("title", t);
+		intent.putExtra("message", m);
+		intent.putExtra("from", from);
+		startActivity(intent);
 	}
 
 }
