@@ -30,31 +30,44 @@ public class HeadlinesActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.headlines);
-		String number = de.damps.fantasy.activities.HomeActivity.preferences.getString(
-				"news", "25");
+
+		inititalizeScreen();
+	}
+
+	private void inititalizeScreen() {
+		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
+		((TextView) findViewById(R.id.tv_headlines_title)).setTypeface(font);
+
+		String number = de.damps.fantasy.activities.HomeActivity.preferences
+				.getString("news", "25");
 		url = de.damps.fantasy.activities.HomeActivity.URL + "/news/" + number;
 
-		inititaliseApp();
 		new GetHeadlines().execute(url);
 	}
 
-	private void inititaliseApp() {
-		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
-		((TextView) findViewById(R.id.tv_hea_title)).setTypeface(font);
-
-	}
-
-	// News refreshen
+	/*
+	 * refresh news
+	 */
 	public void refresh(View view) {
 		new GetHeadlines().execute(url);
 	}
+	
+	/*
+	 * return to last screen
+	 */
+	public void back(View view) {
+		finish();
+	}
 
+	/*
+	 * retrieve headlines
+	 */
 	private class GetHeadlines extends AsyncTask<String, Void, Void> {
 		ProgressBar pb;
 
 		@Override
 		protected void onPreExecute() {
-			pb = (ProgressBar) findViewById(R.id.pb_hea_bar1);
+			pb = (ProgressBar) findViewById(R.id.pb_headlines_bar1);
 			pb.setVisibility(View.VISIBLE);
 		};
 
@@ -72,10 +85,9 @@ public class HeadlinesActivity extends ListActivity {
 
 	}
 
-	public void back(View view) {
-		finish();
-	}
-
+	/*
+	 * retrieve data
+	 */
 	private void parse() {
 		Json data = new Json(url);
 		JSONObject jo = data.data;
@@ -85,19 +97,24 @@ public class HeadlinesActivity extends ListActivity {
 			for (int i = 0; i < joa.length(); i++) {
 				News t = new News(joa.getJSONObject(i));
 				headlines.add(t);
-
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/*
+	 * fill list
+	 */
 	private void showHeadlines() {
 		final NewsAdapter titleAdapter = new NewsAdapter(this,
 				android.R.layout.simple_list_item_1, headlines);
 		setListAdapter(titleAdapter);
 	}
 
+	/*
+	 * show news
+	 */
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 
