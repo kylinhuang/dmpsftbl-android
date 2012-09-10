@@ -41,6 +41,8 @@
         <activity android:name=".activities.OutboxActivity" />
         <activity android:name=".activities.NewMessageActivity" />
         <activity android:name=".activities.MessageActivity" />
+        <activity android:name=".activities.TeamManagementActivity" />
+        <activity android:name=".activities.ReleaseActivity" />
     </application>
 
 </manifest>

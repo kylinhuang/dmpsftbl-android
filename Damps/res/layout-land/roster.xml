@@ -21,13 +21,33 @@
             style="@style/progressbar" />
     </RelativeLayout>
 
-    <de.damps.fantasy.DDScroll
-        android:layout_below="@+id/rl_roster_layout1"
+    <LinearLayout
+        android:id="@+id/ll_roster_layout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rl_roster_layout1" >
+
+        <Button
+            android:id="@+id/bu_roster_half1"
+            style="@style/button"
+            android:onClick="showHalf1"
+            android:text="@string/half1"
+            android:textSize="23dp" />
+
+        <Button
+            android:id="@+id/bu_roster_half2"
+            style="@style/button"
+            android:onClick="showHalf2"
+            android:text="@string/half2"
+            android:textSize="23dp" />
+    </LinearLayout>
+    
+    <ScrollView
         android:id="@+id/sv_roster_view1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:drawingCacheQuality="low"
-        android:scrollbars="horizontal" >
+        android:layout_below="@+id/ll_roster_layout2" >
 
         <TableLayout
             android:id="@+id/tl_roster_roster"
@@ -36,9 +56,9 @@
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
             android:layout_marginTop="5dp"
-            android:orientation="vertical" >
-
+            android:orientation="vertical"
+            android:stretchColumns="2" >
         </TableLayout>
-    </de.damps.fantasy.DDScroll>
+    </ScrollView>
 
 </RelativeLayout>
