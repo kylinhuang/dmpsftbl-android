@@ -11,8 +11,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-
 import de.damps.fantasy.R;
+import de.damps.fantasy.adapter.MessageAdapter;
 import de.damps.fantasy.data.Message;
 
 import android.os.AsyncTask;
@@ -44,28 +44,33 @@ public class InboxActivity extends ListActivity {
 		showThreads();
 	}
 
-	// Anzeigen der Threads
+
+	/*
+	 * fill list
+	 */
 	private void showThreads() {
 		messageadapter = new MessageAdapter(this, R.layout.threaditem, messages);
 		setListAdapter(messageadapter);
 	}
 
-	// back from reading
+	/*
+	 * back from reading
+	 */
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1) {
 			int p = data.getExtras().getInt("pos");
-			// ListView lv = getListView();
 			messages.get(p).read[0] = true;
 
 			messageadapter.notifyDataSetChanged();
-
 		}
 	}
 
+	/*
+	 * open message
+	 */
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		new ReadMessage().execute();
-		// creates Intent and fills with local Data
 		Intent intent = new Intent(getApplicationContext(),
 				MessageActivity.class);
 		message = messages.get(position);
@@ -74,6 +79,9 @@ public class InboxActivity extends ListActivity {
 		startActivityForResult(intent, 1);
 	}
 
+	/*
+	 * mark message as read
+	 */
 	private class ReadMessage extends AsyncTask<Void, Void, Void> {
 
 		@Override
@@ -88,11 +96,13 @@ public class InboxActivity extends ListActivity {
 
 		@Override
 		protected void onPostExecute(Void v) {
-
 		}
 
 	}
 
+	/*
+	 * send marker
+	 */
 	protected void post() {
 
 		final DefaultHttpClient client = new DefaultHttpClient();
@@ -105,6 +115,7 @@ public class InboxActivity extends ListActivity {
 				.toString()));
 		try {
 			httppost.setEntity(new UrlEncodedFormEntity(postPara));
+
 			try {
 				client.execute(httppost);
 			} catch (ClientProtocolException e) {
