@@ -37,20 +37,36 @@ public class MessagesActivity extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.messages);
+		
+		initializeScreen();
+	}
+	
+	/*
+	 * init screen
+	 */
+	private void initializeScreen(){
 		urlin = de.damps.fantasy.activities.HomeActivity.URL + "/messages/to";
 		urlout = de.damps.fantasy.activities.HomeActivity.URL + "/messages/from";
+		
 		SharedPreferences pref = de.damps.fantasy.activities.HomeActivity.preferences;
 		token = pref.getString("token", "");
 		hash = pref.getString("hash", "");
+		
 		tabHost = getTabHost();
 
 		new GetMessages().execute();
 
 	}
 	
+	/*
+	 * refresh messages
+	 */
 	public void refresh(View view){
 	}
 
+	/*
+	 * retrieve messages
+	 */
 	private class GetMessages extends AsyncTask<Void, Void, Void> {
 		ProgressBar pb;
 
@@ -75,7 +91,9 @@ public class MessagesActivity extends TabActivity {
 
 	}
 
-	// holt die Daten und parst sie
+	/*
+	 * retrieve data
+	 */
 	private ArrayList<Message> parse(String url) {
 		Json data = new Json(url, token, hash);
 		JSONObject jo = data.data;
@@ -96,7 +114,11 @@ public class MessagesActivity extends TabActivity {
 
 	}
 
+	/*
+	 * create tabview and intents for inbox and outbox
+	 */
 	private void createTabs() {
+
 		View view1 = createTabView(tabHost.getContext(), "Inbox");
 		TabSpec inspec = tabHost.newTabSpec("Inbox");
 		inspec.setIndicator(view1);
@@ -118,6 +140,9 @@ public class MessagesActivity extends TabActivity {
 		tabHost.setCurrentTab(0);
 	}
 
+	/*
+	 * create tabs
+	 */
 	private View createTabView(Context context, String string) {
 		View view = LayoutInflater.from(context).inflate(R.layout.tabs, null);
 		TextView tv = (TextView) view.findViewById(R.id.tv_tab_tab);
@@ -125,12 +150,18 @@ public class MessagesActivity extends TabActivity {
 		return view;
 	}
 
+	/*
+	 * send message
+	 */
 	public void sendMessage(View view) {
 		Intent intent = new Intent(getApplicationContext(),
 				NewMessageActivity.class);
 		startActivity(intent);
 	}
 
+	/*
+	 * return to last screen
+	 */
 	public void back(View view) {
 		finish();
 	}
