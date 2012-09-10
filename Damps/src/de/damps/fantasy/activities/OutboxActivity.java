@@ -3,6 +3,7 @@ package de.damps.fantasy.activities;
 import java.util.ArrayList;
 
 import de.damps.fantasy.R;
+import de.damps.fantasy.adapter.MessageAdapter;
 import de.damps.fantasy.data.Message;
 
 import android.os.Bundle;
@@ -24,26 +25,32 @@ public class OutboxActivity extends ListActivity {
 		showThreads();
 	}
 
-	// Anzeigen der Threads
+	/*
+	 * fill list
+	 */
 	private void showThreads() {
 		messageadapter = new MessageAdapter(this, R.layout.threaditem, messages);
 
 		setListAdapter(messageadapter);
 	}
-	
-	//back from reading
-		protected void onActivityResult(int requestCode, int resultCode,
-	            Intent data) {
-	        if (requestCode == 2) {
-	        	Message m = data.getExtras().getParcelable("Message");
-	        	//ListView lv = getListView();
-	        	messages.add(0, m);
-	        	
-	        	messageadapter.notifyDataSetChanged();
 
-	        }
-	    }
-	
+	/*
+	 * come back from new message
+	 */
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 2) {
+			Message m = data.getExtras().getParcelable("Message");
+			// ListView lv = getListView();
+			messages.add(0, m);
+
+			messageadapter.notifyDataSetChanged();
+
+		}
+	}
+
+	/*
+	 * open message
+	 */
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 
