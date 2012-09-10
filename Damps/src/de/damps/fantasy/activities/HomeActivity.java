@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -262,27 +263,36 @@ public class HomeActivity extends Activity {
 			bu_ok.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					if (login(et_username.getText().toString(), et_password
-							.getText().toString())) {
+					String[] user = {et_username.getText().toString(), et_password
+							.getText().toString()}; 
+					try {
+						if (new Login().execute(user).get()) {
 
-						log.setImageResource(R.drawable.logout);
-						tm.setBackgroundResource(R.drawable.button_selector);
-						tm.setClickable(true);
-						msg.setBackgroundResource(R.drawable.button_selector);
-						msg.setClickable(true);
-						
-						if (cb_save.isChecked()) {
-							editor.putBoolean("savelogin", true);
+							log.setImageResource(R.drawable.logout);
+							tm.setBackgroundResource(R.drawable.button_selector);
+							tm.setClickable(true);
+							msg.setBackgroundResource(R.drawable.button_selector);
+							msg.setClickable(true);
+							
+							if (cb_save.isChecked()) {
+								editor.putBoolean("savelogin", true);
+							}
+
+							editor.commit();
+							dialog.dismiss();
+						} else {
+							Toast toast = Toast.makeText(getApplicationContext(),
+									"Falscher Benutzername/Passwort",
+									Toast.LENGTH_LONG);
+							toast.setGravity(Gravity.CENTER, 0, 0);
+							toast.show();
 						}
-
-						editor.commit();
-						dialog.dismiss();
-					} else {
-						Toast toast = Toast.makeText(getApplicationContext(),
-								"Falscher Benutzername/Passwort",
-								Toast.LENGTH_LONG);
-						toast.setGravity(Gravity.CENTER, 0, 0);
-						toast.show();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ExecutionException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 
 				}
@@ -299,6 +309,21 @@ public class HomeActivity extends Activity {
 		}
 
 	}
+	
+	/*
+	 * retrieve headlines
+	 */
+	private class Login extends AsyncTask<String, Void, Boolean> {
+
+		protected Boolean doInBackground(String... params) {
+			return login(params);
+		}
+		
+		protected void onPostExecute(Boolean result) {
+		}
+
+
+	}
 
 	/*
 	 * loging in
@@ -307,14 +332,14 @@ public class HomeActivity extends Activity {
 	 * sets userdata
 	 * 
 	 */
-	protected boolean login(String un, String pw) {
+	protected boolean login(String[] user) {
 		urlLogin = URL + "/login";
 		final DefaultHttpClient client = new DefaultHttpClient();
 		final HttpPost httppost = new HttpPost(urlLogin);
 		final List<NameValuePair> postPara = new ArrayList<NameValuePair>();
 
-		postPara.add(new BasicNameValuePair("username", un));
-		postPara.add(new BasicNameValuePair("password", pw));
+		postPara.add(new BasicNameValuePair("username", user[0]));
+		postPara.add(new BasicNameValuePair("password", user[1]));
 
 		String responsebody = null;
 		try {
