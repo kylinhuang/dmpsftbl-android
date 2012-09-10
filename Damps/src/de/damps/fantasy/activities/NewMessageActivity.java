@@ -16,6 +16,7 @@ import org.apache.http.util.EntityUtils;
 
 import de.damps.fantasy.R;
 import de.damps.fantasy.adapter.OwnerAdapter;
+import de.damps.fantasy.data.DampsTeam;
 import de.damps.fantasy.data.Message;
 
 import android.app.Activity;
@@ -41,23 +42,52 @@ public class NewMessageActivity extends Activity {
 	private String hash;
 	private Spinner spinner;
 	private String receiver;
+	private String from;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.new_message);
+		
+		initializeScreen();
+	}
+
+	/*
+	 * initialize screen
+	 */
+	private void initializeScreen() {
 		url = de.damps.fantasy.activities.HomeActivity.URL + "/sendmessage";
 		SharedPreferences pref = de.damps.fantasy.activities.HomeActivity.preferences;
 		token = pref.getString("token", "");
 		hash = pref.getString("hash", "");
-		initializeSpinner();
-	}
-
-	public void sendMessage(View view) {
+		
 		title = (EditText) findViewById(R.id.et_newm_title);
 		msg = (EditText) findViewById(R.id.et_newm_msg);
+		
+		initializeSpinner();
+		
+		Bundle extra = getIntent().getExtras();
+		
+		if(extra != null){
+			titletxt = extra.getString("title");
+			msgtxt = extra.getString("message");
+			from = extra.getString("from");
+			int i =de.damps.fantasy.activities.HomeActivity.league.getPosition(from);
+			spinner.setSelection(i);
+			
+			title.setText(titletxt);
+			msg.setText(msgtxt);
+		}
+	}
+
+	/*
+	 * retrieve title and message
+	 */
+	public void sendMessage(View view) {
+		
+		String s = ((DampsTeam)spinner.getSelectedItem()).owner_id;
 		receiver = de.damps.fantasy.activities.HomeActivity.league
-				.getOwneridByOwner(spinner.getSelectedItem().toString());
+				.getOwneridByOwner(s);
 
 		titletxt = title.getText().toString();
 		msgtxt = msg.getText().toString();
@@ -72,19 +102,28 @@ public class NewMessageActivity extends Activity {
 		}
 	}
 
+	/*
+	 * init spinner
+	 */
 	private void initializeSpinner() {
 		spinner = (Spinner) findViewById(R.id.spi_mewm_dest);
 		OwnerAdapter ownerAdapter = new OwnerAdapter(this,
-				android.R.layout.simple_spinner_dropdown_item,
+				android.R.layout.simple_spinner_item,
 				de.damps.fantasy.activities.HomeActivity.league.league);
 		spinner.setAdapter(ownerAdapter);
 
 	}
 
+	/*
+	 * return to last screen
+	 */
 	public void back(View view) {
 		finish();
 	}
 
+	/*
+	 * send message and return to inbox
+	 */
 	private class SendMessage extends AsyncTask<String, Void, Void> {
 		ProgressBar pb;
 		String response = null;
@@ -126,6 +165,9 @@ public class NewMessageActivity extends Activity {
 
 	}
 
+	/*
+	 * send message
+	 */
 	protected String post() {
 
 		final DefaultHttpClient client = new DefaultHttpClient();
