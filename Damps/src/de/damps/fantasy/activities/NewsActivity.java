@@ -27,25 +27,38 @@ public class NewsActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.news);
-		final Bundle extra = getIntent().getExtras();
-		String news_id = extra.getString("ID");
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/story/" + news_id;
-		titleView = (TextView) findViewById(R.id.tv_news_title);
-		newsView = (TextView) findViewById(R.id.tv_news_news);
-		inititaliseApp();
-		new GetNews().execute(url);
+		
+		inititalizeScreen();
 	}
 
-	private void inititaliseApp() {
+	/*
+	 * init screen
+	 */
+	private void inititalizeScreen() {
 		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
 		((TextView) findViewById(R.id.tv_news_title1)).setTypeface(font);
 
+		final Bundle extra = getIntent().getExtras();
+		String news_id = extra.getString("ID");
+		
+		url = de.damps.fantasy.activities.HomeActivity.URL + "/story/" + news_id;
+		
+		titleView = (TextView) findViewById(R.id.tv_news_title);
+		newsView = (TextView) findViewById(R.id.tv_news_news);
+		
+		new GetNews().execute(url);
 	}
 
+	/*
+	 * return to last screen
+	 */
 	public void back(View view) {
 		finish();
 	}
-
+	
+	/*
+	 * get news
+	 */
 	private class GetNews extends AsyncTask<String, Void, Void> {
 		ProgressBar pb;
 
@@ -70,6 +83,9 @@ public class NewsActivity extends Activity {
 
 	}
 
+	/*
+	 * retrieve data
+	 */
 	private void parse() {
 		Json data = new Json(url);
 		JSONObject jo = data.data;
@@ -82,11 +98,17 @@ public class NewsActivity extends Activity {
 		}
 	}
 
+	/*
+	 * fill textviews
+	 */
 	private void showNews() {
 		titleView.setText(Html.fromHtml(this.title));
 		newsView.setText(this.news);
 	}
 
+	/*
+	 * format text
+	 */
 	private void format() {
 		news = news.replace("<p>", "");
 		news = news.replaceAll("\\s+", " ");
