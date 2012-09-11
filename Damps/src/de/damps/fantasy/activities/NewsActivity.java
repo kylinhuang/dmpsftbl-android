@@ -11,6 +11,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -103,6 +104,7 @@ public class NewsActivity extends Activity {
 	private void showNews() {
 		titleView.setText(Html.fromHtml(this.title));
 		newsView.setText(Html.fromHtml(this.news));
+		newsView.setMovementMethod(LinkMovementMethod.getInstance());
 	}
 
 }
