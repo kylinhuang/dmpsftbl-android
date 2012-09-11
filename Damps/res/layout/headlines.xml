@@ -36,7 +36,7 @@
         android:id="@+id/android:list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/rl_hea_layout1"
+        android:layout_below="@+id/rl_headlines_layout1"
         android:orientation="vertical" >
     </ListView>
 
