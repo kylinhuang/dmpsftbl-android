@@ -8,12 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.damps.fantasy.R;
-import de.damps.fantasy.data.DDScroll;
-import de.damps.fantasy.data.Json;
-import de.damps.fantasy.data.League;
-import de.damps.fantasy.data.Player;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,6 +19,9 @@ import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import de.damps.fantasy.R;
+import de.damps.fantasy.data.Json;
+import de.damps.fantasy.data.Player;
 
 public class RosterActivity extends Activity {
 
@@ -42,10 +39,20 @@ public class RosterActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.roster);
+
+		initializeScreen();
+	}
+
+	/*
+	 * init screen
+	 */
+	public void initializeScreen() {
 		final Bundle extra = getIntent().getExtras();
 		dteam = extra.getString("team");
-		id = de.damps.fantasy.activities.HomeActivity.league.getTeamidByTeam(dteam);
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/roster/2012/" + id;
+		id = de.damps.fantasy.activities.HomeActivity.league
+				.getTeamidByTeam(dteam);
+		url = de.damps.fantasy.activities.HomeActivity.URL + "/roster/2012/"
+				+ id;
 		tbl = (TableLayout) findViewById(R.id.tl_roster_roster);
 		team = (TextView) findViewById(R.id.tv_roster_title);
 		team.setText(dteam);
@@ -53,10 +60,42 @@ public class RosterActivity extends Activity {
 		new GetRoster().execute(url);
 	}
 
+	/*
+	 * return to last screen
+	 */
 	public void back(View view) {
 		finish();
 	}
 
+	/*
+	 * show first half of season
+	 */
+	public void showHalf1(View view) {
+		for (int j = 0; j < 17; j++) {
+			if (j < 9) {
+				tbl.setColumnCollapsed(3 + j, false);
+			} else {
+				tbl.setColumnCollapsed(3 + j, true);
+			}
+		}
+	}
+
+	/*
+	 * show second half of season
+	 */
+	public void showHalf2(View view) {
+		for (int j = 0; j < 17; j++) {
+			if (j < 9) {
+				tbl.setColumnCollapsed(3 + j, true);
+			} else {
+				tbl.setColumnCollapsed(3 + j, false);
+			}
+		}
+	}
+
+	/*
+	 * retrieve roster
+	 */
 	private class GetRoster extends AsyncTask<String, Void, Void> {
 		ProgressBar pb;
 
@@ -82,6 +121,9 @@ public class RosterActivity extends Activity {
 
 	}
 
+	/*
+	 * retrieve data
+	 */
 	private void parse() {
 		Json data = new Json(url);
 		JSONObject jo = data.data;
@@ -101,15 +143,19 @@ public class RosterActivity extends Activity {
 
 		for (int i = 0; i < anzahl; i++) {
 			Player p = new Player(joa.getJSONObject(i));
-			roster.add(p);
+			if (!p.contract.equals("R")) {
+				roster.add(p);
+			}
 		}
 	}
 
+	/*
+	 * construct roster
+	 */
 	private void contructRoster() {
-
 		int ori = getResources().getConfiguration().orientation;
 		if (ori == 1) {
-			for (int i = 0; i < anzahl; i++) {
+			for (int i = 0; i < roster.size(); i++) {
 				// Row
 				TableRow newRow = new TableRow(getApplicationContext());
 				TableLayout.LayoutParams parar = new TableLayout.LayoutParams();
@@ -168,8 +214,7 @@ public class RosterActivity extends Activity {
 				tbl.addView(newRow, i);
 			}
 		} else {
-			DDScroll sv = (DDScroll) findViewById(R.id.sv_roster_view1);
-			for (int i = 0; i < anzahl + 1; i++) {
+			for (int i = 0; i < roster.size() + 1; i++) {
 				if (i == 0) {
 					// Row
 					TableRow newRow = new TableRow(getApplicationContext());
@@ -254,76 +299,84 @@ public class RosterActivity extends Activity {
 					score.setBackgroundDrawable(getResources().getDrawable(
 							R.drawable.column_right));
 					score.setPadding(p, p, p, p);
-
 					tbl.addView(newRow, i);
-				}else{
-				// Row
-				TableRow newRow = new TableRow(getApplicationContext());
-				TableLayout.LayoutParams parar = new TableLayout.LayoutParams();
-				parar.setMargins(0, (int) TypedValue.applyDimension(
-						TypedValue.COMPLEX_UNIT_DIP, 1, getResources()
-								.getDisplayMetrics()), 0, (int) TypedValue
-						.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1,
-								getResources().getDisplayMetrics()));
-				newRow.setLayoutParams(parar);
+				} else {
+					// Row
+					TableRow newRow = new TableRow(getApplicationContext());
+					TableLayout.LayoutParams parar = new TableLayout.LayoutParams();
+					parar.setMargins(0, (int) TypedValue.applyDimension(
+							TypedValue.COMPLEX_UNIT_DIP, 1, getResources()
+									.getDisplayMetrics()), 0, (int) TypedValue
+							.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1,
+									getResources().getDisplayMetrics()));
+					newRow.setLayoutParams(parar);
 
-				TableRow.LayoutParams para = new TableRow.LayoutParams();
-				para.setMargins((int) TypedValue.applyDimension(
-						TypedValue.COMPLEX_UNIT_DIP, 2, getResources()
-								.getDisplayMetrics()), 0, 0, 0);
+					TableRow.LayoutParams para = new TableRow.LayoutParams();
+					para.setMargins((int) TypedValue.applyDimension(
+							TypedValue.COMPLEX_UNIT_DIP, 2, getResources()
+									.getDisplayMetrics()), 0, 0, 0);
 
-				ImageView team = new ImageView(getApplicationContext());
-				TextView pos = new TextView(getApplicationContext());
-				TextView name = new TextView(getApplicationContext());
-				TextView score = new TextView(getApplicationContext());
-				newRow.addView(team, 0);
-				newRow.addView(pos, 1);
-				newRow.addView(name, 2);
+					ImageView team = new ImageView(getApplicationContext());
+					TextView pos = new TextView(getApplicationContext());
+					TextView name = new TextView(getApplicationContext());
+					TextView score = new TextView(getApplicationContext());
+					newRow.addView(team, 0);
+					newRow.addView(pos, 1);
+					newRow.addView(name, 2);
 
-				// Team
+					// Team
 
-				// Pos
-				pos.setLayoutParams(para);
-				pos.setTextAppearance(getApplicationContext(), R.style.text);
-				pos.setTextColor(getResources().getColor(R.color.weis));
-				pos.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.button));
-				pos.setGravity(Gravity.CENTER);
+					// Pos
+					pos.setLayoutParams(para);
+					pos.setTextAppearance(getApplicationContext(), R.style.text);
+					pos.setTextColor(getResources().getColor(R.color.weis));
+					pos.setBackgroundDrawable(getResources().getDrawable(
+							R.drawable.button));
+					pos.setGravity(Gravity.CENTER);
 
-				// Name
-				name.setLayoutParams(para);
-				name.setTextAppearance(getApplicationContext(), R.style.text);
-				name.setPadding((int) TypedValue.applyDimension(
-						TypedValue.COMPLEX_UNIT_DIP, 3, getResources()
-								.getDisplayMetrics()), 0, 0, 0);
+					// Name
+					name.setLayoutParams(para);
+					name.setTextAppearance(getApplicationContext(),
+							R.style.text);
+					name.setPadding((int) TypedValue.applyDimension(
+							TypedValue.COMPLEX_UNIT_DIP, 3, getResources()
+									.getDisplayMetrics()), 0, 0, 0);
 
-				// gameday
-				for (int j = 0; j < 17; j++) {
-					TextView gd = new TextView(getApplicationContext());
-					newRow.addView(gd, 3 + j);
-					gd.setLayoutParams(para);
-					gd.setTextAppearance(getApplicationContext(), R.style.text);
-					gd.setGravity(Gravity.CENTER);
+					// gameday
+					for (int j = 0; j < 17; j++) {
+						TextView gd = new TextView(getApplicationContext());
+						newRow.addView(gd, 3 + j);
+						gd.setLayoutParams(para);
+						gd.setTextAppearance(getApplicationContext(),
+								R.style.text);
+						gd.setGravity(Gravity.CENTER);
+					}
+
+					// Score
+					newRow.addView(score, 20);
+					score.setLayoutParams(para);
+					score.setTextAppearance(getApplicationContext(),
+							R.style.text);
+					score.setGravity(Gravity.RIGHT);
+					score.setPadding(0, 0, (int) TypedValue.applyDimension(
+							TypedValue.COMPLEX_UNIT_DIP, 3, getResources()
+									.getDisplayMetrics()), 0);
+					tbl.addView(newRow, i);
 				}
-
-				// Score
-				newRow.addView(score, 20);
-				score.setLayoutParams(para);
-				score.setTextAppearance(getApplicationContext(), R.style.text);
-				score.setGravity(Gravity.RIGHT);
-				score.setPadding(0, 0, (int) TypedValue.applyDimension(
-						TypedValue.COMPLEX_UNIT_DIP, 3, getResources()
-								.getDisplayMetrics()), 0);
-				tbl.addView(newRow, i);
+				for (int j = 9; j < 17; j++) {
+					tbl.setColumnCollapsed(3 + j, true);
 				}
 			}
 		}
 	}
 
+	/*
+	 * fill roster
+	 */
 	private void fillarray() {
 		int ori = getResources().getConfiguration().orientation;
 		if (ori == 1) {
-			for (int i = 0; i < anzahl; i++) {
+			for (int i = 0; i < roster.size(); i++) {
 				if (i % 2 == 1) {
 					tbl.getChildAt(i).setBackgroundColor(
 							getResources().getColor(R.color.hellhellgrau));
@@ -342,7 +395,7 @@ public class RosterActivity extends Activity {
 						.setText(roster.get(i).summary);
 			}
 		} else {
-			for (int i = 1; i < anzahl + 1; i++) {
+			for (int i = 1; i < roster.size() + 1; i++) {
 				// grey
 				if (i % 2 == 0) {
 					tbl.getChildAt(i).setBackgroundColor(
