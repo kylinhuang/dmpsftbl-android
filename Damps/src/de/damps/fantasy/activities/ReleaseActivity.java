@@ -7,14 +7,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -157,13 +155,10 @@ public class ReleaseActivity extends Activity {
 		postPara.add(new BasicNameValuePair("player_id", ids[0]));
 		postPara.add(new BasicNameValuePair("roster_id", ids[1]));
 
-		String responsebody = null;
 		try {
 			httppost.setEntity(new UrlEncodedFormEntity(postPara));
 			try {
-				HttpResponse response = client.execute(httppost);
-				responsebody = EntityUtils.toString(response.getEntity());
-				String test = responsebody;
+				client.execute(httppost);
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -197,7 +192,9 @@ public class ReleaseActivity extends Activity {
 
 		for (int i = 0; i < anzahl; i++) {
 			Player p = new Player(joa.getJSONObject(i));
-			roster.add(p);
+			if (!p.contract.equals("R")) {
+				roster.add(p);
+			}
 		}
 	}
 
@@ -205,7 +202,7 @@ public class ReleaseActivity extends Activity {
 	 * construct roster
 	 */
 	private void contructRoster() {
-		for (int i = 0; i < anzahl; i++) {
+		for (int i = 0; i < roster.size(); i++) {
 			// Row
 			TableRow newRow = new TableRow(getApplicationContext());
 			TableLayout.LayoutParams parar = new TableLayout.LayoutParams();
@@ -225,12 +222,10 @@ public class ReleaseActivity extends Activity {
 			TextView pos = new TextView(getApplicationContext());
 			TextView name = new TextView(getApplicationContext());
 			TextView score = new TextView(getApplicationContext());
-			ImageView release = new ImageView(getApplicationContext());
 			newRow.addView(team, 0);
 			newRow.addView(pos, 1);
 			newRow.addView(name, 2);
 			newRow.addView(score, 3);
-			newRow.addView(release, 4);
 
 			// Team
 			team.getLayoutParams().width = ((TextView) ((TableRow) ((TableLayout) findViewById(R.id.tl_release_table1))
@@ -263,16 +258,13 @@ public class ReleaseActivity extends Activity {
 					TypedValue.COMPLEX_UNIT_DIP, 3, getResources()
 							.getDisplayMetrics()), 0);
 
-			// relese
-			release.getLayoutParams().width = ((TextView) ((TableRow) ((TableLayout) findViewById(R.id.tl_release_table1))
-					.getChildAt(0)).getVirtualChildAt(4)).getWidth();
 
 			String pid = ((Integer) roster.get(i).player_id).toString();
 			String rid = ((Integer) roster.get(i).roster_id).toString();
 			final String[] ids = {pid,rid};
 			final String name1 = roster.get(i).name;
 
-			release.setOnClickListener(new OnClickListener() {
+			newRow.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
@@ -318,7 +310,7 @@ public class ReleaseActivity extends Activity {
 	 * fill roster
 	 */
 	private void fillarray() {
-		for (int i = 0; i < anzahl; i++) {
+		for (int i = 0; i < roster.size(); i++) {
 			if (i % 2 == 1) {
 				tbl.getChildAt(i).setBackgroundColor(
 						getResources().getColor(R.color.hellhellgrau));
@@ -335,11 +327,6 @@ public class ReleaseActivity extends Activity {
 					.setText(roster.get(i).name);
 			((TextView) ((TableRow) tbl.getChildAt(i)).getVirtualChildAt(3))
 					.setText(roster.get(i).summary);
-			int re = getResources().getIdentifier("remove", "drawable",
-					getPackageName());
-			ImageView r = (ImageView) ((TableRow) tbl.getChildAt(i))
-					.getVirtualChildAt(4);
-			r.setImageResource(re);
 		}
 	}
 
