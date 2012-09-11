@@ -125,6 +125,9 @@ public class ReleaseActivity extends Activity {
 		}
 	}
 
+	/*
+	 * release player
+	 */
 	private class ReleasePlayer extends AsyncTask<String, Void, Void> {
 
 		@Override
@@ -141,6 +144,9 @@ public class ReleaseActivity extends Activity {
 		}
 	}
 
+	/*
+	 * release
+	 */
 	private void release(String[] ids) {
 		final DefaultHttpClient client = new DefaultHttpClient();
 		final HttpPost httppost = new HttpPost(url_release);
