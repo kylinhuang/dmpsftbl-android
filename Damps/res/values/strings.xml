@@ -68,15 +68,15 @@
 
     <!-- Headlines -->
     <string name="posten">Posten</string>
-    
+
     <!-- Messages -->
     <string name="send_message">Send Message</string>
     <string name="new_message">New Message</string>
     <string name="pic_read">Read</string>
     <string name="subject">Subject:</string>
     <string name="mes">Message</string>
-    
-     <!-- Teammanagement -->
+
+    <!-- Teammanagement -->
     <string name="select">Select Starter</string>
     <string name="releasePlayer">Release Player</string>
     <string name="sign">Sign Free Agent</string>
@@ -85,12 +85,12 @@
     <!-- Set Starter -->
     <string name="set_starters">Select Starter</string>
     <string name="standard">Standard</string>
-    <string name="f311">3\-1\-1</string>
-    <string name="f131">1\-3\-1</string>
-    <string name="f122">1\-2\-2</string>
-    <string name="f212">2\-1\-2</string>
-    <string name="f113">1\-1\-3</string>
-    
+    <string name="f311">3-1-1</string>
+    <string name="f131">1-3-1</string>
+    <string name="f122">1-2-2</string>
+    <string name="f212">2-1-2</string>
+    <string name="f113">1-1-3</string>
+
     <!-- Options -->
     <string name="nflteam">NFL</string>
     <string name="fflteam">FL-Team</string>
@@ -127,5 +127,8 @@
     <string name="gd15">15.</string>
     <string name="gd16">16.</string>
     <string name="gd17">17.</string>
+
+    <!-- Tags -->
+    <string name="start">start</string>
 
 </resources>
