@@ -85,9 +85,7 @@ public class NewMessageActivity extends Activity {
 	 */
 	public void sendMessage(View view) {
 		
-		String s = ((DampsTeam)spinner.getSelectedItem()).owner_id;
-		receiver = de.damps.fantasy.activities.HomeActivity.league
-				.getOwneridByOwner(s);
+		receiver = ((DampsTeam)spinner.getSelectedItem()).owner_id;
 
 		titletxt = title.getText().toString();
 		msgtxt = msg.getText().toString();
