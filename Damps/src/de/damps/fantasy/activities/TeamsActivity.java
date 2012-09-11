@@ -10,6 +10,8 @@ import android.widget.ListView;
 
 public class TeamsActivity extends ListActivity {
 
+	private TeamAdapter teamadapter;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -17,27 +19,33 @@ public class TeamsActivity extends ListActivity {
 		zeigeTeams();
 	}
 
-	//
+	/*
+	 * return to last screen
+	 */
+	public void back(View view) {
+		finish();
+	}
+
+	/*
+	 * open specific roster
+	 */
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 
-		// creates Intent and fills with local Data
 		Intent intent = new Intent(getApplicationContext(),
 				RosterActivity.class);
-		intent.putExtra("team", l.getItemIdAtPosition(position));
+		intent.putExtra("team", teamadapter.getItem(position).team);
 		startActivity(intent);
 	}
 
-	// fills ListView with Teams
+	/*
+	 * fill list
+	 */
 	private void zeigeTeams() {
-		final TeamAdapter teamadapter = new TeamAdapter(this,
+		teamadapter = new TeamAdapter(this,
 				android.R.layout.simple_list_item_1,
 				de.damps.fantasy.activities.HomeActivity.league.league);
 		setListAdapter(teamadapter);
-	}
-	
-	public void back(View view){
-		finish();
 	}
 
 }
