@@ -23,27 +23,33 @@ public class OptionsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.options);
 
-		initialise();
+		initialiseScreen();
 	}
 
-	private void initialise() {
+	/*
+	 * init screen
+	 */
+	private void initialiseScreen() {
 		pref = de.damps.fantasy.activities.HomeActivity.preferences;
 		editor = de.damps.fantasy.activities.HomeActivity.editor;
-		domain = (EditText) findViewById(R.id.et_opt_Text1);
-		news = (EditText) findViewById(R.id.et_opt_Text2);
-		threads = (EditText) findViewById(R.id.et_opt_Text3);
-		oben = (RadioButton) findViewById(R.id.rb_opt_oben);
+		domain = (EditText) findViewById(R.id.et_options_Text1);
+		news = (EditText) findViewById(R.id.et_options_Text2);
+		threads = (EditText) findViewById(R.id.et_options_Text3);
+		oben = (RadioButton) findViewById(R.id.rb_options_oben);
 
 		domain.setText(pref.getString("domain", getString(R.string.domain)));
 		news.setText(pref.getString("news", "25"));
 		threads.setText(pref.getString("threads", "25"));
 		if(pref.getBoolean("chron", false)){
-			((RadioGroup) findViewById(R.id.rg_opt_Group1)).check(R.id.rb_opt_unten);
+			((RadioGroup) findViewById(R.id.rg_opt_Group1)).check(R.id.rb_options_unten);
 		}else{
-			((RadioGroup) findViewById(R.id.rg_opt_Group1)).check(R.id.rb_opt_oben);
+			((RadioGroup) findViewById(R.id.rg_opt_Group1)).check(R.id.rb_options_oben);
 		}
 	}
 	
+	/*
+	 * return to last screen
+	 */
 	public void back(View view){
 		finish();
 	}
@@ -55,6 +61,7 @@ public class OptionsActivity extends Activity {
 		String msg = getString(R.string.domain_set) + " " + dom + " " + getString(R.string.setted);
 		Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG);
 		toast.show();
+		de.damps.fantasy.activities.HomeActivity.logout();
 	}
 
 	public void setNewsNumber(View view) {
@@ -91,6 +98,9 @@ public class OptionsActivity extends Activity {
 		}
 	}
 
+	/*
+	 * return to last screen
+	 */
 	public void ok(View view) {
 		this.finish();
 	}
