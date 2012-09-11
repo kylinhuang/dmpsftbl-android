@@ -5,7 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Player {
-	public int player_id, nfl_id, fflteam_id, nflteam_id, total;
+	public int player_id, roster_id, nfl_id, fflteam_id, nflteam_id, total;
 	public boolean active;
 	public String name, pos, nfl_nick, nfl_city, nfl_abr, summary;
 	public int[] scores = new int[17];
@@ -25,6 +25,7 @@ public class Player {
 			nfl_id = roster.getInt("id");
 			fflteam_id = roster.getInt("fflteam_id");
 			nflteam_id = roster.getInt("nflteam_id");
+			roster_id = roster.getInt("id");
 
 			String vorname = player.getString("firstname");
 			String nachname = player.getString("name");
@@ -33,15 +34,21 @@ public class Player {
 			nfl_nick = nflteam.getString("nickname");
 			nfl_city = nflteam.getString("name");
 			nfl_abr = nflteam.getString("abbr");
-
-			for (int i = 0; i < score.length(); i++) {
-				int gd = score.getJSONObject(i).getJSONObject("Starter").getInt("gameday");
-				scores[gd-1] = score.getJSONObject(i).getJSONObject("Starter").getInt("score");
-				total += scores[gd-1];
-			}
 			
 		} catch (JSONException e) {
-			e.printStackTrace();
+			System.err.println("Fehler mit dem Starter");
+		}
+		for (int i = 0; i < score.length(); i++) {
+			int gd;
+			try {
+				gd = score.getJSONObject(i).getJSONObject("Teamstarter").getInt("gameday");
+				scores[gd-1] = score.getJSONObject(i).getJSONObject("Starter").getInt("score");
+				total += scores[gd-1];
+			} catch (JSONException e) {
+				System.err.println("Fehler im Gameday Score");
+
+			}
+
 		}
 		summary = ((Integer) total).toString();
 	}

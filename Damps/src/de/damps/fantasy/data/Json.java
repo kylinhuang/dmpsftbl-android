@@ -43,7 +43,7 @@ public class Json {
 		}
 	}
 
-	private String getStringFromWeb(String url, String token, String hash){
+	private String getStringFromWeb(String url, String token, String hash) {
 		final DefaultHttpClient client = new DefaultHttpClient();
 		final HttpPost httppost = new HttpPost(url);
 		final List<NameValuePair> postPara = new ArrayList<NameValuePair>();
@@ -66,6 +66,7 @@ public class Json {
 		}
 		return responsebody;
 	}
+
 	// reads URL
 	private String readUrl(String url) {
 		String string = new String();
