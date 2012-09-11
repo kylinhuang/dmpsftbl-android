@@ -287,6 +287,7 @@ public class ReleaseActivity extends Activity {
 						@Override
 						public void onClick(View v) {
 							new ReleasePlayer().execute(ids);
+							tbl.removeView(v);
 							dialog.dismiss();
 						}
 					});
