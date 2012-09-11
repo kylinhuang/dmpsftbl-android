@@ -71,7 +71,6 @@ public class NewsActivity extends Activity {
 		@Override
 		protected Void doInBackground(String... params) {
 			parse();
-			format();
 			return null;
 		}
 
@@ -103,16 +102,7 @@ public class NewsActivity extends Activity {
 	 */
 	private void showNews() {
 		titleView.setText(Html.fromHtml(this.title));
-		newsView.setText(this.news);
+		newsView.setText(Html.fromHtml(this.news));
 	}
 
-	/*
-	 * format text
-	 */
-	private void format() {
-		news = news.replace("<p>", "");
-		news = news.replaceAll("\\s+", " ");
-		news = news.replace(" </p> ", "\n\n");
-		news.trim();
-	}
 }
