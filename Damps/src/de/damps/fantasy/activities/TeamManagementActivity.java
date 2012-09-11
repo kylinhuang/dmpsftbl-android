@@ -14,10 +14,14 @@ public class TeamManagementActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.teammanagement);
-		inititaliseApp();
+		
+		inititaliseScreen();
 	}
 
-	private void inititaliseApp() {
+	/*
+	 * init screen
+	 */
+	private void inititaliseScreen() {
 		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
 		((TextView) findViewById(R.id.tv_teammanagement_title1)).setTypeface(font);
 
@@ -29,9 +33,9 @@ public class TeamManagementActivity extends Activity {
 
 	/** select news */
 	public void selectStarter(View view) {
-		/*Intent intent = new Intent(getApplicationContext(),
-				SelectStarterActivity.class);
-		startActivity(intent);*/
+		Intent intent = new Intent(getApplicationContext(),
+				SetStartersActivity.class);
+		startActivity(intent);
 	}
 
 	/** select roster */
