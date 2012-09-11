@@ -82,6 +82,15 @@
     <string name="sign">Sign Free Agent</string>
     <string name="trades">Open Trades</string>
 
+    <!-- Set Starter -->
+    <string name="set_starters">Select Starter</string>
+    <string name="standard">Standard</string>
+    <string name="f311">3\-1\-1</string>
+    <string name="f131">1\-3\-1</string>
+    <string name="f122">1\-2\-2</string>
+    <string name="f212">2\-1\-2</string>
+    <string name="f113">1\-1\-3</string>
+    
     <!-- Options -->
     <string name="nflteam">NFL</string>
     <string name="fflteam">FL-Team</string>

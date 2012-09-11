@@ -4,8 +4,8 @@
 	<color name="weis">#FFFFFF</color>
     <color name="schwarz">#000000</color>
     <color name="damps_blau">#036CAE</color>
-    <color name="damps_blau_inactive">#55036CAE</color>
-    <color name="damps_blau_pressed">#AA036CAE</color>
+    <color name="damps_blau_inactive">#B2B2B2</color>
+    <color name="damps_blau_pressed">#0088CC</color>
     <color name="hellgrau">#B2B2B2</color>
     <color name="hellhellgrau">#F0F0F0</color>
     <color name="dunkelgrau">#4D4D4D</color>
