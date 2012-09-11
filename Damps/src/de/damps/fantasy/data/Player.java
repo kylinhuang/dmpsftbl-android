@@ -7,7 +7,7 @@ import org.json.JSONObject;
 public class Player {
 	public int player_id, roster_id, nfl_id, fflteam_id, nflteam_id, total;
 	public boolean active;
-	public String name, pos, nfl_nick, nfl_city, nfl_abr, summary;
+	public String name, pos, nfl_nick, nfl_city, nfl_abr, summary, contract;
 	public int[] scores = new int[17];
 	
 	private JSONObject roster,player, nflteam;
@@ -26,6 +26,7 @@ public class Player {
 			fflteam_id = roster.getInt("fflteam_id");
 			nflteam_id = roster.getInt("nflteam_id");
 			roster_id = roster.getInt("id");
+			contract = roster.getString("contract");
 
 			String vorname = player.getString("firstname");
 			String nachname = player.getString("name");
