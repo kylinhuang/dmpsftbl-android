@@ -43,6 +43,7 @@
         <activity android:name=".activities.MessageActivity" />
         <activity android:name=".activities.TeamManagementActivity" />
         <activity android:name=".activities.ReleaseActivity" />
+        <activity android:name=".activities.SetStartersActivity" />
     </application>
 
 </manifest>
