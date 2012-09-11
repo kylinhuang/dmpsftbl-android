@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/rl_setstarters_layout1"
+        style="@style/titlebar" >
+
+        <ImageView
+            android:id="@+id/iv_setstarters_back"
+            style="@style/pic_title_left" />
+
+        <TextView
+            android:id="@+id/tv_setstarters_title"
+            style="@style/title"
+            android:layout_toRightOf="@+id/iv_setstarters_back"
+            android:text="@string/set_starters" />
+
+        <ProgressBar
+            android:id="@+id/pb_setstarters_bar1"
+            style="@style/progressbar"
+            android:layout_alignParentRight="false"
+            android:layout_toLeftOf="@+id/iv_setstarters_ok" />
+
+        <ImageView
+            android:id="@+id/iv_setstarters_ok"
+            style="@style/pic_title_right"
+            android:contentDescription="@string/pic_acc"
+            android:onClick="ok"
+            android:src="@drawable/accept" />
+    </RelativeLayout>
+
+    <RadioGroup
+        android:id="@+id/rg_setstarters_group1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rl_setstarters_layout1" >
+
+        <LinearLayout
+            android:id="@+id/ll_setstarters_layout0"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <RadioButton
+                android:id="@+id/rb_setstarters_news"
+                style="@style/radio_button"
+                android:checked="true"
+                android:text="@string/standard" />
+
+            <RadioButton
+                android:id="@+id/rb_setstarters_311"
+                style="@style/radio_button"
+                android:text="@string/f311" />
+
+            <RadioButton
+                android:id="@+id/rb_setstarters_131"
+                style="@style/radio_button"
+                android:text="@string/f131" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_setstarters_layout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <RadioButton
+                android:id="@+id/rb_setstarters_122"
+                style="@style/radio_button"
+                android:text="@string/f122" />
+
+            <RadioButton
+                android:id="@+id/rb_setstarters_212"
+                style="@style/radio_button"
+                android:text="@string/f212" />
+
+            <RadioButton
+                android:id="@+id/rb_setstarters_113"
+                style="@style/radio_button"
+                android:text="@string/f113" />
+        </LinearLayout>
+    </RadioGroup>
+
+</RelativeLayout>
