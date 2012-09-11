@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:id="@+id/rl_release_layout1"
+        style="@style/titlebar" >
+
+        <ImageView
+            android:id="@+id/iv_release_back"
+            style="@style/pic_title_left" />
+
+        <TextView
+            android:id="@+id/tv_release_title"
+            style="@style/title"
+            android:layout_toRightOf="@+id/iv_release_back" />
+
+        <ProgressBar
+            android:id="@+id/pb_release_bar1"
+            style="@style/progressbar" />
+    </RelativeLayout>
+
+    <TableLayout
+        android:id="@+id/tl_release_table1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_release_layout1"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        android:stretchColumns="2" > 
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                style="@style/column"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_left"
+                android:onClick="sortTeam"
+                android:text="@string/team" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:onClick="sortPos"
+                android:text="@string/pos" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="@drawable/column_mid"
+                android:onClick="sortName"
+                android:text="@string/name" />
+
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:background="@drawable/column_mid"
+                android:onClick="sortScore"
+                android:text="@string/score" />
+            
+            <TextView
+                style="@style/column"
+                android:layout_marginLeft="1dp"
+                android:background="@drawable/column_right"
+                android:clickable="false"
+                android:text="@string/release"
+                android:textColor="@color/damps_blau" />
+        </TableRow>
+    </TableLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tl_release_table1" >
+
+        <TableLayout
+            android:id="@+id/tl_release_roster"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:orientation="vertical"
+            android:stretchColumns="2" >
+        </TableLayout>
+    </ScrollView>
+
+</RelativeLayout>
