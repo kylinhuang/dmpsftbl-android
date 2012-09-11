@@ -31,62 +31,33 @@
             android:src="@drawable/accept" />
     </RelativeLayout>
 
-    <RadioGroup
-        android:id="@+id/rg_setstarters_group1"
+    <LinearLayout
+        android:id="@+id/ll_setstarters_layout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/rl_setstarters_layout1" >
 
-        <LinearLayout
-            android:id="@+id/ll_setstarters_layout0"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+        <Spinner
+            android:id="@+id/spi_setstarters_gameday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawSelectorOnTop="true" />
 
-            <RadioButton
-                android:id="@+id/rb_setstarters_news"
-                style="@style/radio_button"
-                android:checked="true"
-                android:text="@string/standard" />
-
-            <RadioButton
-                android:id="@+id/rb_setstarters_311"
-                style="@style/radio_button"
-                android:text="@string/f311" />
-
-            <RadioButton
-                android:id="@+id/rb_setstarters_131"
-                style="@style/radio_button"
-                android:text="@string/f131" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_setstarters_layout1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
-
-            <RadioButton
-                android:id="@+id/rb_setstarters_122"
-                style="@style/radio_button"
-                android:text="@string/f122" />
-
-            <RadioButton
-                android:id="@+id/rb_setstarters_212"
-                style="@style/radio_button"
-                android:text="@string/f212" />
-
-            <RadioButton
-                android:id="@+id/rb_setstarters_113"
-                style="@style/radio_button"
-                android:text="@string/f113" />
-        </LinearLayout>
-    </RadioGroup>
+        <Spinner
+            android:id="@+id/spi_setstarters_formation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawSelectorOnTop="true" />
+    </LinearLayout>
     
     <TableLayout
         android:id="@+id/tl_setstarters_table1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rg_setstarters_group1"
+        android:layout_below="@+id/ll_setstarters_layout1"
         android:layout_marginLeft="3dp"
         android:layout_marginRight="3dp"
         android:layout_marginTop="5dp"
