@@ -1,4 +1,4 @@
-package de.damps.fantasy.activities;
+package de.damps.fantasy.adapter;
 
 import java.util.ArrayList;
 
