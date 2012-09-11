@@ -30,7 +30,8 @@
 
     <TextView
         android:id="@+id/tv_pos_message"
-        style="@style/text" />
+        style="@style/text"
+        android:autoLink="web" />
 
     <View
         android:layout_width="fill_parent"
