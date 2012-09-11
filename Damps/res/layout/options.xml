@@ -4,168 +4,192 @@
     android:layout_height="match_parent" >
 
     <RelativeLayout
-        android:id="@+id/rl_opt_layout1"
+        android:id="@+id/rl_options_layout1"
         style="@style/titlebar" >
 
         <ImageView
-            android:id="@+id/iv_opt_back"
+            android:id="@+id/iv_options_back"
             style="@style/pic_title_left" />
 
         <TextView
             style="@style/title"
-            android:layout_toRightOf="@+id/iv_opt_back"
+            android:layout_toRightOf="@+id/iv_options_back"
             android:text="@string/options" />
     </RelativeLayout>
 
-    <!-- Domain -->
-
-    <TextView
-        android:id="@+id/tv_opt_view1"
+    <ScrollView
+        android:id="@+id/sv_options_view1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/rl_opt_layout1"
-        android:text="@string/leaguedomain"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_below="@+id/rl_options_layout1" >
 
-    <EditText
-        android:id="@+id/et_opt_Text1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tv_opt_view1"
-        android:ems="12"
-        android:inputType="text" >
+        <RelativeLayout
+            android:id="@+id/rl_options_layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
-        <requestFocus />
-    </EditText>
+            <!-- Domain -->
+
+            <TextView
+                android:id="@+id/tv_options_view1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/leaguedomain"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <LinearLayout
+                android:id="@+id/ll_options_layout1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/tv_options_view1" >
+
+                <EditText
+                    android:id="@+id/et_options_Text1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="text" >
+
+                    <requestFocus />
+                </EditText>
+
+                <Button
+                    android:id="@+id/bu_options_setDom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="setDomain"
+                    android:text="@string/set" />
+            </LinearLayout>
+            <!-- News -->
+
+            <TextView
+                android:id="@+id/tv_options_view2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/ll_options_layout1"
+                android:text="@string/number_news"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <LinearLayout
+                android:id="@+id/ll_options_layout2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/tv_options_view2" >
+
+                <EditText
+                    android:id="@+id/et_options_Text2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number" >
+
+                    <requestFocus />
+                </EditText>
+
+                <Button
+                    android:id="@+id/bu_options_setNews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="setNewsNumber"
+                    android:text="@string/set" />
+            </LinearLayout>
+            <!-- Threads -->
+
+            <TextView
+                android:id="@+id/tv_options_view3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/ll_options_layout2"
+                android:text="@string/number_threads"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <LinearLayout
+                android:id="@+id/ll_options_layout3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/tv_options_view3" >
+
+                <EditText
+                    android:id="@+id/et_options_Text3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:inputType="number" >
+
+                    <requestFocus />
+                </EditText>
+
+                <Button
+                    android:id="@+id/bu_options_setthreads"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="setThreadsNumber"
+                    android:text="@string/set" />
+            </LinearLayout>
+            <!-- Posts -->
+
+            <TextView
+                android:id="@+id/tv_options_view4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/ll_options_layout3"
+                android:text="@string/posts"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <LinearLayout
+                android:id="@+id/ll_options_layout4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/tv_options_view4" >
+
+                <RadioGroup
+                    android:id="@+id/rg_opt_Group1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/rb_options_oben"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/oben" />
+
+                    <RadioButton
+                        android:id="@+id/rb_options_unten"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/unten" />
+                </RadioGroup>
+
+                <Button
+                    android:id="@+id/bu_options_setOri"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:onClick="setOrientation"
+                    android:text="@string/set" />
+            </LinearLayout>
+            <!-- OK -->
+
+        </RelativeLayout>
+    </ScrollView>
 
     <Button
-        android:id="@+id/bu_opt_setDom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_opt_view1"
-        android:layout_toRightOf="@+id/et_opt_Text1"
-        android:onClick="setDomain"
-        android:text="@string/set" />
-
-    <!-- News -->
-
-    <TextView
-        android:id="@+id/tv_opt_view2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/et_opt_Text1"
-        android:text="@string/number_news"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <EditText
-        android:id="@+id/et_opt_Text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tv_opt_view2"
-        android:ems="12"
-        android:inputType="number" >
-
-        <requestFocus />
-    </EditText>
-
-    <Button
-        android:id="@+id/bu_opt_setNews"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_opt_view2"
-        android:layout_toRightOf="@+id/et_opt_Text2"
-        android:onClick="setNewsNumber"
-        android:text="@string/set" />
-
-    <!-- Threads -->
-
-    <TextView
-        android:id="@+id/tv_opt_view3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/et_opt_Text2"
-        android:text="@string/number_threads"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <EditText
-        android:id="@+id/et_opt_Text3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tv_opt_view3"
-        android:ems="12"
-        android:inputType="number" >
-
-        <requestFocus />
-    </EditText>
-
-    <Button
-        android:id="@+id/bu_opt_setthreads"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_opt_view3"
-        android:layout_toRightOf="@+id/et_opt_Text3"
-        android:onClick="setThreadsNumber"
-        android:text="@string/set" />
-
-    <!-- Posts -->
-
-    <TextView
-        android:id="@+id/tv_opt_view4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/et_opt_Text3"
-        android:text="@string/posts"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <RadioGroup
-        android:id="@+id/rg_opt_Group1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tv_opt_view4"
-        android:orientation="horizontal" >
-
-
-        <RadioButton
-            android:id="@+id/rb_opt_oben"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/oben" />
-
-        <RadioButton
-            android:id="@+id/rb_opt_unten"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/unten" />
-    </RadioGroup>
-
-    <Button
-        android:id="@+id/bu_opt_setOri"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_opt_view4"
-        android:layout_toRightOf="@+id/rg_opt_Group1"
-        android:onClick="setOrientation"
-        android:text="@string/set" />
-
-    <!-- OK -->
-
-    <Button
-        android:id="@+id/bu_opt_ok"
+        android:id="@+id/bu_options_ok"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+         android:layout_below="@+id/sv_options_view1" 
         android:layout_centerHorizontal="true"
         android:onClick="ok"
         android:text="@string/ok" />
-
-    
 
 </RelativeLayout>
