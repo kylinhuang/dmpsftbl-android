@@ -46,11 +46,11 @@ public class NewPostActivity extends Activity {
 	} 
 	
 	/*
-	 * initialize screen
+	 * init screen
 	 */
 	private void inititalizeScreen() {
 		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
-		((TextView) findViewById(R.id.tv_newthread_title1)).setTypeface(font);
+		((TextView) findViewById(R.id.tv_newpost_title)).setTypeface(font);
 
 		final Bundle extra = getIntent().getExtras();
 
