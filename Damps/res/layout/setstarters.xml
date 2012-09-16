@@ -94,17 +94,10 @@
             <TextView
                 style="@style/column"
                 android:layout_marginLeft="1dp"
-                android:background="@drawable/column_mid"
+                android:background="@drawable/column_right"
                 android:onClick="sortScore"
                 android:text="@string/score" />
             
-            <TextView
-                style="@style/column"
-                android:layout_marginLeft="1dp"
-                android:background="@drawable/column_right"
-                android:clickable="false"
-                android:text="@string/release"
-                android:textColor="@color/damps_blau" />
         </TableRow>
     </TableLayout>
 

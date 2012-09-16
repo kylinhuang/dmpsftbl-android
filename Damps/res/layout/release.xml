@@ -62,7 +62,7 @@
             <TextView
                 style="@style/column"
                 android:layout_marginLeft="1dp"
-                android:background="@drawable/column_mid"
+                android:background="@drawable/column_right"
                 android:onClick="sortScore"
                 android:text="@string/score" />
             

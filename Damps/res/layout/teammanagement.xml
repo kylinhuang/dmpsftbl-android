@@ -25,9 +25,7 @@
         android:onClick="selectStarter"
         android:text="@string/select"
         android:layout_width="fill_parent"
-        android:layout_below="@+id/rl_teammanagement_layout1"
-        android:enabled="false"
-        android:background="@drawable/button_inactive" />
+        android:layout_below="@+id/rl_teammanagement_layout1" />
 
     <Button
         android:id="@+id/bu_teammanagement_release"
