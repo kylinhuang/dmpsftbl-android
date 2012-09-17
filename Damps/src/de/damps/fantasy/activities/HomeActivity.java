@@ -1,5 +1,7 @@
 package de.damps.fantasy.activities;
 
+import static de.damps.fantasy.CommonUtilities.SENDER_ID;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -17,6 +19,8 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.android.gcm.GCMRegistrar;
+
 import de.damps.fantasy.R;
 import de.damps.fantasy.data.Json;
 import de.damps.fantasy.data.League;
@@ -29,6 +33,7 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,20 +62,23 @@ public class HomeActivity extends Activity {
 	private static Button tm;
 	private static Button msg;
 
+	private String TAG = "** Homeactivity **";
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
 
-		inititalizeApp();
-		inititalizeScreen();
+		initializePush();
+		initializeApp();
+		initializeScreen();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		inititalizeApp();
+		initializeApp();
 	}
 
 	/** Called when the activity is closed. */
@@ -83,24 +91,43 @@ public class HomeActivity extends Activity {
 	}
 
 	/*
-	 * initializes App
-	 * 
+	 * initializes Pushnotifications
 	 */
-	private void inititalizeApp() {
+	private void initializePush() {
+
+		GCMRegistrar.checkDevice(this);
+		GCMRegistrar.checkManifest(this);
+
+		final String regId = GCMRegistrar.getRegistrationId(this);
+		Log.i(TAG, "registration id =====  " + regId);
+
+		if (regId.equals("")) {
+			GCMRegistrar.register(this, SENDER_ID);
+			Log.i(TAG, "registration id =====  " + regId);
+
+		} else {
+			Log.v(TAG, "Already registered");
+		}
+	}
+
+
+	/*
+	 * initializes App
+	 */
+	private void initializeApp() {
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		editor = preferences.edit();
 
 		URL = preferences.getString("domain", getString(R.string.domain))
 				+ "/json";
-		
+
 		new GetLeague().execute();
 	}
-	
+
 	/*
 	 * initializes screen
-	 * 
 	 */
-	private void inititalizeScreen() {
+	private void initializeScreen() {
 		log = (ImageView) findViewById(R.id.iv_hom_log);
 		tm = (Button) findViewById(R.id.bu_hom_team);
 		msg = (Button) findViewById(R.id.bu_hom_nachrichten);
@@ -134,7 +161,6 @@ public class HomeActivity extends Activity {
 
 	/*
 	 * gets FFLTeams
-	 * 
 	 */
 	private class GetLeague extends AsyncTask<Void, Void, Void> {
 		String url = URL + "/userlist";
@@ -163,7 +189,6 @@ public class HomeActivity extends Activity {
 
 	/*
 	 * inflate menu
-	 *
 	 */
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.hauptmenue, menu);
@@ -172,7 +197,6 @@ public class HomeActivity extends Activity {
 
 	/*
 	 * press button on menu
-	 * 
 	 */
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -180,7 +204,7 @@ public class HomeActivity extends Activity {
 		case R.id.bu_menu_exit:
 			finish();
 			return true;
-		// options
+			// options
 		case R.id.bu_menu_options:
 			Intent intent = new Intent(getApplicationContext(),
 					OptionsActivity.class);
@@ -237,14 +261,13 @@ public class HomeActivity extends Activity {
 	}
 
 	public void startMessages(View view) {
-			Intent intent = new Intent(getApplicationContext(),
-					MessagesActivity.class);
-			startActivity(intent);
+		Intent intent = new Intent(getApplicationContext(),
+				MessagesActivity.class);
+		startActivity(intent);
 	}
 
 	/*
 	 * logging in
-	 * 
 	 */
 	public void log(View view) {
 		if (!preferences.contains("token")) {
@@ -252,19 +275,19 @@ public class HomeActivity extends Activity {
 			dialog.setContentView(R.layout.log);
 			dialog.setTitle("Log in");
 			dialog.setCancelable(true);
-			
+
 			// set up button
 			Button bu_cancel = (Button) dialog.findViewById(R.id.bu_cancel);
 			Button bu_ok = (Button) dialog.findViewById(R.id.bu_ok);
 			et_username = (EditText) dialog.findViewById(R.id.et_log_text1);
 			et_password = (EditText) dialog.findViewById(R.id.et_log_text2);
 			cb_save = (CheckBox) dialog.findViewById(R.id.cb_log_Box1);
-			
+
 			bu_ok.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					String[] user = {et_username.getText().toString(), et_password
-							.getText().toString()}; 
+					String[] user = { et_username.getText().toString(),
+							et_password.getText().toString() };
 					try {
 						if (new Login().execute(user).get()) {
 
@@ -273,7 +296,7 @@ public class HomeActivity extends Activity {
 							tm.setClickable(true);
 							msg.setBackgroundResource(R.drawable.button_selector);
 							msg.setClickable(true);
-							
+
 							if (cb_save.isChecked()) {
 								editor.putBoolean("savelogin", true);
 							}
@@ -281,7 +304,8 @@ public class HomeActivity extends Activity {
 							editor.commit();
 							dialog.dismiss();
 						} else {
-							Toast toast = Toast.makeText(getApplicationContext(),
+							Toast toast = Toast.makeText(
+									getApplicationContext(),
 									"Falscher Benutzername/Passwort",
 									Toast.LENGTH_LONG);
 							toast.setGravity(Gravity.CENTER, 0, 0);
@@ -309,7 +333,7 @@ public class HomeActivity extends Activity {
 		}
 
 	}
-	
+
 	/*
 	 * retrieve headlines
 	 */
@@ -318,19 +342,16 @@ public class HomeActivity extends Activity {
 		protected Boolean doInBackground(String... params) {
 			return login(params);
 		}
-		
+
 		protected void onPostExecute(Boolean result) {
 		}
-
 
 	}
 
 	/*
 	 * loging in
 	 * 
-	 * returns if logged in
-	 * sets userdata
-	 * 
+	 * returns if logged in sets userdata
 	 */
 	protected boolean login(String[] user) {
 		urlLogin = URL + "/login";
@@ -380,7 +401,6 @@ public class HomeActivity extends Activity {
 	 * Logging out
 	 * 
 	 * Removes prefs, sets buttons
-	 * 
 	 */
 	public static void logout() {
 		editor.remove("token");
