@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import de.damps.fantasy.R;
 import de.damps.fantasy.data.Json;
 import de.damps.fantasy.data.Player;
+import de.damps.fantasy.data.Row;
 
 public class RosterActivity extends Activity {
 
@@ -154,63 +156,11 @@ public class RosterActivity extends Activity {
 	 */
 	private void contructRoster() {
 		int ori = getResources().getConfiguration().orientation;
+		TableLayout head = (TableLayout) findViewById(R.id.tl_roster_table1);
+		Context c = getApplicationContext();
 		if (ori == 1) {
 			for (int i = 0; i < roster.size(); i++) {
-				// Row
-				TableRow newRow = new TableRow(getApplicationContext());
-				TableLayout.LayoutParams parar = new TableLayout.LayoutParams();
-				parar.setMargins(0, (int) TypedValue.applyDimension(
-						TypedValue.COMPLEX_UNIT_DIP, 1, getResources()
-								.getDisplayMetrics()), 0, (int) TypedValue
-						.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1,
-								getResources().getDisplayMetrics()));
-				newRow.setLayoutParams(parar);
-
-				TableRow.LayoutParams para = new TableRow.LayoutParams();
-				para.setMargins((int) TypedValue.applyDimension(
-						TypedValue.COMPLEX_UNIT_DIP, 2, getResources()
-								.getDisplayMetrics()), 0, 0, 0);
-
-				ImageView team = new ImageView(getApplicationContext());
-				TextView pos = new TextView(getApplicationContext());
-				TextView name = new TextView(getApplicationContext());
-				TextView score = new TextView(getApplicationContext());
-				newRow.addView(team, 0);
-				newRow.addView(pos, 1);
-				newRow.addView(name, 2);
-				newRow.addView(score, 3);
-
-				// Team
-				team.getLayoutParams().width = ((TextView) ((TableRow) ((TableLayout) findViewById(R.id.tl_roster_table1))
-						.getChildAt(0)).getVirtualChildAt(0)).getWidth();
-
-				// Pos
-				pos.setWidth(((TextView) ((TableRow) ((TableLayout) findViewById(R.id.tl_roster_table1))
-						.getChildAt(0)).getVirtualChildAt(1)).getWidth());
-				pos.setLayoutParams(para);
-				pos.setGravity(Gravity.CENTER);
-				pos.setTextAppearance(getApplicationContext(), R.style.text);
-				pos.setTextColor(getResources().getColor(R.color.weis));
-				pos.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.button));
-
-				// Name
-				name.setLayoutParams(para);
-				name.setTextAppearance(getApplicationContext(), R.style.text);
-				name.setPadding((int) TypedValue.applyDimension(
-						TypedValue.COMPLEX_UNIT_DIP, 3, getResources()
-								.getDisplayMetrics()), 0, 0, 0);
-
-				// Score
-				score.setWidth(((TextView) ((TableRow) ((TableLayout) findViewById(R.id.tl_roster_table1))
-						.getChildAt(0)).getVirtualChildAt(3)).getWidth());
-				score.setLayoutParams(para);
-				score.setTextAppearance(getApplicationContext(), R.style.text);
-				score.setGravity(Gravity.RIGHT);
-				score.setPadding(0, 0, (int) TypedValue.applyDimension(
-						TypedValue.COMPLEX_UNIT_DIP, 3, getResources()
-								.getDisplayMetrics()), 0);
-
+				TableRow newRow = new Row(c,"pos",head).newRow;
 				tbl.addView(newRow, i);
 			}
 		} else {
