@@ -19,16 +19,7 @@
 
         <ProgressBar
             android:id="@+id/pb_setstarters_bar1"
-            style="@style/progressbar"
-            android:layout_alignParentRight="false"
-            android:layout_toLeftOf="@+id/iv_setstarters_ok" />
-
-        <ImageView
-            android:id="@+id/iv_setstarters_ok"
-            style="@style/pic_title_right"
-            android:contentDescription="@string/pic_acc"
-            android:onClick="ok"
-            android:src="@drawable/accept" />
+            style="@style/progressbar" />
     </RelativeLayout>
 
     <LinearLayout
@@ -72,7 +63,6 @@
                 style="@style/column"
                 android:layout_marginRight="1dp"
                 android:background="@drawable/column_left"
-                android:onClick="sortTeam"
                 android:text="@string/team" />
 
             <TextView
@@ -80,7 +70,6 @@
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="1dp"
                 android:background="@drawable/column_mid"
-                android:onClick="sortPos"
                 android:text="@string/pos" />
 
             <TextView
@@ -88,15 +77,13 @@
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="1dp"
                 android:background="@drawable/column_mid"
-                android:onClick="sortName"
                 android:text="@string/name" />
 
             <TextView
                 style="@style/column"
                 android:layout_marginLeft="1dp"
                 android:background="@drawable/column_right"
-                android:onClick="sortScore"
-                android:text="@string/score" />
+                android:text="@string/status" />
             
         </TableRow>
     </TableLayout>

@@ -12,8 +12,15 @@ public class Player {
 
 	private JSONObject roster, player, nflteam;
 	private JSONArray score;
+	public boolean locked = false;
 
 	public Player(JSONObject jo) {
+		
+		try {
+			locked = !jo.getBoolean("open");
+		} catch (JSONException e2) {
+			locked = false;
+		}
 
 		try {
 			roster = jo.getJSONObject("Roster");
@@ -85,6 +92,8 @@ public class Player {
 		} catch (JSONException e) {
 			System.err.println("Kein Score Object");
 		}
+		
+		
 
 		summary = ((Integer) total).toString();
 	}

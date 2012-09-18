@@ -73,6 +73,7 @@ public class Row {
 		score.setPadding(0, 0, (int) TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_DIP, 3, c.getResources()
 						.getDisplayMetrics()), 0);
+		newRow.setTag(false);
 	}
 
 	public Row(Context c, TableLayout head, int top) {

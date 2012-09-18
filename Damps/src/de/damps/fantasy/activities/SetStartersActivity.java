@@ -4,9 +4,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -26,9 +25,9 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.TypedValue;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -52,8 +51,8 @@ public class SetStartersActivity extends Activity {
 
 	private String url;
 	private String url_start;
+	private String url_bench;
 	private TextView team;
-	private String tid;
 	private String token;
 	private String hash;
 	private SharedPreferences pref;
@@ -61,13 +60,8 @@ public class SetStartersActivity extends Activity {
 	private String oid;
 	private int gd;
 	private boolean firstgd;
-	private TableLayout.LayoutParams parar;
-	private TableRow.LayoutParams para;
-
-	private int rb;
-	private int wr;
-	private int te;
 	private boolean init = false;
+	private TableLayout head;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -90,9 +84,11 @@ public class SetStartersActivity extends Activity {
 		token = pref.getString("token", "");
 		hash = pref.getString("hash", "");
 
-		tid = de.damps.fantasy.activities.HomeActivity.league
-				.getTeamidByOwnerid(oid);
 		url = de.damps.fantasy.activities.HomeActivity.URL + "/myteamstarter/";
+		url_start = de.damps.fantasy.activities.HomeActivity.URL
+				+ "/setstarter/";
+		url_bench = de.damps.fantasy.activities.HomeActivity.URL
+				+ "/setstarter/";
 
 		team = (TextView) findViewById(R.id.tv_setstarters_title);
 		dteam = de.damps.fantasy.activities.HomeActivity.league
@@ -185,44 +181,45 @@ public class SetStartersActivity extends Activity {
 	}
 
 	/*
-	 * release player
+	 * start player
 	 */
-	private class SendStarters extends AsyncTask<String, Void, Void> {
+	private class SendStarter extends AsyncTask<String, Void, Boolean> {
 
 		@Override
 		protected void onPreExecute() {
 		};
 
 		@Override
-		protected Void doInBackground(String... params) {
-			// release(params);
-			return null;
+		protected Boolean doInBackground(String... params) {
+			return startPlayer(params);
 		}
 
-		protected void onPostExecute(Void v) {
+		protected void onPostExecute(Boolean result) {
+			
 		}
 	}
 
-	/*
-	 * release
-	 */
-	private void release(String[] ids) {
+	private boolean startPlayer(String[] data) {
 		final DefaultHttpClient client = new DefaultHttpClient();
-		final HttpPost httppost = new HttpPost(url_start);
+		String url_send = data[4];
+		final HttpPost httppost = new HttpPost(url_send);
 		final List<NameValuePair> postPara = new ArrayList<NameValuePair>();
 
 		postPara.add(new BasicNameValuePair("token", token));
 		postPara.add(new BasicNameValuePair("hash", hash));
-		postPara.add(new BasicNameValuePair("player_id", ids[0]));
-		postPara.add(new BasicNameValuePair("roster_id", ids[1]));
+		postPara.add(new BasicNameValuePair("season", data[0]));
+		postPara.add(new BasicNameValuePair("gameday", data[1]));
+		postPara.add(new BasicNameValuePair("position", data[2]));
+		postPara.add(new BasicNameValuePair("roster_id", data[3]));
 
-		String responsebody = null;
 		try {
 			httppost.setEntity(new UrlEncodedFormEntity(postPara));
 			try {
 				HttpResponse response = client.execute(httppost);
-				responsebody = EntityUtils.toString(response.getEntity());
-				String test = responsebody;
+				String s = EntityUtils.toString(response.getEntity());
+				if(false){
+					return false;
+				}
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -231,7 +228,7 @@ public class SetStartersActivity extends Activity {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-
+		return true;
 	}
 
 	/*
@@ -264,7 +261,6 @@ public class SetStartersActivity extends Activity {
 				starter.add(p);
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -277,7 +273,7 @@ public class SetStartersActivity extends Activity {
 		tbl.removeAllViews();
 
 		Context c = getApplicationContext();
-		TableLayout head = (TableLayout) findViewById(R.id.tl_setstarters_table1);
+		head = (TableLayout) findViewById(R.id.tl_setstarters_table1);
 		for (int i = 0; i < 8; i++) {
 			String pos = null;
 			switch (i) {
@@ -307,10 +303,9 @@ public class SetStartersActivity extends Activity {
 				break;
 			}
 			TableRow newRow = new Row(c, pos, head).newRow;
-			newRow.setTag(false);
 			tbl.addView(newRow, i);
 		}
-		
+
 		TableRow newHeader = new Row(c, head, Row.MID_HEADER).newRow;
 		tbl.addView(newHeader, 8);
 
@@ -319,32 +314,150 @@ public class SetStartersActivity extends Activity {
 
 			tbl.addView(newRowBench, i);
 		}
+	}
+
+	private OnClickListener starterListener(final int i) {
+		OnClickListener listener = new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				benchPlayer((TableRow) tbl.getChildAt(i));
+				String pos = (String) ((TextView) ((TableRow) v)
+						.getVirtualChildAt(1)).getText();
+				tbl.addView(new Row(getApplicationContext(), pos, head).newRow,
+						i);
+			}
+		};
+		return listener;
+	}
+
+	private OnClickListener benchListener() {
+		OnClickListener listener = new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				startPlayer((TableRow) v);
+			}
+
+		};
+		return listener;
+	}
+
+	private void startPlayer(TableRow v) {
+
+		String pos = (String) ((TextView) v.getVirtualChildAt(1)).getText();
+		int j = 0;
+		if (pos.equals("QB")
+				&& !(Boolean) ((TableRow) tbl.getChildAt(0)).getTag()) {
+
+			j = 0;
+			start(j, v);
+		} else if (pos.equals("RB")) {
+			if (!(Boolean) ((TableRow) tbl.getChildAt(1)).getTag()
+					|| !(Boolean) ((TableRow) tbl.getChildAt(2)).getTag()) {
+
+				if ((Boolean) ((TableRow) tbl.getChildAt(1)).getTag()) {
+					j = 2;
+					start(j, v);
+				} else {
+					j = 1;
+					start(j, v);
+				}
+			}
+		} else if (pos.equals("WR")) {
+			if (!(Boolean) ((TableRow) tbl.getChildAt(3)).getTag()
+					|| !(Boolean) ((TableRow) tbl.getChildAt(4)).getTag()) {
+
+				if ((Boolean) ((TableRow) tbl.getChildAt(3)).getTag()) {
+					j = 4;
+					start(j, v);
+				} else {
+					j = 3;
+					start(j, v);
+				}
+			}
+		} else if (pos.equals("TE")
+				&& !(Boolean) ((TableRow) tbl.getChildAt(5)).getTag()) {
+			j = 5;
+			start(j, v);
+		} else if (pos.equals("K")
+				&& !(Boolean) ((TableRow) tbl.getChildAt(6)).getTag()) {
+			j = 6;
+			start(j, v);
+		} else if (pos.equals("DEF")
+				&& !(Boolean) ((TableRow) tbl.getChildAt(7)).getTag()) {
+			j = 7;
+			start(j, v);
+		}
 
 	}
 
-
-	/*
-	 * fill bench
-	 */
-	private void fillBench() {
-		for (int i = 0; i < bench.size(); i++) {
-			if (i % 2 == 1) {
-				tbl.getChildAt(i).setBackgroundColor(
-						getResources().getColor(R.color.hellhellgrau));
-			}
-			int res = getResources().getIdentifier(
-					(bench.get(i).nfl_abr).toLowerCase(), "drawable",
-					getPackageName());
-			ImageView im = (ImageView) ((TableRow) tbl.getChildAt(9 + i))
-					.getVirtualChildAt(0);
-			im.setImageResource(res);
-			((TextView) ((TableRow) tbl.getChildAt(9 + i)).getVirtualChildAt(1))
-					.setText(bench.get(i).pos);
-			((TextView) ((TableRow) tbl.getChildAt(9 + i)).getVirtualChildAt(2))
-					.setText(bench.get(i).name);
-			((TextView) ((TableRow) tbl.getChildAt(9 + i)).getVirtualChildAt(3))
-					.setText(bench.get(i).summary);
+	private void start(int j, TableRow v) {
+		if(movePlayer(v, bench, starter)){
+			tbl.removeView(v);
+			tbl.removeViewAt(j);
+			tbl.addView(v, j);
+			((TableRow) tbl.getChildAt(j)).setOnClickListener(starterListener(j));
+			((TableRow) tbl.getChildAt(j)).setTag(true);;
+		}else{
+			Log.i("===============", "gesperrt");
 		}
+
+	}
+
+	public void benchPlayer(TableRow tableRow) {
+		TableRow benchRow = tableRow;
+		benchRow.setTag(true);
+		benchRow.setOnClickListener(benchListener());
+		tbl.removeView(tableRow);
+		tbl.addView(benchRow);
+		movePlayer(tableRow, starter, bench);
+	}
+
+	private boolean movePlayer(TableRow tableRow, ArrayList<Player> from,
+			ArrayList<Player> to) {
+		for (int i = 0; i < from.size(); i++) {
+			String pos = (String) ((TextView) tableRow.getVirtualChildAt(1))
+					.getText();
+			String name = (String) ((TextView) tableRow.getVirtualChildAt(2))
+					.getText();
+			if(from == bench){
+				if (pos.equals(from.get(i).pos) && name.equals(from.get(i).name)) {
+					Player p = from.get(i);
+					String[] data = new String[5];
+					data[0] = "2012";
+					data[1] = ((Integer)gd).toString();
+					data[2] = p.pos;
+					data[3] = ((Integer)p.roster_id).toString();
+					data[4] = url_start;
+					boolean locked = true;
+					try {
+						locked = !new SendStarter().execute(data).get();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					} catch (ExecutionException e) {
+						e.printStackTrace();
+					}
+					if(!locked){
+						to.add(from.remove(i));
+						return true;
+					}
+				}
+			}else{
+				if (pos.equals(from.get(i).pos) && name.equals(from.get(i).name)) {
+					Player p = from.get(i);
+					String[] data = new String[5];
+					data[0] = "2012";
+					data[1] = ((Integer)gd).toString();
+					data[2] = p.pos;
+					data[3] = ((Integer)p.roster_id).toString();
+					data[4] = url_bench;
+					new SendStarter().execute(data);
+				}
+			}
+		}
+		return false;
 	}
 
 	/*
@@ -352,36 +465,48 @@ public class SetStartersActivity extends Activity {
 	 */
 	private void fillStarter() {
 		for (int i = 0; i < starter.size(); i++) {
-			if (i % 2 == 1) {
-				tbl.getChildAt(i).setBackgroundColor(
-						getResources().getColor(R.color.hellhellgrau));
-			}
-
+			int j = 0;
+			/*
+			 * if (i % 2 == 1) { tbl.getChildAt(i).setBackgroundColor(
+			 * getResources().getColor(R.color.hellhellgrau)); }
+			 */
 			String pos = starter.get(i).pos;
 			if (pos.equals("QB")) {
-				fillRow(i, 0);
+				j = 0;
+				fillRow(i, j);
 			} else if (pos.equals("RB")) {
 				if ((Boolean) ((TableRow) tbl.getChildAt(1)).getTag()) {
-					fillRow(i, 2);
+					j = 2;
+					fillRow(i, j);
 				} else {
-					fillRow(i, 1);
+					j = 1;
+					fillRow(i, j);
 				}
 			} else if (pos.equals("WR")) {
 				if ((Boolean) ((TableRow) tbl.getChildAt(3)).getTag()) {
-					fillRow(i, 4);
+					j = 4;
+					fillRow(i, j);
 				} else {
-					fillRow(i, 3);
+					j = 3;
+					fillRow(i, j);
 				}
 			} else if (pos.equals("TE")) {
-				fillRow(i, 5);
+				j = 5;
+				fillRow(i, j);
 			} else if (pos.equals("K")) {
-				fillRow(i, 6);
+				j = 6;
+				fillRow(i, j);
 			} else if (pos.equals("DEF")) {
-				fillRow(i, 7);
+				j = 7;
+				fillRow(i, j);
 			}
+			
 		}
 	}
 
+	/*
+	 * fills StarterRow
+	 */
 	private void fillRow(int i, int p) {
 		int res = getResources().getIdentifier(
 				(starter.get(i).nfl_abr).toLowerCase(), "drawable",
@@ -393,62 +518,50 @@ public class SetStartersActivity extends Activity {
 				.setText(starter.get(i).pos);
 		((TextView) ((TableRow) tbl.getChildAt(p)).getVirtualChildAt(2))
 				.setText(starter.get(i).name);
-		((TextView) ((TableRow) tbl.getChildAt(p)).getVirtualChildAt(3))
-				.setText(starter.get(i).summary);
+		((TableRow) tbl.getChildAt(p)).removeViewAt(3);
 		((TableRow) tbl.getChildAt(p)).setTag(true);
+		if(!starter.get(i).locked){
+			((TableRow) tbl.getChildAt(p))
+			.setOnClickListener(starterListener(p));
+		}else{
+			ImageView iv = new ImageView(getApplicationContext());
+			iv.setImageResource(R.drawable.locked);
+			((TableRow) tbl.getChildAt(p)).addView(iv, 3);
+		}
+
 	}
 
-	public void sortTeam(View view) {
-		Comparator<Player> comp = new Comparator<Player>() {
-
-			@Override
-			public int compare(Player lhs, Player rhs) {
-				return lhs.nfl_abr.compareToIgnoreCase(rhs.nfl_abr);
+	/*
+	 * fill bench
+	 */
+	private void fillBench() {
+		for (int i = 0; i < bench.size(); i++) {
+			/*
+			 * if (i % 2 == 1) { tbl.getChildAt(i).setBackgroundColor(
+			 * getResources().getColor(R.color.hellhellgrau)); }
+			 */
+			int res = getResources().getIdentifier(
+					(bench.get(i).nfl_abr).toLowerCase(), "drawable",
+					getPackageName());
+			ImageView im = (ImageView) ((TableRow) tbl.getChildAt(9 + i))
+					.getVirtualChildAt(0);
+			im.setImageResource(res);
+			((TextView) ((TableRow) tbl.getChildAt(9 + i)).getVirtualChildAt(1))
+					.setText(bench.get(i).pos);
+			((TextView) ((TableRow) tbl.getChildAt(9 + i)).getVirtualChildAt(2))
+					.setText(bench.get(i).name);
+			((TableRow) tbl.getChildAt(9 + i)).removeViewAt(3);
+			
+			
+			((TableRow) tbl.getChildAt(9 + i)).setTag(true);
+			if(!bench.get(i).locked){
+				((TableRow) tbl.getChildAt(9+i))
+				.setOnClickListener(benchListener());
+			}else{
+				ImageView iv = new ImageView(getApplicationContext());
+				iv.setImageResource(R.drawable.locked);
+				((TableRow) tbl.getChildAt(9+i)).addView(iv, 3);
 			}
-		};
-		Collections.sort(bench, comp);
+		}
 	}
-
-	public void sortPos(View view) {
-		Comparator<Player> comp = new Comparator<Player>() {
-
-			@Override
-			public int compare(Player lhs, Player rhs) {
-				return lhs.pos.compareToIgnoreCase(rhs.pos);
-			}
-		};
-		Collections.sort(bench, comp);
-
-	}
-
-	public void sortName(View view) {
-		Comparator<Player> comp = new Comparator<Player>() {
-
-			@Override
-			public int compare(Player lhs, Player rhs) {
-				return lhs.name.compareToIgnoreCase(rhs.name);
-			}
-		};
-		Collections.sort(bench, comp);
-
-	}
-
-	public void sortScore(View view) {
-		Comparator<Player> comp = new Comparator<Player>() {
-
-			@Override
-			public int compare(Player lhs, Player rhs) {
-				if (lhs.total < rhs.total) {
-					return 1;
-				} else if (lhs.total > rhs.total) {
-					return -1;
-				} else {
-					return 0;
-				}
-			}
-		};
-		Collections.sort(bench, comp);
-
-	}
-
 }
