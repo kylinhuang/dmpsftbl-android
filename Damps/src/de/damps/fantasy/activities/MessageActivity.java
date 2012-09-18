@@ -71,7 +71,7 @@ public class MessageActivity extends Activity {
 		Intent intent = new Intent(getApplicationContext(),
 				NewMessageActivity.class);
 		String t = "AW: " + title;
-		String m = from + ":\n\n" + message;
+		String m = from + ":\n\n" + message + "\n\n";
 		intent.putExtra("title", t);
 		intent.putExtra("message", m);
 		intent.putExtra("from", from);

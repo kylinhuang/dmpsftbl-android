@@ -66,6 +66,8 @@ public class NewPostActivity extends Activity {
 		msg = (EditText) findViewById(R.id.et_newpost_msg);
 		if (extra.containsKey("quote")) {
 			msg.setText(extra.getString("quote"));
+			msg.setSelection(msg.getText().length());
+			msg.requestFocus();
 		}
 	}
 	

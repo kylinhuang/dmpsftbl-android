@@ -77,6 +77,9 @@ public class NewMessageActivity extends Activity {
 			
 			title.setText(titletxt);
 			msg.setText(msgtxt);
+			
+			msg.setSelection(msg.getText().length());
+			msg.requestFocus();
 		}
 	}
 

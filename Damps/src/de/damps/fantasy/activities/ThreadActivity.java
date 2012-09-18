@@ -153,7 +153,7 @@ public class ThreadActivity extends ListActivity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> av, View v, int pos,
 					long id) {
-				String quote = "[quote]" + posts.get(pos).message + "[/quote]";
+				String quote = "[quote]" + posts.get(pos).message + "[/quote]\n\n";
 				
 				Intent intent = new Intent(getApplicationContext(),
 						NewPostActivity.class);

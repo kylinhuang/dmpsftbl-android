@@ -63,6 +63,7 @@ public class HomeActivity extends Activity {
 	private static Button msg;
 
 	private String TAG = "** Homeactivity **";
+	private String reg_id;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -99,10 +100,11 @@ public class HomeActivity extends Activity {
 		GCMRegistrar.checkManifest(this);
 
 		final String regId = GCMRegistrar.getRegistrationId(this);
-		Log.i(TAG, "registration id =====  " + regId);
+		reg_id = regId;
 
 		if (regId.equals("")) {
 			GCMRegistrar.register(this, SENDER_ID);
+			reg_id = GCMRegistrar.getRegistrationId(this);
 		} else {
 			Log.v(TAG, "Already registered");
 		}
@@ -359,6 +361,7 @@ public class HomeActivity extends Activity {
 
 		postPara.add(new BasicNameValuePair("username", user[0]));
 		postPara.add(new BasicNameValuePair("password", user[1]));
+		postPara.add(new BasicNameValuePair("reg_id", reg_id));
 
 		String responsebody = null;
 		try {
