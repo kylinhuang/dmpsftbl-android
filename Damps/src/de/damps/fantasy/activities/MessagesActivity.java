@@ -105,7 +105,7 @@ public class MessagesActivity extends TabActivity {
 			for (int i = 0; i < joa.length(); i++) {
 				Message m = new Message(joa.getJSONObject(i));
 
-				list.add(0, m);
+				list.add(m);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();

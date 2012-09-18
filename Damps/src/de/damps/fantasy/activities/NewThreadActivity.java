@@ -1,23 +1,9 @@
 package de.damps.fantasy.activities;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-
 import de.damps.fantasy.R;
+import de.damps.fantasy.data.DataPost;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -40,8 +26,6 @@ public class NewThreadActivity extends Activity{
 	private String msgtxt;
 	private String stickystring = "0";
 	private String memberstring = "0";
-	private String token;
-	private String hash;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -61,9 +45,6 @@ public class NewThreadActivity extends Activity{
 		((TextView) findViewById(R.id.tv_newthread_title1)).setTypeface(font);
 
 		url = de.damps.fantasy.activities.HomeActivity.URL + "/openthread";
-		SharedPreferences pref = de.damps.fantasy.activities.HomeActivity.preferences;
-		token = pref.getString("token", "");
-		hash = pref.getString("hash", "");
 	}
 	
 	/*
@@ -99,16 +80,25 @@ public class NewThreadActivity extends Activity{
 	private class CreateThread extends AsyncTask<Void, Void, Void> {
 		ProgressBar pb;
 		private String id;
+		String[][] data = new String[4][2];
 
 		@Override
 		protected void onPreExecute() {
 			pb = (ProgressBar) findViewById(R.id.pb_newthread_bar1);
 			pb.setVisibility(View.VISIBLE);
+			data[0][0] = "sticky";
+			data[0][1] = stickystring;
+			data[1][0] = "members";
+			data[1][1] = memberstring;
+			data[2][0] = "title";
+			data[2][1] = titletxt;
+			data[3][0] = "message";
+			data[3][1] = msgtxt;
 		};
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			id = post();
+			id = new DataPost(url,data).response;
 			return null;
 		}
 
@@ -118,40 +108,6 @@ public class NewThreadActivity extends Activity{
 			pb.setVisibility(View.INVISIBLE);
 		}
 
-	}
-
-	/*
-	 * send new thread
-	 */
-	protected String post() {
-		
-		final DefaultHttpClient client = new DefaultHttpClient();
-		final HttpPost httppost = new HttpPost(url);
-		final List<NameValuePair> postPara = new ArrayList<NameValuePair>();
-
-		postPara.add(new BasicNameValuePair("token", token));
-		postPara.add(new BasicNameValuePair("hash", hash));
-		postPara.add(new BasicNameValuePair("sticky", stickystring));
-		postPara.add(new BasicNameValuePair("members", memberstring));
-		postPara.add(new BasicNameValuePair("title", titletxt));
-		postPara.add(new BasicNameValuePair("message", msgtxt));
-
-		String responsebody = null;
-		try {
-			httppost.setEntity(new UrlEncodedFormEntity(postPara));
-			try {
-				HttpResponse response = client.execute(httppost);
-				responsebody = EntityUtils.toString(response.getEntity());
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-
-		return responsebody;
 	}
 	
 	/*

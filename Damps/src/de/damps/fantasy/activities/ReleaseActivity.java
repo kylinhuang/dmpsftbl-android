@@ -1,18 +1,8 @@
 package de.damps.fantasy.activities;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +23,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import de.damps.fantasy.R;
+import de.damps.fantasy.data.DataPost;
 import de.damps.fantasy.data.Json;
 import de.damps.fantasy.data.Player;
 import de.damps.fantasy.data.Row;
@@ -47,11 +38,11 @@ public class ReleaseActivity extends Activity {
 	private String url_release;
 	private TextView team;
 	private String id;
-	private String token;
-	private String hash;
 	private SharedPreferences pref;
 	private String dteam;
 	private String oid;
+	private String pid;
+	private String rid;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -82,9 +73,6 @@ public class ReleaseActivity extends Activity {
 		dteam = de.damps.fantasy.activities.HomeActivity.league
 				.getTeamByOwnerid(oid);
 		team.setText(dteam);
-		//
-		token = pref.getString("token", "");
-		hash = pref.getString("hash", "");
 
 		new GetRoster().execute();
 	}
@@ -106,6 +94,7 @@ public class ReleaseActivity extends Activity {
 		protected void onPreExecute() {
 			pb = (ProgressBar) findViewById(R.id.pb_release_bar1);
 			pb.setVisibility(View.VISIBLE);
+
 		};
 
 		@Override
@@ -126,48 +115,25 @@ public class ReleaseActivity extends Activity {
 	/*
 	 * release player
 	 */
-	private class ReleasePlayer extends AsyncTask<String, Void, Void> {
+	private class ReleasePlayer extends AsyncTask<Void, Void, Void> {
+		String[][] data = new String[2][2];
 
 		@Override
 		protected void onPreExecute() {
+			data[0][0] = "player_id";
+			data[0][1] = pid;
+			data[1][0] = "roster_id";
+			data[1][1] = rid;
 		};
 
 		@Override
-		protected Void doInBackground(String... params) {
-			release(params);
+		protected Void doInBackground(Void... v) {
+			new DataPost(url_release,data);
 			return null;
 		}
 
 		protected void onPostExecute(Void v) {
 		}
-	}
-
-	/*
-	 * release
-	 */
-	private void release(String[] ids) {
-		final DefaultHttpClient client = new DefaultHttpClient();
-		final HttpPost httppost = new HttpPost(url_release);
-		final List<NameValuePair> postPara = new ArrayList<NameValuePair>();
-
-		postPara.add(new BasicNameValuePair("token", token));
-		postPara.add(new BasicNameValuePair("hash", hash));
-		postPara.add(new BasicNameValuePair("player_id", ids[0]));
-		postPara.add(new BasicNameValuePair("roster_id", ids[1]));
-
-		try {
-			httppost.setEntity(new UrlEncodedFormEntity(postPara));
-			try {
-				client.execute(httppost);
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	/*
@@ -205,12 +171,11 @@ public class ReleaseActivity extends Activity {
 		TableLayout head = (TableLayout) findViewById(R.id.tl_release_table1);
 		Context c = getApplicationContext();
 		for (int i = 0; i < roster.size(); i++) {
-			
-			TableRow newRow = new Row(c,"pos",head).newRow;
 
-			String pid = ((Integer) roster.get(i).player_id).toString();
-			String rid = ((Integer) roster.get(i).roster_id).toString();
-			final String[] ids = {pid,rid};
+			TableRow newRow = new Row(c, "pos", head).newRow;
+
+			pid = ((Integer) roster.get(i).player_id).toString();
+			rid = ((Integer) roster.get(i).roster_id).toString();
 			final String name1 = roster.get(i).name;
 
 			newRow.setOnClickListener(new OnClickListener() {
@@ -235,7 +200,7 @@ public class ReleaseActivity extends Activity {
 					bu_ok.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							new ReleasePlayer().execute(ids);
+							new ReleasePlayer().execute();
 							tbl.removeView(v);
 							dialog.dismiss();
 						}

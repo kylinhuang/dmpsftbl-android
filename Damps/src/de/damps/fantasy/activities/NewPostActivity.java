@@ -1,21 +1,9 @@
 package de.damps.fantasy.activities;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-
 import de.damps.fantasy.R;
+import de.damps.fantasy.data.DataPost;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,16 +20,13 @@ public class NewPostActivity extends Activity {
 	private EditText msg;
 	private String url;
 	private String msgtxt;
-	private String token;
-	private String hash;
 	private String id;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.new_post);
-		
-		
+
 		inititalizeScreen();
 	} 
 	
@@ -58,10 +43,6 @@ public class NewPostActivity extends Activity {
 		title = extra.getString("title");
 		
 		url = de.damps.fantasy.activities.HomeActivity.URL + "/postforum";
-		
-		SharedPreferences pref = de.damps.fantasy.activities.HomeActivity.preferences;
-		token = pref.getString("token", "");
-		hash = pref.getString("hash", "");
 
 		msg = (EditText) findViewById(R.id.et_newpost_msg);
 		if (extra.containsKey("quote")) {
@@ -100,16 +81,21 @@ public class NewPostActivity extends Activity {
 	 */
 	private class Reply extends AsyncTask<Void, Void, Void> {
 		ProgressBar pb;
+		private String[][] data;
 
 		@Override
 		protected void onPreExecute() {
 			pb = (ProgressBar) findViewById(R.id.pb_newpost_bar1);
 			pb.setVisibility(View.VISIBLE);
+			data[0][0] = "message";
+			data[0][1] = msgtxt;
+			data[1][0] = "forum_id";
+			data[1][1] = id;
 		};
 
 		@Override
 		protected Void doInBackground(Void... params) {
-			reply();
+			new DataPost(url,data);
 			return null;
 		}
 
@@ -118,35 +104,6 @@ public class NewPostActivity extends Activity {
 			openThread();
 			pb.setVisibility(View.INVISIBLE);
 		}
-
-	}
-
-	/*
-	 * send reply
-	 */
-	protected void reply() {
-		final DefaultHttpClient client = new DefaultHttpClient();
-		final HttpPost httppost = new HttpPost(url);
-		final List<NameValuePair> postPara = new ArrayList<NameValuePair>();
-
-		postPara.add(new BasicNameValuePair("token", token));
-		postPara.add(new BasicNameValuePair("hash", hash));
-		postPara.add(new BasicNameValuePair("message", msgtxt));
-		postPara.add(new BasicNameValuePair("forum_id", id));
-
-		try {
-			httppost.setEntity(new UrlEncodedFormEntity(postPara));
-			try {
-				client.execute(httppost);
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	/*

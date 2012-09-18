@@ -1,27 +1,13 @@
 package de.damps.fantasy.activities;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-
 import de.damps.fantasy.R;
 import de.damps.fantasy.adapter.OwnerAdapter;
 import de.damps.fantasy.data.DampsTeam;
+import de.damps.fantasy.data.DataPost;
 import de.damps.fantasy.data.Message;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -38,8 +24,6 @@ public class NewMessageActivity extends Activity {
 	private String titletxt;
 	private String msgtxt;
 	private String url;
-	private String token;
-	private String hash;
 	private Spinner spinner;
 	private String receiver;
 	private String from;
@@ -57,9 +41,6 @@ public class NewMessageActivity extends Activity {
 	 */
 	private void initializeScreen() {
 		url = de.damps.fantasy.activities.HomeActivity.URL + "/sendmessage";
-		SharedPreferences pref = de.damps.fantasy.activities.HomeActivity.preferences;
-		token = pref.getString("token", "");
-		hash = pref.getString("hash", "");
 		
 		title = (EditText) findViewById(R.id.et_newm_title);
 		msg = (EditText) findViewById(R.id.et_newm_msg);
@@ -112,7 +93,6 @@ public class NewMessageActivity extends Activity {
 				android.R.layout.simple_spinner_item,
 				de.damps.fantasy.activities.HomeActivity.league.league);
 		spinner.setAdapter(ownerAdapter);
-
 	}
 
 	/*
@@ -128,16 +108,23 @@ public class NewMessageActivity extends Activity {
 	private class SendMessage extends AsyncTask<String, Void, Void> {
 		ProgressBar pb;
 		String response = null;
+		String[][] data = new String[3][2];
 
 		@Override
 		protected void onPreExecute() {
 			pb = (ProgressBar) findViewById(R.id.pb_newm_bar1);
 			pb.setVisibility(View.VISIBLE);
+			data[0][0] = "to";
+			data[0][1] = receiver;
+			data[1][0] = "subject";
+			data[1][1] = titletxt;
+			data[2][0] = "content";
+			data[2][1] = msgtxt;
 		};
 
 		@Override
 		protected Void doInBackground(String... params) {
-			response = post();
+			response = new DataPost(url,data).response;
 			return null;
 		}
 
@@ -161,42 +148,7 @@ public class NewMessageActivity extends Activity {
 				toast.setGravity(Gravity.CENTER, 0, 0);
 				toast.show();
 			}
-
 		}
-
-	}
-
-	/*
-	 * send message
-	 */
-	protected String post() {
-
-		final DefaultHttpClient client = new DefaultHttpClient();
-		final HttpPost httppost = new HttpPost(url);
-		final List<NameValuePair> postPara = new ArrayList<NameValuePair>();
-
-		postPara.add(new BasicNameValuePair("token", token));
-		postPara.add(new BasicNameValuePair("hash", hash));
-		postPara.add(new BasicNameValuePair("to", receiver));
-		postPara.add(new BasicNameValuePair("subject", titletxt));
-		postPara.add(new BasicNameValuePair("content", msgtxt));
-
-		String responsebody = null;
-		try {
-			httppost.setEntity(new UrlEncodedFormEntity(postPara));
-			try {
-				HttpResponse response = client.execute(httppost);
-				responsebody = EntityUtils.toString(response.getEntity());
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-
-		return responsebody;
 	}
 
 }
