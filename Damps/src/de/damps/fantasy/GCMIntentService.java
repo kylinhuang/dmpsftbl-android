@@ -11,7 +11,7 @@ import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
 
-import de.damps.fantasy.activities.HomeActivity;
+import de.damps.fantasy.activities.MessagesActivity;
 
 public class GCMIntentService extends GCMBaseIntentService {
 
@@ -49,7 +49,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 			Context context = getApplicationContext();
 			CharSequence contentTitle = ctitle;
 			CharSequence contentText = ctxt;
-			Intent notificationIntent = new Intent(this, HomeActivity.class);
+			Intent notificationIntent = new Intent(this, MessagesActivity.class);
 			PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
 					notificationIntent, 0);
 

@@ -1,6 +1,5 @@
 package de.damps.fantasy.data;
 
-import java.sql.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
