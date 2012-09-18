@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ListView;
@@ -83,9 +84,30 @@ public class ForumActivity extends ListActivity {
 		@Override
 		protected void onPostExecute(Void v) {
 			showThreads();
+			new LoadList().execute();
 			pb.setVisibility(View.INVISIBLE);
 		}
+	}
 
+	private class LoadList extends AsyncTask<Void, Void, Void> {
+		@Override
+		protected Void doInBackground(Void... params) {
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void v) {
+			long ftime = System.currentTimeMillis() + 7200000;
+			de.damps.fantasy.activities.HomeActivity.editor.putLong("ftime",
+					ftime);
+			de.damps.fantasy.activities.HomeActivity.editor.commit();
+		}
 	}
 
 	/*
@@ -114,6 +136,7 @@ public class ForumActivity extends ListActivity {
 		threadadapter = new ThreadAdapter(this, R.layout.threaditem, threads);
 
 		setListAdapter(threadadapter);
+
 	}
 
 	/*
@@ -136,7 +159,7 @@ public class ForumActivity extends ListActivity {
 	public void newThread(View view) {
 		if (de.damps.fantasy.activities.HomeActivity.preferences
 				.contains("token")) {
-			
+
 			Intent intent = new Intent(getApplicationContext(),
 					NewThreadActivity.class);
 			startActivity(intent);

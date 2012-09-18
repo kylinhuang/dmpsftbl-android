@@ -103,8 +103,6 @@ public class HomeActivity extends Activity {
 
 		if (regId.equals("")) {
 			GCMRegistrar.register(this, SENDER_ID);
-			Log.i(TAG, "registration id =====  " + regId);
-
 		} else {
 			Log.v(TAG, "Already registered");
 		}

@@ -6,6 +6,8 @@ import de.damps.fantasy.*;
 import de.damps.fantasy.data.MyThread;
 
 import android.content.Context;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +43,15 @@ public class ThreadAdapter extends ArrayAdapter<MyThread> {
 
 		// Assign the appropriate data from our alert object above
 		title.setText(th.title);
-		modified.setText("Letzter Beitrag: " + th.last + " " + th.modified);
+
+		String s = "Letzter Beitrag: " + th.last + " " + th.modified;
+
+		long time = de.damps.fantasy.activities.HomeActivity.preferences
+				.getLong("ftime", 0);
+		if (time < th.mod) {
+			s = s+ "<font color=#036CAE><i><sup>new post</sup></i></font";
+		}
+		modified.setText(Html.fromHtml(s));
 		return v;
 	}
 
