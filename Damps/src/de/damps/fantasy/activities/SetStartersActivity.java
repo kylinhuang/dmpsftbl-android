@@ -62,6 +62,7 @@ public class SetStartersActivity extends Activity {
 	private boolean firstgd;
 	private boolean init = false;
 	private TableLayout head;
+	private Integer starter_id;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -88,7 +89,7 @@ public class SetStartersActivity extends Activity {
 		url_start = de.damps.fantasy.activities.HomeActivity.URL
 				+ "/setstarter/";
 		url_bench = de.damps.fantasy.activities.HomeActivity.URL
-				+ "/setstarter/";
+				+ "/removestarter/";
 
 		team = (TextView) findViewById(R.id.tv_setstarters_title);
 		dteam = de.damps.fantasy.activities.HomeActivity.league
@@ -104,7 +105,7 @@ public class SetStartersActivity extends Activity {
 		ArrayList<String> gamedays = new ArrayList<String>(
 				Arrays.asList(getResources().getStringArray(R.array.gameday)));
 		for (int i = 0; i < gd - 1; i++) {
-			gamedays.remove(i);
+			gamedays.remove(0);
 		}
 		sp_gd = (Spinner) findViewById(R.id.spi_setstarters_gameday);
 		ArrayAdapter<String> ad_gd = new ArrayAdapter<String>(this,
@@ -195,30 +196,41 @@ public class SetStartersActivity extends Activity {
 		}
 
 		protected void onPostExecute(Boolean result) {
-			
+
 		}
 	}
 
 	private boolean startPlayer(String[] data) {
 		final DefaultHttpClient client = new DefaultHttpClient();
-		String url_send = data[4];
+		String url_send = data[0];
 		final HttpPost httppost = new HttpPost(url_send);
 		final List<NameValuePair> postPara = new ArrayList<NameValuePair>();
-
+		
 		postPara.add(new BasicNameValuePair("token", token));
 		postPara.add(new BasicNameValuePair("hash", hash));
-		postPara.add(new BasicNameValuePair("season", data[0]));
-		postPara.add(new BasicNameValuePair("gameday", data[1]));
-		postPara.add(new BasicNameValuePair("position", data[2]));
-		postPara.add(new BasicNameValuePair("roster_id", data[3]));
+		
+		if(data.length == 5){
+			postPara.add(new BasicNameValuePair("season", data[1]));
+			postPara.add(new BasicNameValuePair("gameday", data[2]));
+			postPara.add(new BasicNameValuePair("position", data[3]));
+			postPara.add(new BasicNameValuePair("roster_id", data[4]));
+		}else{
+			postPara.add(new BasicNameValuePair("starter_id", data[1]));
+		}
+		
+		
 
 		try {
 			httppost.setEntity(new UrlEncodedFormEntity(postPara));
 			try {
 				HttpResponse response = client.execute(httppost);
 				String s = EntityUtils.toString(response.getEntity());
-				if(false){
+				if (false) {
 					return false;
+				}else{
+					if(!s.equals("true")){
+						starter_id = Integer.valueOf(s);
+					}
 				}
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
@@ -235,7 +247,7 @@ public class SetStartersActivity extends Activity {
 	 * retrieve data
 	 */
 	private void parse() {
-		Json data = new Json(url);
+		Json data = new Json(url, token, hash);
 		JSONObject jo = data.data;
 
 		try {
@@ -307,6 +319,7 @@ public class SetStartersActivity extends Activity {
 		}
 
 		TableRow newHeader = new Row(c, head, Row.MID_HEADER).newRow;
+		((TextView) newHeader.getVirtualChildAt(3)).setText("Status");
 		tbl.addView(newHeader, 8);
 
 		for (int i = 9; i < 9 + bench.size(); i++) {
@@ -394,19 +407,21 @@ public class SetStartersActivity extends Activity {
 	}
 
 	private void start(int j, TableRow v) {
-		if(movePlayer(v, bench, starter)){
+		if (movePlayer(v, bench, starter)) {
 			tbl.removeView(v);
 			tbl.removeViewAt(j);
 			tbl.addView(v, j);
-			((TableRow) tbl.getChildAt(j)).setOnClickListener(starterListener(j));
-			((TableRow) tbl.getChildAt(j)).setTag(true);;
-		}else{
+			((TableRow) tbl.getChildAt(j))
+					.setOnClickListener(starterListener(j));
+			((TableRow) tbl.getChildAt(j)).setTag(true);
+			;
+		} else {
 			Log.i("===============", "gesperrt");
 		}
 
 	}
 
-	public void benchPlayer(TableRow tableRow) {
+	private void benchPlayer(TableRow tableRow) {
 		TableRow benchRow = tableRow;
 		benchRow.setTag(true);
 		benchRow.setOnClickListener(benchListener());
@@ -422,15 +437,17 @@ public class SetStartersActivity extends Activity {
 					.getText();
 			String name = (String) ((TextView) tableRow.getVirtualChildAt(2))
 					.getText();
-			if(from == bench){
-				if (pos.equals(from.get(i).pos) && name.equals(from.get(i).name)) {
+			if (from == bench) {
+				if (pos.equals(from.get(i).pos)
+						&& name.equals(from.get(i).name)) {
 					Player p = from.get(i);
 					String[] data = new String[5];
-					data[0] = "2012";
-					data[1] = ((Integer)gd).toString();
-					data[2] = p.pos;
-					data[3] = ((Integer)p.roster_id).toString();
-					data[4] = url_start;
+					data[0] = url_start;
+					data[1] = "2012";
+					data[2] = ((Integer) gd).toString();
+					data[3] = p.pos;
+					data[4] = ((Integer) p.roster_id).toString();
+					
 					boolean locked = true;
 					try {
 						locked = !new SendStarter().execute(data).get();
@@ -439,20 +456,20 @@ public class SetStartersActivity extends Activity {
 					} catch (ExecutionException e) {
 						e.printStackTrace();
 					}
-					if(!locked){
+					if (!locked) {
+						from.get(i).starter_id = starter_id;
 						to.add(from.remove(i));
 						return true;
 					}
 				}
-			}else{
-				if (pos.equals(from.get(i).pos) && name.equals(from.get(i).name)) {
+			} else {
+				if (pos.equals(from.get(i).pos)
+						&& name.equals(from.get(i).name)) {
 					Player p = from.get(i);
-					String[] data = new String[5];
-					data[0] = "2012";
-					data[1] = ((Integer)gd).toString();
-					data[2] = p.pos;
-					data[3] = ((Integer)p.roster_id).toString();
-					data[4] = url_bench;
+					String[] data = new String[2];
+					data[0] = url_bench;
+					data[1] =  ((Integer)p.starter_id).toString();
+					
 					new SendStarter().execute(data);
 				}
 			}
@@ -500,7 +517,7 @@ public class SetStartersActivity extends Activity {
 				j = 7;
 				fillRow(i, j);
 			}
-			
+
 		}
 	}
 
@@ -520,10 +537,10 @@ public class SetStartersActivity extends Activity {
 				.setText(starter.get(i).name);
 		((TableRow) tbl.getChildAt(p)).removeViewAt(3);
 		((TableRow) tbl.getChildAt(p)).setTag(true);
-		if(!starter.get(i).locked){
+		if (!starter.get(i).locked) {
 			((TableRow) tbl.getChildAt(p))
-			.setOnClickListener(starterListener(p));
-		}else{
+					.setOnClickListener(starterListener(p));
+		} else {
 			ImageView iv = new ImageView(getApplicationContext());
 			iv.setImageResource(R.drawable.locked);
 			((TableRow) tbl.getChildAt(p)).addView(iv, 3);
@@ -551,16 +568,15 @@ public class SetStartersActivity extends Activity {
 			((TextView) ((TableRow) tbl.getChildAt(9 + i)).getVirtualChildAt(2))
 					.setText(bench.get(i).name);
 			((TableRow) tbl.getChildAt(9 + i)).removeViewAt(3);
-			
-			
+
 			((TableRow) tbl.getChildAt(9 + i)).setTag(true);
-			if(!bench.get(i).locked){
-				((TableRow) tbl.getChildAt(9+i))
-				.setOnClickListener(benchListener());
-			}else{
+			if (!bench.get(i).locked) {
+				((TableRow) tbl.getChildAt(9 + i))
+						.setOnClickListener(benchListener());
+			} else {
 				ImageView iv = new ImageView(getApplicationContext());
 				iv.setImageResource(R.drawable.locked);
-				((TableRow) tbl.getChildAt(9+i)).addView(iv, 3);
+				((TableRow) tbl.getChildAt(9 + i)).addView(iv, 3);
 			}
 		}
 	}

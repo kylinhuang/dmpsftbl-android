@@ -4,8 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class Player {
-	public int player_id, roster_id, nfl_id, fflteam_id, nflteam_id, total;
+	public int player_id, roster_id, nfl_id, fflteam_id, nflteam_id, starter_id, total;
 	public boolean active;
 	public String name, pos, nfl_nick, nfl_city, nfl_abr, summary, contract;
 	public int[] scores = new int[17];
@@ -20,6 +22,12 @@ public class Player {
 			locked = !jo.getBoolean("open");
 		} catch (JSONException e2) {
 			locked = false;
+		}
+		
+		try {
+			starter_id = jo.getInt("id");
+		} catch (JSONException e2) {
+			Log.i("STARTER", "Kein Starter");
 		}
 
 		try {
