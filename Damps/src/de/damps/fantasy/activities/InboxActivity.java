@@ -5,12 +5,15 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+
 import de.damps.fantasy.R;
 import de.damps.fantasy.adapter.MessageAdapter;
 import de.damps.fantasy.data.Message;
@@ -117,7 +120,9 @@ public class InboxActivity extends ListActivity {
 			httppost.setEntity(new UrlEncodedFormEntity(postPara));
 
 			try {
-				client.execute(httppost);
+				HttpResponse response = client.execute(httppost);
+				String s = EntityUtils.toString(response.getEntity());
+				String t =s;
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
 			} catch (IOException e) {

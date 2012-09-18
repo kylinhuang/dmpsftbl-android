@@ -12,6 +12,7 @@ public class Message implements Parcelable {
 	public String title, message, from, to;
 	public boolean[] read = new boolean[2];
 	public int id;
+	private int from_id;
 
 	public Message(JSONObject jsonObject) {
 		SharedPreferences pref = de.damps.fantasy.activities.HomeActivity.preferences;
@@ -21,8 +22,9 @@ public class Message implements Parcelable {
 			JSONObject to = jsonObject.getJSONObject("To");
 			title = message.getString("subject");
 			this.message = message.getString("content");
-			id = message.getInt("from");
+			id = message.getInt("id");
 			this.from = from.getString("username");
+			from_id = from.getInt("id");
 			this.to = to.getString("username");
 			read[0] = message.getBoolean("read");
 
@@ -30,7 +32,7 @@ public class Message implements Parcelable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (((Integer) id).toString().equals(pref.getString("id", "x"))) {
+		if (((Integer) from_id).toString().equals(pref.getString("id", "x"))) {
 			read[1] = true;
 		}
 

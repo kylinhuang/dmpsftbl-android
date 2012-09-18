@@ -14,7 +14,7 @@ public class Post {
 			final JSONObject post = jsonObject.getJSONObject("Forum");
 			JSONObject author = jsonObject.getJSONObject("User");
 
-						message = post.getString("message");
+			message = post.getString("message");
 			
 			created = parseDate(post.getString("created"));
 			this.author = author.getString("username");
