@@ -1,5 +1,9 @@
 package de.damps.fantasy.data;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +19,9 @@ public class Player {
 	private JSONObject roster, player, nflteam;
 	private JSONArray score;
 	public boolean locked = false;
+	public long kickoff;
+	public String date;
+	public String hours;
 
 	public Player(JSONObject jo) {
 		
@@ -22,6 +29,21 @@ public class Player {
 			locked = !jo.getBoolean("open");
 		} catch (JSONException e2) {
 			locked = false;
+			try {
+				date = ((Integer) jo.getJSONArray("open").get(0)).toString();
+				hours = (String) jo.getJSONArray("open").get(2);
+				int year = Integer.valueOf(date.substring(0, 4));
+				int month = Integer.valueOf(date.substring(4, 6))-1;
+				int day = Integer.valueOf(date.substring(6, 8));
+				int hour = Integer.valueOf(hours.substring(0, 2));
+				int minute = Integer.valueOf(hours.substring(3, 5));
+				int second = Integer.valueOf(hours.substring(6, 8));
+				Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
+				cal.set(year, month, day, hour, minute, second); 
+				kickoff = cal.getTime().getTime(); 
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		try {

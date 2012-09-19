@@ -125,5 +125,6 @@
 
     <!-- Tags -->
     <string name="start">start</string>
+    <string name="kickoff">kickoff</string>
 
 </resources>

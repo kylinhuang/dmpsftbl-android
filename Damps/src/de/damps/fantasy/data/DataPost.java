@@ -43,7 +43,6 @@ public class DataPost {
 			try {
 				HttpResponse response = client.execute(httppost);
 				this.response = EntityUtils.toString(response.getEntity());
-				String s="s";
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
