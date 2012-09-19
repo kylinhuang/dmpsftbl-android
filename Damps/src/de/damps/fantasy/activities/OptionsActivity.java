@@ -61,7 +61,11 @@ public class OptionsActivity extends Activity {
 		String msg = getString(R.string.domain_set) + " " + dom + " " + getString(R.string.setted);
 		Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG);
 		toast.show();
-		de.damps.fantasy.activities.HomeActivity.logout();
+		editor.remove("token");
+		editor.remove("hash");
+		editor.remove("id");
+		editor.remove("savelogin");
+		editor.commit();
 	}
 
 	public void setNewsNumber(View view) {

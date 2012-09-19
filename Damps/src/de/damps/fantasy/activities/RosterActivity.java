@@ -50,9 +50,16 @@ public class RosterActivity extends Activity {
 	 */
 	public void initializeScreen() {
 		final Bundle extra = getIntent().getExtras();
-		dteam = extra.getString("team");
-		id = de.damps.fantasy.activities.HomeActivity.league
-				.getTeamidByTeam(dteam);
+		if(extra.containsKey("team")){
+			dteam = extra.getString("team");
+			id = de.damps.fantasy.activities.HomeActivity.league
+					.getTeamidByTeam(dteam);
+		}else{
+			String oid = extra.getString("oid");
+			id = de.damps.fantasy.activities.HomeActivity.league
+					.getTeamidByOwnerid(oid);
+		}
+		
 		url = de.damps.fantasy.activities.HomeActivity.URL + "/roster/2012/"
 				+ id;
 		tbl = (TableLayout) findViewById(R.id.tl_roster_roster);

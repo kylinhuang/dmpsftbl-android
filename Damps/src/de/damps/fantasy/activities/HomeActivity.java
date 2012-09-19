@@ -58,9 +58,15 @@ public class HomeActivity extends Activity {
 	private EditText et_password;
 	private CheckBox cb_save;
 	private String urlLogin;
-	private static ImageView log;
-	private static Button tm;
-	private static Button msg;
+	private ImageView log;
+	private Button msg;
+	private Button mt;
+	private Button ss;
+	private Button rp;
+	private Button sp;
+	private Button opt;
+	private Button oft;
+	private Button tl;
 
 	private String TAG = "** Homeactivity **";
 	private String reg_id;
@@ -80,6 +86,7 @@ public class HomeActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 		initializeApp();
+		initializeScreen();
 	}
 
 	/** Called when the activity is closed. */
@@ -110,7 +117,6 @@ public class HomeActivity extends Activity {
 		}
 	}
 
-
 	/*
 	 * initializes App
 	 */
@@ -128,35 +134,74 @@ public class HomeActivity extends Activity {
 	 * initializes screen
 	 */
 	private void initializeScreen() {
-		log = (ImageView) findViewById(R.id.iv_hom_log);
-		tm = (Button) findViewById(R.id.bu_hom_team);
-		msg = (Button) findViewById(R.id.bu_hom_nachrichten);
+		log = (ImageView) findViewById(R.id.iv_home_log);
+		mt = (Button) findViewById(R.id.bu_home_myteam);
+		ss = (Button) findViewById(R.id.bu_home_starter);
+		rp = (Button) findViewById(R.id.bu_home_release);
+		sp = (Button) findViewById(R.id.bu_home_sign);
+		opt = (Button) findViewById(R.id.bu_home_open_trades);
+		oft = (Button) findViewById(R.id.bu_home_offer_trade);
+		tl = (Button) findViewById(R.id.bu_home_tradelist);
+		msg = (Button) findViewById(R.id.bu_home_nachrichten);
 
 		if (preferences.contains("token")) {
 			log.setImageResource(R.drawable.logout);
-			tm.setBackgroundResource(R.drawable.button_selector);
-			tm.setClickable(true);
+			mt.setBackgroundResource(R.drawable.button_selector);
+			mt.setClickable(true);
+			ss.setBackgroundResource(R.drawable.button_selector);
+			ss.setClickable(true);
+			rp.setBackgroundResource(R.drawable.button_selector);
+			rp.setClickable(true);
+			/*
+			 * sp.setBackgroundResource(R.drawable.button_selector);
+			 * sp.setClickable(true);
+			 * opt.setBackgroundResource(R.drawable.button_selector);
+			 * opt.setClickable(true);
+			 * oft.setBackgroundResource(R.drawable.button_selector);
+			 * oft.setClickable(true);
+			 * tl.setBackgroundResource(R.drawable.button_selector);
+			 * tl.setClickable(true);
+			 */
 			msg.setBackgroundResource(R.drawable.button_selector);
 			msg.setClickable(true);
 		} else {
 			log.setImageResource(R.drawable.login);
-			tm.setBackgroundResource(R.drawable.button_inactive);
-			tm.setClickable(false);
+			mt.setBackgroundResource(R.drawable.button_inactive);
+			mt.setClickable(false);
+			ss.setBackgroundResource(R.drawable.button_inactive);
+			ss.setClickable(false);
+			rp.setBackgroundResource(R.drawable.button_inactive);
+			rp.setClickable(false);
+			sp.setBackgroundResource(R.drawable.button_inactive);
+			sp.setClickable(false);
+			opt.setBackgroundResource(R.drawable.button_inactive);
+			opt.setClickable(false);
+			oft.setBackgroundResource(R.drawable.button_inactive);
+			oft.setClickable(false);
+			tl.setBackgroundResource(R.drawable.button_inactive);
+			tl.setClickable(false);
 			msg.setBackgroundResource(R.drawable.button_inactive);
 			msg.setClickable(false);
 		}
 
 		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
 
-		((Button) findViewById(R.id.bu_hom_news)).setTypeface(font);
-		((Button) findViewById(R.id.bu_hom_forum)).setTypeface(font);
-		((Button) findViewById(R.id.bu_hom_scores)).setTypeface(font);
-		((Button) findViewById(R.id.bu_hom_standings)).setTypeface(font);
-		((Button) findViewById(R.id.bu_hom_roster)).setTypeface(font);
-		((Button) findViewById(R.id.bu_hom_starters)).setTypeface(font);
-		((Button) findViewById(R.id.bu_hom_team)).setTypeface(font);
-		((Button) findViewById(R.id.bu_hom_nachrichten)).setTypeface(font);
-		((TextView) findViewById(R.id.tv_hom_title)).setTypeface(font);
+		((TextView) findViewById(R.id.tv_home_title)).setTypeface(font);
+		((Button) findViewById(R.id.bu_home_news)).setTypeface(font);
+		((Button) findViewById(R.id.bu_home_forum)).setTypeface(font);
+		((Button) findViewById(R.id.bu_home_scores)).setTypeface(font);
+		((Button) findViewById(R.id.bu_home_standings)).setTypeface(font);
+		((Button) findViewById(R.id.bu_home_roster)).setTypeface(font);
+		((Button) findViewById(R.id.bu_home_starters)).setTypeface(font);
+		mt.setTypeface(font);
+		ss.setTypeface(font);
+		rp.setTypeface(font);
+		sp.setTypeface(font);
+		opt.setTypeface(font);
+		oft.setTypeface(font);
+		tl.setTypeface(font);
+		msg.setTypeface(font);
+
 	}
 
 	/*
@@ -254,16 +299,57 @@ public class HomeActivity extends Activity {
 		startActivity(intent);
 	}
 
-	public void startTeammanagement(View view) {
-		Intent intent = new Intent(getApplicationContext(),
-				TeamManagementActivity.class);
-		startActivity(intent);
-	}
-
 	public void startMessages(View view) {
 		Intent intent = new Intent(getApplicationContext(),
 				MessagesActivity.class);
 		startActivity(intent);
+	}
+
+	public void myTeam(View view) {
+		Intent intent = new Intent(getApplicationContext(),
+				RosterActivity.class);
+		intent.putExtra("oid", preferences.getString("id", "0"));
+		startActivity(intent);
+	}
+
+	public void selectStarter(View view) {
+		Intent intent = new Intent(getApplicationContext(),
+				SetStartersActivity.class);
+		startActivity(intent);
+	}
+
+	public void releasePlayer(View view) {
+		Intent intent = new Intent(getApplicationContext(),
+				ReleaseActivity.class);
+		startActivity(intent);
+	}
+
+	public void signFreeAgent(View view) {
+		/*
+		 * Intent intent = new Intent(getApplicationContext(),
+		 * SignFreeAgent.class); startActivity(intent);
+		 */
+	}
+
+	public void openTrades(View view) {
+		/*
+		 * Intent intent = new Intent(getApplicationContext(),
+		 * OpenTradesActivity.class); startActivity(intent);
+		 */
+	}
+
+	public void offerTrade(View view) {
+		/*
+		 * Intent intent = new Intent(getApplicationContext(),
+		 * SignFreeAgent.class); startActivity(intent);
+		 */
+	}
+
+	public void Tradelist(View view) {
+		/*
+		 * Intent intent = new Intent(getApplicationContext(),
+		 * OpenTradesActivity.class); startActivity(intent);
+		 */
 	}
 
 	/*
@@ -292,8 +378,26 @@ public class HomeActivity extends Activity {
 						if (new Login().execute(user).get()) {
 
 							log.setImageResource(R.drawable.logout);
-							tm.setBackgroundResource(R.drawable.button_selector);
-							tm.setClickable(true);
+							mt.setBackgroundResource(R.drawable.button_selector);
+							mt.setClickable(true);
+							ss.setBackgroundResource(R.drawable.button_selector);
+							ss.setClickable(true);
+							rp.setBackgroundResource(R.drawable.button_selector);
+							rp.setClickable(true);
+							// TODO
+							/*
+							 * sp.setBackgroundResource(R.drawable.button_selector
+							 * ); sp.setClickable(true);
+							 * opt.setBackgroundResource
+							 * (R.drawable.button_selector);
+							 * opt.setClickable(true);
+							 * oft.setBackgroundResource(
+							 * R.drawable.button_selector);
+							 * oft.setClickable(true);
+							 * tl.setBackgroundResource(R
+							 * .drawable.button_selector);
+							 * tl.setClickable(true);
+							 */
 							msg.setBackgroundResource(R.drawable.button_selector);
 							msg.setClickable(true);
 
@@ -312,10 +416,8 @@ public class HomeActivity extends Activity {
 							toast.show();
 						}
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (ExecutionException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
@@ -403,17 +505,13 @@ public class HomeActivity extends Activity {
 	 * 
 	 * Removes prefs, sets buttons
 	 */
-	public static void logout() {
+	public void logout() {
 		editor.remove("token");
 		editor.remove("hash");
 		editor.remove("id");
 		editor.remove("savelogin");
 		editor.commit();
-		log.setImageResource(R.drawable.login);
-		tm.setBackgroundResource(R.drawable.button_inactive);
-		tm.setClickable(false);
-		msg.setBackgroundResource(R.drawable.button_inactive);
-		msg.setClickable(false);
+		initializeScreen();
 	}
 
 }

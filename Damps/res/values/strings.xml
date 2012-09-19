@@ -77,10 +77,13 @@
     <string name="mes">Message</string>
 
     <!-- Teammanagement -->
+    <string name="myteam">My Team</string>
     <string name="select">Select Starter</string>
     <string name="releasePlayer">Release Player</string>
     <string name="sign">Sign Free Agent</string>
-    <string name="trades">Open Trades</string>
+    <string name="open_trades">Open Trades</string>
+    <string name="offer_trade">Offer Trade</string>
+    <string name="tradelist">Trade List</string>
 
     <!-- Set Starter -->
     <string name="set_starters">Select Starter</string>

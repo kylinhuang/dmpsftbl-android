@@ -4,154 +4,211 @@
     android:layout_height="match_parent" >
 
     <RelativeLayout
-        android:id="@+id/rl_hom_layout1"
+        android:id="@+id/rl_home_layout1"
         style="@style/titlebar" >
 
         <TextView
-            android:id="@+id/tv_hom_title"
+            android:id="@+id/tv_home_title"
             style="@style/title"
             android:text="@string/main" />
-        
+
         <ProgressBar
             android:id="@+id/pb_home_bar1"
             style="@style/progressbar"
             android:layout_alignParentRight="false"
-            android:layout_toLeftOf="@+id/iv_hom_opt" />
+            android:layout_toLeftOf="@+id/iv_home_opt" />
 
         <ImageView
-            android:id="@+id/iv_hom_opt"
+            android:id="@+id/iv_home_opt"
             style="@style/pic_title_mid"
-            android:layout_toLeftOf="@+id/iv_hom_log"
+            android:layout_toLeftOf="@+id/iv_home_log"
             android:contentDescription="@string/pic_opt"
             android:onClick="options"
             android:src="@drawable/options" />
 
         <ImageView
-            android:id="@+id/iv_hom_log"
+            android:id="@+id/iv_home_log"
             style="@style/pic_title_right"
             android:contentDescription="@string/pic_log"
             android:onClick="log" />
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/iv_hom_view1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_hom_layout1"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="@string/desc"
-        android:src="@drawable/dampsmain" />
-
-    <LinearLayout
-        android:id="@+id/ll_hom_layout1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/iv_hom_view1" >
+        android:layout_below="@+id/rl_home_layout1" >
 
-        <Button
-            android:id="@+id/bu_hom_news"
-            style="@style/button"
-            android:onClick="startNews"
-            android:text="@string/news" />
+        <RelativeLayout
+            android:id="@+id/rl_home_layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
 
-        <Button
-            android:id="@+id/bu_hom_forum"
-            style="@style/button"
-            android:onClick="startForum"
-            android:text="@string/forum" />
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/iv_home_view1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/desc"
+                android:src="@drawable/dampsmain" />
 
-    <LinearLayout
-        android:id="@+id/ll_hom_layout2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/ll_hom_layout1" >
+            <LinearLayout
+                android:id="@+id/ll_home_layout1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/iv_home_view1" >
 
-        <Button
-            android:id="@+id/bu_hom_scores"
-            style="@style/button"
-            android:onClick="startScores"
-            android:text="@string/scores" />
+                <Button
+                    android:id="@+id/bu_home_news"
+                    style="@style/button"
+                    android:onClick="startNews"
+                    android:text="@string/news" />
 
-        <Button
-            android:id="@+id/bu_hom_standings"
-            style="@style/button"
-            android:onClick="startStandings"
-            android:text="@string/standings" />
-    </LinearLayout>
+                <Button
+                    android:id="@+id/bu_home_forum"
+                    style="@style/button"
+                    android:onClick="startForum"
+                    android:text="@string/forum" />
+            </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_hom_layout3"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/ll_hom_layout2" >
+            <LinearLayout
+                android:id="@+id/ll_home_layout2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/ll_home_layout1" >
 
-        <Button
-            android:id="@+id/bu_hom_roster"
-            style="@style/button"
-            android:onClick="startRoster"
-            android:text="@string/roster" />
+                <Button
+                    android:id="@+id/bu_home_scores"
+                    style="@style/button"
+                    android:onClick="startScores"
+                    android:text="@string/scores" />
 
-        <Button
-            android:id="@+id/bu_hom_starters"
-            style="@style/button"
-            android:onClick="startStarters"
-            android:text="@string/starters" />
-    </LinearLayout>
-    <!--
-    <LinearLayout
-        android:id="@+id/ll_hom_layout4"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/ll_hom_layout3" >
+                <Button
+                    android:id="@+id/bu_home_standings"
+                    style="@style/button"
+                    android:onClick="startStandings"
+                    android:text="@string/standings" />
+            </LinearLayout>
 
-        <Button
-            android:id="@+id/bu_home_injuries"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="startInjuries"
-            android:text="@string/injuries" />
+            <LinearLayout
+                android:id="@+id/ll_home_layout3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/ll_home_layout2" >
 
-        <Button
-            android:id="@+id/bu_hom_starters"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="startStarters"
-            android:text="@string/starters" />
-    </LinearLayout>
-    -->
+                <Button
+                    android:id="@+id/bu_home_roster"
+                    style="@style/button"
+                    android:onClick="startRoster"
+                    android:text="@string/roster" />
 
-    <TextView
-        android:id="@+id/tv_hom_member"
-        style="@style/desc_edittext"
-        android:textStyle="bold"
-        android:layout_below="@+id/ll_hom_layout3"
-        android:text="@string/membersection" />
+                <Button
+                    android:id="@+id/bu_home_starters"
+                    style="@style/button"
+                    android:onClick="startStarters"
+                    android:text="@string/starters" />
+            </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_hom_layout5"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tv_hom_member" >
+            <TextView
+                android:id="@+id/tv_home_member"
+                style="@style/desc_edittext"
+                android:layout_below="@+id/ll_home_layout3"
+                android:text="@string/membersection"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/bu_hom_team"
-            style="@style/button"
-            android:onClick="startTeammanagement"
-            android:text="@string/teammanagement" />
+            <LinearLayout
+                android:id="@+id/ll_home_layout5"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/tv_home_member" >
 
-        <Button
-            android:id="@+id/bu_hom_nachrichten"
-            style="@style/button"
-            android:onClick="startMessages"
-            android:text="@string/messages" />
-    </LinearLayout>
+                <Button
+                    android:id="@+id/bu_home_myteam"
+                    style="@style/button"
+                    android:onClick="myTeam"
+                    android:text="@string/myteam" />
+
+                <Button
+                    android:id="@+id/bu_home_open_trades"
+                    style="@style/button"
+                    android:background="@drawable/button_inactive"
+                    android:enabled="false"
+                    android:onClick="openTrades"
+                    android:text="@string/open_trades" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_home_layout6"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/ll_home_layout5" >
+
+                <Button
+                    android:id="@+id/bu_home_starter"
+                    style="@style/button"
+                    android:onClick="selectStarter"
+                    android:text="@string/select" />
+
+                <Button
+                    android:id="@+id/bu_home_offer_trade"
+                    style="@style/button"
+                    android:background="@drawable/button_inactive"
+                    android:enabled="false"
+                    android:onClick="offerTrade"
+                    android:text="@string/offer_trade" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_home_layout7"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/ll_home_layout6" >
+
+                <Button
+                    android:id="@+id/bu_home_release"
+                    style="@style/button"
+                    android:onClick="releasePlayer"
+                    android:text="@string/releasePlayer" />
+
+                <Button
+                    android:id="@+id/bu_home_tradelist"
+                    style="@style/button"
+                    android:background="@drawable/button_inactive"
+                    android:enabled="false"
+                    android:onClick="tradelist"
+                    android:text="@string/tradelist" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_home_layout8"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/ll_home_layout7" >
+
+                <Button
+                    android:id="@+id/bu_home_sign"
+                    style="@style/button"
+                    android:background="@drawable/button_inactive"
+                    android:enabled="false"
+                    android:onClick="signFreeAgent"
+                    android:text="@string/sign" />
+
+                <Button
+                    android:id="@+id/bu_home_nachrichten"
+                    style="@style/button"
+                    android:onClick="startMessages"
+                    android:text="@string/messages" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>
