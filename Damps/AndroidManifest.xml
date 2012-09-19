@@ -72,7 +72,6 @@
         <activity android:name=".activities.NewMessageActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".activities.MessageActivity" />
-        <activity android:name=".activities.TeamManagementActivity" />
         <activity android:name=".activities.ReleaseActivity" />
         <activity android:name=".activities.SetStartersActivity" />
     </application>
