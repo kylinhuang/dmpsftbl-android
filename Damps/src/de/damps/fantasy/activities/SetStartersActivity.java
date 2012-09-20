@@ -2,6 +2,7 @@ package de.damps.fantasy.activities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
@@ -27,6 +28,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import de.damps.fantasy.R;
+import de.damps.fantasy.adapter.PosComparator;
 import de.damps.fantasy.data.DataPost;
 import de.damps.fantasy.data.Json;
 import de.damps.fantasy.data.Player;
@@ -103,16 +105,12 @@ public class SetStartersActivity extends Activity {
 		hash = pref.getString("hash", "");
 
 		url = de.damps.fantasy.CommonUtilities.URL + "/myteamstarter/";
-		url_start = de.damps.fantasy.CommonUtilities.URL
-				+ "/setstarter/";
-		url_bench = de.damps.fantasy.CommonUtilities.URL
-				+ "/removestarter/";
-		url_formation = de.damps.fantasy.CommonUtilities.URL
-				+ "/setformation/";
+		url_start = de.damps.fantasy.CommonUtilities.URL + "/setstarter/";
+		url_bench = de.damps.fantasy.CommonUtilities.URL + "/removestarter/";
+		url_formation = de.damps.fantasy.CommonUtilities.URL + "/setformation/";
 
 		team = (TextView) findViewById(R.id.tv_setstarters_title);
-		dteam = de.damps.fantasy.CommonUtilities.league
-				.getTeamByOwnerid(oid);
+		dteam = de.damps.fantasy.CommonUtilities.league.getTeamByOwnerid(oid);
 		team.setText(dteam);
 
 		tbl = (TableLayout) findViewById(R.id.tl_setstarters_roster);
@@ -303,16 +301,19 @@ public class SetStartersActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				benchPlayer((TableRow) tbl.getChildAt(i));
-				
+
 				long time = System.currentTimeMillis() - 3600000;
 
-				if (time < (Long) ((TableRow) tbl.getChildAt(i)).getTag(R.string.kickoff)) {
+				if (time < (Long) ((TableRow) v).getTag(R.string.kickoff)) {
 					String pos = (String) ((TextView) ((TableRow) v)
 							.getVirtualChildAt(1)).getText();
-					tbl.addView(new Row(getApplicationContext(), pos, head).newRow,
+					tbl.addView(
+							new Row(getApplicationContext(), pos, head).newRow,
 							i);
+					sortBench();
+					fillBench();
 				}
-				
+
 			}
 		};
 		return listener;
@@ -323,8 +324,6 @@ public class SetStartersActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-
-				
 				startPlayer((TableRow) v);
 			}
 
@@ -388,6 +387,7 @@ public class SetStartersActivity extends Activity {
 				Player p = new Player(joar.getJSONObject(i));
 				bench.add(p);
 			}
+			sortBench();
 
 			JSONArray joas = jo.getJSONArray("Starter").getJSONObject(0)
 					.getJSONArray("Starter");
@@ -555,7 +555,7 @@ public class SetStartersActivity extends Activity {
 			tbl.removeView(tableRow);
 			tbl.addView(benchRow);
 			movePlayer(tableRow, starter, bench);
-		}else {
+		} else {
 			Log.i("===============", "gesperrt");
 		}
 	}
@@ -574,7 +574,7 @@ public class SetStartersActivity extends Activity {
 					return;
 				}
 			}
-		}else {
+		} else {
 			Log.i("===============", "gesperrt");
 		}
 	}
@@ -660,7 +660,8 @@ public class SetStartersActivity extends Activity {
 			((TableRow) tbl.getChildAt(9 + i)).removeViewAt(3);
 
 			((TableRow) tbl.getChildAt(9 + i)).setTag(true);
-			((TableRow) tbl.getChildAt(9 + i)).setTag(R.string.kickoff,bench.get(i).kickoff);
+			((TableRow) tbl.getChildAt(9 + i)).setTag(R.string.kickoff,
+					bench.get(i).kickoff);
 			if (!bench.get(i).locked) {
 				((TableRow) tbl.getChildAt(9 + i))
 						.setOnClickListener(benchListener());
@@ -712,8 +713,9 @@ public class SetStartersActivity extends Activity {
 				.setText(starter.get(i).name);
 		((TableRow) tbl.getChildAt(p)).removeViewAt(3);
 		((TableRow) tbl.getChildAt(p)).setTag(true);
-		((TableRow) tbl.getChildAt(p)).setTag(R.string.kickoff,bench.get(i).kickoff);
-		
+		((TableRow) tbl.getChildAt(p)).setTag(R.string.kickoff,
+				starter.get(i).kickoff);
+
 		if (!starter.get(i).locked) {
 			((TableRow) tbl.getChildAt(p))
 					.setOnClickListener(starterListener(p));
@@ -729,7 +731,10 @@ public class SetStartersActivity extends Activity {
 			iv.setImageResource(R.drawable.locked);
 			((TableRow) tbl.getChildAt(p)).addView(iv, 3);
 		}
-
 	}
 
+	private void sortBench() {
+		PosComparator comp = new PosComparator();
+		Collections.sort(bench, comp);
+	}
 }

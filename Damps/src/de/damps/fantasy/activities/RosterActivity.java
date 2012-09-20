@@ -21,6 +21,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import de.damps.fantasy.R;
+import de.damps.fantasy.adapter.PosComparator;
 import de.damps.fantasy.data.Json;
 import de.damps.fantasy.data.Player;
 import de.damps.fantasy.data.Row;
@@ -123,7 +124,7 @@ public class RosterActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void v) {
 			contructRoster();
-			fillarray();
+			sortPos(null);
 			pb.setVisibility(View.INVISIBLE);
 
 		}
@@ -404,13 +405,7 @@ public class RosterActivity extends Activity {
 	}
 
 	public void sortPos(View view) {
-		Comparator<Player> comp = new Comparator<Player>() {
-
-			@Override
-			public int compare(Player lhs, Player rhs) {
-				return lhs.pos.compareToIgnoreCase(rhs.pos);
-			}
-		};
+		PosComparator comp = new PosComparator();
 		Collections.sort(roster, comp);
 		fillarray();
 	}
