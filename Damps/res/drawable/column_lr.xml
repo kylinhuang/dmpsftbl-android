@@ -3,10 +3,11 @@
     android:padding="10dp"
     android:shape="rectangle" >
 
-    <!-- you can use any color you want I used here gray color -->
     <solid android:color="@color/damps_blau" />
 
-    <padding android:right="2dp" />
+    <corners android:topLeftRadius="5dp" />
+    <corners android:topRightRadius="5dp" />
+
     <padding android:left="2dp" />
 
 </shape>

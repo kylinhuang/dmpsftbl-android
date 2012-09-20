@@ -280,6 +280,7 @@ public class SetStartersActivity extends Activity {
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
 				flexFormation(sp_for.getSelectedItemPosition());
+				my_flex_for = sp_for.getSelectedItemPosition();
 				if (sp_for.getSelectedItemPosition() == 0) {
 					flex = false;
 				} else {

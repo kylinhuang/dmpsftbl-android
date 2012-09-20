@@ -9,5 +9,6 @@
     <color name="hellgrau">#B2B2B2</color>
     <color name="hellhellgrau">#F0F0F0</color>
     <color name="dunkelgrau">#4D4D4D</color>
+    <color name="rot">#FF0000</color>
     
 </resources>

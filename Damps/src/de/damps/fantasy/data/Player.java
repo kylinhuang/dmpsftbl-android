@@ -63,7 +63,7 @@ public class Player {
 			roster_id = roster.getInt("id");
 			contract = roster.getString("contract");
 		} catch (JSONException e) {
-			System.err.println("Kein Roster Objetc");
+			System.err.println("Kein Roster Object");
 		}
 
 		try {
@@ -82,7 +82,7 @@ public class Player {
 				name = vorname + " " + nachname;
 				pos = player.getString("position");
 			} catch (JSONException e1) {
-				System.err.println("Kein Player Objetc");
+				System.err.println("Kein Player Object");
 			}
 		}
 
@@ -100,7 +100,7 @@ public class Player {
 				nfl_city = nflteam.getString("name");
 				nfl_abr = nflteam.getString("abbr");
 			} catch (JSONException e1) {
-				System.err.println("Kein Player Objetc");
+				System.err.println("Kein Player Object");
 			}
 		}
 
@@ -132,22 +132,6 @@ public class Player {
 		pos = s;
 		name = "";
 		nfl_abr = "";
-	}
-
-	public Player(JSONObject jo, String string) {
-		try {
-			player = jo.getJSONObject("Player");
-			nflteam = jo.getJSONObject("Nflteam");
-			pos = jo.getString("position");
-			String vorname = player.getString("firstname");
-			String nachname = player.getString("name");
-			name = vorname + " " + nachname;
-
-			nfl_abr = nflteam.getString("abbr");
-
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
 	}
 
 }

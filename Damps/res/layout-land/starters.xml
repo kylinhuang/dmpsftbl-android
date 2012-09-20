@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
     <RelativeLayout
         android:id="@+id/rl_start_layout1"
@@ -49,14 +49,32 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_start_layout2" >
 
-        <TableLayout
-            android:id="@+id/tl_start_starting"
+        <LinearLayout
+            android:id="@+id/ll_start_layout3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:orientation="vertical" >
-        </TableLayout>
+            android:baselineAligned="false" >
+
+            <TableLayout
+                android:id="@+id/tl_start_starting_left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/tl_start_starting_right"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+            </TableLayout>
+        </LinearLayout>
     </ScrollView>
 
 </RelativeLayout>

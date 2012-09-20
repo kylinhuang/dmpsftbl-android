@@ -109,7 +109,7 @@ public class Row {
 		team.setGravity(Gravity.CENTER);
 		team.setTextAppearance(c, R.style.text);
 		team.setTextColor(c.getResources().getColor(R.color.weis));
-		
+
 		team.setTextAppearance(c, R.style.column);
 		team.setText("NFL");
 
@@ -142,7 +142,7 @@ public class Row {
 		score.setGravity(Gravity.CENTER);
 		score.setTextAppearance(c, R.style.text);
 		score.setTextColor(c.getResources().getColor(R.color.weis));
-		
+
 		score.setTextAppearance(c, R.style.column);
 		score.setText("Score");
 		if (top == 1) {
@@ -157,4 +157,98 @@ public class Row {
 					R.drawable.column_mid));
 		}
 	}
+
+	public Row(Context c) {
+		// Row
+		newRow = new TableRow(c);
+		TableLayout.LayoutParams parar = new TableLayout.LayoutParams();
+		parar.setMargins(0, (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 1, c.getResources()
+						.getDisplayMetrics()), 0, (int) TypedValue
+				.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, c
+						.getResources().getDisplayMetrics()));
+		newRow.setLayoutParams(parar);
+
+		TableRow.LayoutParams para = new TableRow.LayoutParams();
+		para.setMargins((int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 2, c.getResources()
+						.getDisplayMetrics()), 0, 0, 0);
+
+		TableRow.LayoutParams params = new TableRow.LayoutParams();
+		params.span = 3;
+		ImageView team = new ImageView(c);
+		TextView pos = new TextView(c);
+		TextView name = new TextView(c);
+		newRow.addView(team, 0);
+		newRow.addView(pos, 1);
+		newRow.addView(name, 2,params);
+		
+
+		// Pos
+		pos.setLayoutParams(para);
+		pos.setGravity(Gravity.CENTER);
+		pos.setTextAppearance(c, R.style.text);
+		pos.setTextColor(c.getResources().getColor(R.color.weis));
+		pos.setBackgroundDrawable(c.getResources().getDrawable(
+				R.drawable.button));
+
+		// Name
+		name.setLayoutParams(para);
+		name.setTextAppearance(c, R.style.text);
+		name.setPadding((int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 3, c.getResources()
+						.getDisplayMetrics()), 0, 0, 0);
+	}
+
+	public Row(Context c, String team, boolean flex) {
+		// Row
+		newRow = new TableRow(c);
+		TableLayout.LayoutParams parar = new TableLayout.LayoutParams();
+		parar.setMargins(0, (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 1, c.getResources()
+						.getDisplayMetrics()),0,  (int) TypedValue.applyDimension(
+								TypedValue.COMPLEX_UNIT_DIP, 1, c.getResources()
+								.getDisplayMetrics()));
+
+		TableRow.LayoutParams params = new TableRow.LayoutParams();
+		params.span = 3;
+
+		newRow.setLayoutParams(parar);
+
+		TextView fflteam = new TextView(c);
+		TextView isflex = new TextView(c);
+		newRow.addView(fflteam, 0, params);
+		newRow.addView(isflex, 1);
+
+		// Team
+		fflteam.setGravity(Gravity.CENTER_VERTICAL);
+		fflteam.setTextAppearance(c, R.style.text);
+		fflteam.setTextColor(c.getResources().getColor(R.color.weis));
+		fflteam.setTextAppearance(c, R.style.column);
+		fflteam.setText(team);
+		fflteam.setBackgroundDrawable(c.getResources().getDrawable(
+				R.drawable.column_left));
+		fflteam.setPadding((int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 6, c.getResources()
+				.getDisplayMetrics()), 0,0,0);
+
+		// Name
+		isflex.setGravity(Gravity.RIGHT);
+		isflex.setTextAppearance(c, R.style.text);
+		isflex.setTextAppearance(c, R.style.column);
+		isflex.setTextColor(c.getResources().getColor(R.color.damps_blau));
+		isflex.setPadding(0, 0, (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 6, c.getResources()
+				.getDisplayMetrics()), 0);
+		isflex.setText("flex");
+		if (flex) {
+			isflex.setTextColor(c.getResources().getColor(R.color.rot));
+		}
+		
+		isflex.setBackgroundDrawable(c.getResources().getDrawable(
+				R.drawable.column_right));
+		
+
+	}
+
 }
