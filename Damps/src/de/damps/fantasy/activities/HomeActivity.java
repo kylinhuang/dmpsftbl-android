@@ -1,6 +1,9 @@
 package de.damps.fantasy.activities;
 
 import static de.damps.fantasy.CommonUtilities.SENDER_ID;
+import static de.damps.fantasy.CommonUtilities.preferences;
+import static de.damps.fantasy.CommonUtilities.league;
+import static de.damps.fantasy.CommonUtilities.URL;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -27,7 +30,6 @@ import de.damps.fantasy.data.League;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -48,10 +50,7 @@ import android.widget.Toast;
 import android.view.View.OnClickListener;
 
 public class HomeActivity extends Activity {
-
-	public static League league;
-	public static String URL;
-	public static SharedPreferences preferences;
+	
 	public static Editor editor;
 
 	private EditText et_username;

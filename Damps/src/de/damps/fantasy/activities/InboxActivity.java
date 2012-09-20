@@ -24,7 +24,7 @@ public class InboxActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.inbox);
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/readmessage";
+		url = de.damps.fantasy.CommonUtilities.URL + "/readmessage";
 		messages = getIntent().getExtras().getParcelableArrayList("messages");
 		
 		showThreads();

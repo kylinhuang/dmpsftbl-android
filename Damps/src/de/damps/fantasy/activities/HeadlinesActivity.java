@@ -38,9 +38,9 @@ public class HeadlinesActivity extends ListActivity {
 		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
 		((TextView) findViewById(R.id.tv_headlines_title)).setTypeface(font);
 
-		String number = de.damps.fantasy.activities.HomeActivity.preferences
+		String number = de.damps.fantasy.CommonUtilities.preferences
 				.getString("news", "25");
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/news/" + number;
+		url = de.damps.fantasy.CommonUtilities.URL + "/news/" + number;
 
 		new GetHeadlines().execute(url);
 	}

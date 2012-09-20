@@ -44,7 +44,7 @@ public class TeamsActivity extends ListActivity {
 	private void zeigeTeams() {
 		teamadapter = new TeamAdapter(this,
 				android.R.layout.simple_list_item_1,
-				de.damps.fantasy.activities.HomeActivity.league.league);
+				de.damps.fantasy.CommonUtilities.league.league);
 		setListAdapter(teamadapter);
 	}
 

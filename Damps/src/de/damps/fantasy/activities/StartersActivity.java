@@ -37,7 +37,7 @@ public class StartersActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.starters);
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/starter/";
+		url = de.damps.fantasy.CommonUtilities.URL + "/starter/";
 		constructStarters();
 
 		new GetStarters().execute(url);
@@ -118,7 +118,7 @@ public class StartersActivity extends Activity {
 				if (y_init) {
 					int gd = sp_gd.getSelectedItemPosition() + 1;
 					String year = (String) parent.getItemAtPosition(position);
-					url = de.damps.fantasy.activities.HomeActivity.URL + "/starter/"
+					url = de.damps.fantasy.CommonUtilities.URL + "/starter/"
 							+ year + "/" + gd;
 					new GetStarters().execute(url);
 				}
@@ -146,7 +146,7 @@ public class StartersActivity extends Activity {
 					int position, long id) {
 				if (gd_init) {
 					String year = (String) sp_ye.getSelectedItem();
-					url = de.damps.fantasy.activities.HomeActivity.URL + "/starter/"
+					url = de.damps.fantasy.CommonUtilities.URL + "/starter/"
 							+ year + "/" + (position + 1);
 					new GetStarters().execute(url);
 				}

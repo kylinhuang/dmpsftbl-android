@@ -42,7 +42,7 @@ public class NewPostActivity extends Activity {
 		id = extra.getString("ID");
 		title = extra.getString("title");
 		
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/postforum";
+		url = de.damps.fantasy.CommonUtilities.URL + "/postforum";
 
 		msg = (EditText) findViewById(R.id.et_newpost_msg);
 		if (extra.containsKey("quote")) {

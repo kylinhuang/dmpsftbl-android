@@ -97,21 +97,21 @@ public class SetStartersActivity extends Activity {
 		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
 		((TextView) findViewById(R.id.tv_setstarters_title)).setTypeface(font);
 
-		pref = de.damps.fantasy.activities.HomeActivity.preferences;
+		pref = de.damps.fantasy.CommonUtilities.preferences;
 		oid = pref.getString("id", "X");
 		token = pref.getString("token", "");
 		hash = pref.getString("hash", "");
 
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/myteamstarter/";
-		url_start = de.damps.fantasy.activities.HomeActivity.URL
+		url = de.damps.fantasy.CommonUtilities.URL + "/myteamstarter/";
+		url_start = de.damps.fantasy.CommonUtilities.URL
 				+ "/setstarter/";
-		url_bench = de.damps.fantasy.activities.HomeActivity.URL
+		url_bench = de.damps.fantasy.CommonUtilities.URL
 				+ "/removestarter/";
-		url_formation = de.damps.fantasy.activities.HomeActivity.URL
+		url_formation = de.damps.fantasy.CommonUtilities.URL
 				+ "/setformation/";
 
 		team = (TextView) findViewById(R.id.tv_setstarters_title);
-		dteam = de.damps.fantasy.activities.HomeActivity.league
+		dteam = de.damps.fantasy.CommonUtilities.league
 				.getTeamByOwnerid(oid);
 		team.setText(dteam);
 
@@ -252,7 +252,7 @@ public class SetStartersActivity extends Activity {
 				if (init_gd) {
 					String gameday = ((String) sp_gd.getSelectedItem())
 							.substring(8);
-					url = de.damps.fantasy.activities.HomeActivity.URL
+					url = de.damps.fantasy.CommonUtilities.URL
 							+ "/myteamstarter/" + gameday;
 					f_p1 = null;
 					f_p2 = null;

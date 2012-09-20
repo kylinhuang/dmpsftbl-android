@@ -44,9 +44,9 @@ public class ForumActivity extends ListActivity {
 		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
 		((TextView) findViewById(R.id.tv_forum_title)).setTypeface(font);
 
-		String number = de.damps.fantasy.activities.HomeActivity.preferences
+		String number = de.damps.fantasy.CommonUtilities.preferences
 				.getString("threads", "25");
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/forum/" + number;
+		url = de.damps.fantasy.CommonUtilities.URL + "/forum/" + number;
 
 		new GetThreads().execute();
 	}
@@ -156,7 +156,7 @@ public class ForumActivity extends ListActivity {
 	 * create new thread
 	 */
 	public void newThread(View view) {
-		if (de.damps.fantasy.activities.HomeActivity.preferences
+		if (de.damps.fantasy.CommonUtilities.preferences
 				.contains("token")) {
 
 			Intent intent = new Intent(getApplicationContext(),

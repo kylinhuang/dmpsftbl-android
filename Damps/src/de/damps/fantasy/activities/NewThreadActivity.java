@@ -44,7 +44,7 @@ public class NewThreadActivity extends Activity{
 		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
 		((TextView) findViewById(R.id.tv_newthread_title1)).setTypeface(font);
 
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/openthread";
+		url = de.damps.fantasy.CommonUtilities.URL + "/openthread";
 	}
 	
 	/*

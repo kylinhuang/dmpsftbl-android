@@ -52,15 +52,15 @@ public class RosterActivity extends Activity {
 		final Bundle extra = getIntent().getExtras();
 		if(extra.containsKey("team")){
 			dteam = extra.getString("team");
-			id = de.damps.fantasy.activities.HomeActivity.league
+			id = de.damps.fantasy.CommonUtilities.league
 					.getTeamidByTeam(dteam);
 		}else{
 			String oid = extra.getString("oid");
-			id = de.damps.fantasy.activities.HomeActivity.league
+			id = de.damps.fantasy.CommonUtilities.league
 					.getTeamidByOwnerid(oid);
 		}
 		
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/roster/2012/"
+		url = de.damps.fantasy.CommonUtilities.URL + "/roster/2012/"
 				+ id;
 		tbl = (TableLayout) findViewById(R.id.tl_roster_roster);
 		team = (TextView) findViewById(R.id.tv_roster_title);

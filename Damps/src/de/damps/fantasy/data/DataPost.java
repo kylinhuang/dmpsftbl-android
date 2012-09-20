@@ -21,7 +21,7 @@ public class DataPost {
 	public String response;
 
 	public DataPost(String url, String[][] data) {
-		SharedPreferences pref = de.damps.fantasy.activities.HomeActivity.preferences;
+		SharedPreferences pref = de.damps.fantasy.CommonUtilities.preferences;
 		String token = pref.getString("token", "");
 		String hash = pref.getString("hash", "");
 

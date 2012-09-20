@@ -38,7 +38,7 @@ public class StandingsActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.standings);
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/standings";
+		url = de.damps.fantasy.CommonUtilities.URL + "/standings";
 		constructStandings();
 
 		new GetScores().execute(url);
@@ -91,7 +91,7 @@ public class StandingsActivity extends Activity {
 					int position, long id) {
 				if (initialised) {
 					year = (String) parent.getItemAtPosition(position);
-					url = de.damps.fantasy.activities.HomeActivity.URL + "/standings/"
+					url = de.damps.fantasy.CommonUtilities.URL + "/standings/"
 							+ year;
 					new GetScores().execute(url);
 				}
@@ -106,7 +106,7 @@ public class StandingsActivity extends Activity {
 
 	private void constructStandings() {
 		tbl = ((TableLayout) findViewById(R.id.tl_sta_standings));
-		for (int i = 0; i < de.damps.fantasy.activities.HomeActivity.league.size; i++) {
+		for (int i = 0; i < de.damps.fantasy.CommonUtilities.league.size; i++) {
 			TableRow newRow = new TableRow(getApplicationContext());
 			TextView pos = new TextView(getApplicationContext());
 			TextView team = new TextView(getApplicationContext());
@@ -130,7 +130,7 @@ public class StandingsActivity extends Activity {
 	}
 
 	private void fillTable() {
-		for (int i = 0; i < de.damps.fantasy.activities.HomeActivity.league.size; i++) {
+		for (int i = 0; i < de.damps.fantasy.CommonUtilities.league.size; i++) {
 			((TextView) ((TableRow) tbl.getChildAt(i)).getVirtualChildAt(0))
 					.setText("");
 			((TextView) ((TableRow) tbl.getChildAt(i)).getVirtualChildAt(1))

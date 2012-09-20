@@ -15,7 +15,7 @@ public class Message implements Parcelable {
 	private int from_id;
 
 	public Message(JSONObject jsonObject) {
-		SharedPreferences pref = de.damps.fantasy.activities.HomeActivity.preferences;
+		SharedPreferences pref = de.damps.fantasy.CommonUtilities.preferences;
 		try {
 			JSONObject message = jsonObject.getJSONObject("Message");
 			JSONObject from = jsonObject.getJSONObject("From");

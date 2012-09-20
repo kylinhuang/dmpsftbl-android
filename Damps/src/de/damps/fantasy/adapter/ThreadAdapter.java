@@ -45,7 +45,7 @@ public class ThreadAdapter extends ArrayAdapter<MyThread> {
 
 		String s = "Letzter Beitrag: " + th.last + " " + th.modified;
 
-		long time = de.damps.fantasy.activities.HomeActivity.preferences
+		long time = de.damps.fantasy.CommonUtilities.preferences
 				.getLong("ftime", 0);
 		if (time < th.mod) {
 			s = s+ "<font color=#036CAE><i><sup>new post</sup></i></font";

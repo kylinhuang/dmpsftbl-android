@@ -60,17 +60,17 @@ public class ReleaseActivity extends Activity {
 		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
 		((TextView) findViewById(R.id.tv_release_title)).setTypeface(font);
 
-		pref = de.damps.fantasy.activities.HomeActivity.preferences;
+		pref = de.damps.fantasy.CommonUtilities.preferences;
 		oid = pref.getString("id", "X");
-		id = de.damps.fantasy.activities.HomeActivity.league
+		id = de.damps.fantasy.CommonUtilities.league
 				.getTeamidByOwnerid(oid);
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/roster/2012/"
+		url = de.damps.fantasy.CommonUtilities.URL + "/roster/2012/"
 				+ id;
-		url_release = de.damps.fantasy.activities.HomeActivity.URL + "/release";
+		url_release = de.damps.fantasy.CommonUtilities.URL + "/release";
 
 		tbl = (TableLayout) findViewById(R.id.tl_release_roster);
 		team = (TextView) findViewById(R.id.tv_release_title);
-		dteam = de.damps.fantasy.activities.HomeActivity.league
+		dteam = de.damps.fantasy.CommonUtilities.league
 				.getTeamByOwnerid(oid);
 		team.setText(dteam);
 

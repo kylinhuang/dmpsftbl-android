@@ -30,7 +30,7 @@ public class OptionsActivity extends Activity {
 	 * init screen
 	 */
 	private void initialiseScreen() {
-		pref = de.damps.fantasy.activities.HomeActivity.preferences;
+		pref = de.damps.fantasy.CommonUtilities.preferences;
 		editor = de.damps.fantasy.activities.HomeActivity.editor;
 		domain = (EditText) findViewById(R.id.et_options_Text1);
 		news = (EditText) findViewById(R.id.et_options_Text2);

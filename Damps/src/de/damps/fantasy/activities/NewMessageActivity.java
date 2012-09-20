@@ -40,7 +40,7 @@ public class NewMessageActivity extends Activity {
 	 * initialize screen
 	 */
 	private void initializeScreen() {
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/sendmessage";
+		url = de.damps.fantasy.CommonUtilities.URL + "/sendmessage";
 		
 		title = (EditText) findViewById(R.id.et_newm_title);
 		msg = (EditText) findViewById(R.id.et_newm_msg);
@@ -53,7 +53,7 @@ public class NewMessageActivity extends Activity {
 			titletxt = extra.getString("title");
 			msgtxt = extra.getString("message");
 			from = extra.getString("from");
-			int i =de.damps.fantasy.activities.HomeActivity.league.getPosition(from);
+			int i =de.damps.fantasy.CommonUtilities.league.getPosition(from);
 			spinner.setSelection(i);
 			
 			title.setText(titletxt);
@@ -91,7 +91,7 @@ public class NewMessageActivity extends Activity {
 		spinner = (Spinner) findViewById(R.id.spi_mewm_dest);
 		OwnerAdapter ownerAdapter = new OwnerAdapter(this,
 				android.R.layout.simple_spinner_item,
-				de.damps.fantasy.activities.HomeActivity.league.league);
+				de.damps.fantasy.CommonUtilities.league.league);
 		spinner.setAdapter(ownerAdapter);
 	}
 

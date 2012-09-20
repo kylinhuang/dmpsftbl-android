@@ -42,7 +42,7 @@ public class NewsActivity extends Activity {
 		final Bundle extra = getIntent().getExtras();
 		String news_id = extra.getString("ID");
 		
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/story/" + news_id;
+		url = de.damps.fantasy.CommonUtilities.URL + "/story/" + news_id;
 		
 		titleView = (TextView) findViewById(R.id.tv_news_title);
 		newsView = (TextView) findViewById(R.id.tv_news_news);

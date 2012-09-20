@@ -53,8 +53,8 @@ public class ThreadActivity extends ListActivity {
 
 		id = extra.getString("ID");
 		title = extra.getString("title");
-		url = de.damps.fantasy.activities.HomeActivity.URL + "/thread/" + id;
-		chron = de.damps.fantasy.activities.HomeActivity.preferences
+		url = de.damps.fantasy.CommonUtilities.URL + "/thread/" + id;
+		chron = de.damps.fantasy.CommonUtilities.preferences
 				.getBoolean("chron", false);
 
 		titleview = (TextView) findViewById(R.id.tv_thread_subject);
@@ -170,7 +170,7 @@ public class ThreadActivity extends ListActivity {
 	 * new post
 	 */
 	public void reply(View view) {
-		if (de.damps.fantasy.activities.HomeActivity.preferences
+		if (de.damps.fantasy.CommonUtilities.preferences
 				.contains("token")) {
 			
 			Intent intent = new Intent(getApplicationContext(),

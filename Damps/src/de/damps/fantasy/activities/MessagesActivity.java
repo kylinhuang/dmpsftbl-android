@@ -45,10 +45,10 @@ public class MessagesActivity extends TabActivity {
 	 * init screen
 	 */
 	private void initializeScreen(){
-		urlin = de.damps.fantasy.activities.HomeActivity.URL + "/messages/to";
-		urlout = de.damps.fantasy.activities.HomeActivity.URL + "/messages/from";
+		urlin = de.damps.fantasy.CommonUtilities.URL + "/messages/to";
+		urlout = de.damps.fantasy.CommonUtilities.URL + "/messages/from";
 		
-		SharedPreferences pref = de.damps.fantasy.activities.HomeActivity.preferences;
+		SharedPreferences pref = de.damps.fantasy.CommonUtilities.preferences;
 		token = pref.getString("token", "");
 		hash = pref.getString("hash", "");
 		
