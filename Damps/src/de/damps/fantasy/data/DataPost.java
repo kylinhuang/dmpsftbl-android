@@ -29,21 +29,22 @@ public class DataPost {
 		final HttpPost httppost = new HttpPost(url);
 		final List<NameValuePair> postPara = new ArrayList<NameValuePair>();
 
-		postPara.add(new BasicNameValuePair("token", token));
-		postPara.add(new BasicNameValuePair("hash", hash));
-		
+		if (token != null) {
+			postPara.add(new BasicNameValuePair("token", token));
+			postPara.add(new BasicNameValuePair("hash", hash));
+		}
+
 		for (int i = 0; i < data.length; i++) {
 
 			postPara.add(new BasicNameValuePair(data[i][0], data[i][1]));
 		}
-		
+
 		try {
 			httppost.setEntity(new UrlEncodedFormEntity(postPara));
 
 			try {
 				HttpResponse response = client.execute(httppost);
 				this.response = EntityUtils.toString(response.getEntity());
-				String s = this.response;
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
 			} catch (IOException e) {

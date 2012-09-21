@@ -7,7 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.damps.fantasy.R;
-import de.damps.fantasy.data.Json;
+import de.damps.fantasy.data.DataGet;
 import de.damps.fantasy.data.Player;
 import de.damps.fantasy.data.Row;
 import de.damps.fantasy.data.Team;
@@ -32,7 +32,7 @@ public class StartersActivity extends Activity {
 	private String url;
 	private boolean y_init = false, gd_init = false, initialised = false;
 	private Spinner sp_ye, sp_gd;
-	private ArrayList<Team> teams = new ArrayList<Team>();
+	private ArrayList<Team> teams;
 	private int year;
 	private int gd;
 	private TableLayout tbl;
@@ -57,6 +57,7 @@ public class StartersActivity extends Activity {
 
 		@Override
 		protected void onPreExecute() {
+			teams = new ArrayList<Team>();
 			pb = (ProgressBar) findViewById(R.id.pb_start_bar1);
 			pb.setVisibility(View.VISIBLE);
 		};
@@ -80,7 +81,7 @@ public class StartersActivity extends Activity {
 	}
 
 	private void parse() {
-		Json data = new Json(url);
+		DataGet data = new DataGet(url);
 		JSONObject jo = data.data;
 		JSONArray joa = null;
 		try {
@@ -124,6 +125,15 @@ public class StartersActivity extends Activity {
 					String year = (String) parent.getItemAtPosition(position);
 					url = de.damps.fantasy.CommonUtilities.URL + "/starter/"
 							+ year + "/" + gd;
+					if (tbl != null) {
+						tbl.removeAllViews();
+					}
+					if (tbll != null) {
+						tbll.removeAllViews();
+					}
+					if (tblr != null) {
+						tblr.removeAllViews();
+					}
 					new GetStarters().execute();
 				}
 				y_init = true;
@@ -152,6 +162,16 @@ public class StartersActivity extends Activity {
 					String year = (String) sp_ye.getSelectedItem();
 					url = de.damps.fantasy.CommonUtilities.URL + "/starter/"
 							+ year + "/" + (position + 1);
+					
+					if (tbl != null) {
+						tbl.removeAllViews();
+					}
+					if (tbll != null) {
+						tbll.removeAllViews();
+					}
+					if (tblr != null) {
+						tblr.removeAllViews();
+					}
 					new GetStarters().execute();
 				}
 				gd_init = true;

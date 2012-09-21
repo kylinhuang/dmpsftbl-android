@@ -30,7 +30,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import de.damps.fantasy.R;
 import de.damps.fantasy.adapter.PosComparator;
 import de.damps.fantasy.data.DataPost;
-import de.damps.fantasy.data.Json;
+import de.damps.fantasy.data.DataGet;
 import de.damps.fantasy.data.Player;
 import de.damps.fantasy.data.Row;
 
@@ -336,7 +336,7 @@ public class SetStartersActivity extends Activity {
 	 * retrieve data
 	 */
 	private void parse() {
-		Json data = new Json(url, token, hash);
+		DataGet data = new DataGet(url, token, hash);
 		JSONObject jo = data.data;
 
 		try {

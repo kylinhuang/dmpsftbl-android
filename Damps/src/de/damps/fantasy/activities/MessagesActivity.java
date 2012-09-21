@@ -7,7 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.damps.fantasy.R;
-import de.damps.fantasy.data.Json;
+import de.damps.fantasy.data.DataGet;
 import de.damps.fantasy.data.Message;
 
 import android.os.AsyncTask;
@@ -95,7 +95,7 @@ public class MessagesActivity extends TabActivity {
 	 * retrieve data
 	 */
 	private ArrayList<Message> parse(String url) {
-		Json data = new Json(url, token, hash);
+		DataGet data = new DataGet(url, token, hash);
 		JSONObject jo = data.data;
 		JSONArray joa = null;
 		ArrayList<Message> list = new ArrayList<Message>();

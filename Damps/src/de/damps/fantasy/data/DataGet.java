@@ -21,11 +21,11 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Json {
+public class DataGet {
 
 	public JSONObject data;
 
-	public Json(String url) {
+	public DataGet(String url) {
 		String dataRaw = readUrl(url);
 		try {
 			data = new JSONObject(dataRaw);
@@ -34,7 +34,7 @@ public class Json {
 		}
 	}
 
-	public Json(String url, String token, String hash) {
+	public DataGet(String url, String token, String hash) {
 		String dataRaw = getStringFromWeb(url, token, hash);
 		try {
 			data = new JSONObject(dataRaw);
@@ -48,6 +48,7 @@ public class Json {
 		final HttpPost httppost = new HttpPost(url);
 		final List<NameValuePair> postPara = new ArrayList<NameValuePair>();
 		String responsebody = null;
+
 		postPara.add(new BasicNameValuePair("token", token));
 		postPara.add(new BasicNameValuePair("hash", hash));
 

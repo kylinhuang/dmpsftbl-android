@@ -24,7 +24,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import de.damps.fantasy.R;
 import de.damps.fantasy.data.DataPost;
-import de.damps.fantasy.data.Json;
+import de.damps.fantasy.data.DataGet;
 import de.damps.fantasy.data.Player;
 import de.damps.fantasy.data.Row;
 
@@ -140,7 +140,7 @@ public class ReleaseActivity extends Activity {
 	 * retrieve data
 	 */
 	private void parse() {
-		Json data = new Json(url);
+		DataGet data = new DataGet(url);
 		JSONObject jo = data.data;
 
 		try {

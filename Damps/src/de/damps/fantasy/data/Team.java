@@ -73,7 +73,7 @@ public class Team {
 			for (int i = 0; i < starter.length(); i++) {
 				Player p = new Player(starter.getJSONObject(i));
 
-				for (int j = 0; j < 9; j++) {
+				for (int j = 0; j < 8; j++) {
 					if (p.pos.equals(starters.get(j).pos) && !set[j]) {
 						starters.set(j, p);
 						set[j] = true;

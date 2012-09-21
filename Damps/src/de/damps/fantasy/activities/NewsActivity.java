@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.damps.fantasy.R;
-import de.damps.fantasy.data.Json;
+import de.damps.fantasy.data.DataGet;
 
 import android.app.Activity;
 import android.graphics.Typeface;
@@ -87,7 +87,7 @@ public class NewsActivity extends Activity {
 	 * retrieve data
 	 */
 	private void parse() {
-		Json data = new Json(url);
+		DataGet data = new DataGet(url);
 		JSONObject jo = data.data;
 		try {
 			jo = jo.getJSONObject("News");

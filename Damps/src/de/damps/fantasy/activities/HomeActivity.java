@@ -5,27 +5,16 @@ import static de.damps.fantasy.CommonUtilities.preferences;
 import static de.damps.fantasy.CommonUtilities.league;
 import static de.damps.fantasy.CommonUtilities.URL;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.android.gcm.GCMRegistrar;
 
 import de.damps.fantasy.R;
-import de.damps.fantasy.data.Json;
+import de.damps.fantasy.data.DataGet;
+import de.damps.fantasy.data.DataPost;
 import de.damps.fantasy.data.League;
 import android.app.Activity;
 import android.app.Dialog;
@@ -50,13 +39,13 @@ import android.widget.Toast;
 import android.view.View.OnClickListener;
 
 public class HomeActivity extends Activity {
-	
+
 	public static Editor editor;
 
 	private EditText et_username;
 	private EditText et_password;
 	private CheckBox cb_save;
-	private String urlLogin;
+	private String url_login;
 	private ImageView log;
 	private Button msg;
 	private Button mt;
@@ -125,6 +114,8 @@ public class HomeActivity extends Activity {
 
 		URL = preferences.getString("domain", getString(R.string.domain))
 				+ "/json";
+
+		url_login = URL + "/login";
 
 		new GetLeague().execute();
 	}
@@ -218,7 +209,7 @@ public class HomeActivity extends Activity {
 
 		@Override
 		protected Void doInBackground(Void... voids) {
-			Json data = new Json(url);
+			DataGet data = new DataGet(url);
 			JSONObject jo = data.data;
 			league = new League(jo);
 			return null;
@@ -455,30 +446,17 @@ public class HomeActivity extends Activity {
 	 * returns if logged in sets userdata
 	 */
 	protected boolean login(String[] user) {
-		urlLogin = URL + "/login";
-		final DefaultHttpClient client = new DefaultHttpClient();
-		final HttpPost httppost = new HttpPost(urlLogin);
-		final List<NameValuePair> postPara = new ArrayList<NameValuePair>();
-
-		postPara.add(new BasicNameValuePair("username", user[0]));
-		postPara.add(new BasicNameValuePair("password", user[1]));
-		postPara.add(new BasicNameValuePair("reg_id", reg_id));
-
-		String responsebody = null;
-		try {
-			httppost.setEntity(new UrlEncodedFormEntity(postPara));
-			try {
-				HttpResponse response = client.execute(httppost);
-				responsebody = EntityUtils.toString(response.getEntity());
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-
+		String[][] data = new String[3][2];
+		
+		data[0][0] = "username";
+		data[0][1] = user[0];
+		data[1][0] = "password";
+		data[1][1] = user[1];
+		data[2][0] = "reg_id";
+		data[2][1] = reg_id;
+		
+		String responsebody = new DataPost(url_login, data).response;
+		
 		if (responsebody.equals("false")) {
 			return false;
 		} else {

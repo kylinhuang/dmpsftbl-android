@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import de.damps.fantasy.R;
 import de.damps.fantasy.adapter.PostAdapter;
-import de.damps.fantasy.data.Json;
+import de.damps.fantasy.data.DataGet;
 import de.damps.fantasy.data.Post;
 
 import android.app.ListActivity;
@@ -110,7 +110,7 @@ public class ThreadActivity extends ListActivity {
 	 * retrieves the data
 	 */
 	private void parse() {
-		Json data = new Json(url);
+		DataGet data = new DataGet(url);
 		JSONObject jo = data.data;
 		JSONArray joa = null;
 		try {
