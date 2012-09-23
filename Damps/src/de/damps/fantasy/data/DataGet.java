@@ -21,6 +21,10 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 public class DataGet {
 
 	public JSONObject data;
@@ -109,6 +113,20 @@ public class DataGet {
 			}
 		}
 		return sb.toString();
+	}
+	
+	public boolean checkConnection() {
+		ConnectivityManager conMgr = (ConnectivityManager) de.damps.fantasy.CommonUtilities.context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+		if (conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED
+				|| conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING) {
+			return true;
+		} else if (conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED
+				|| conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED) {
+			return false;
+		}
+		return false;
 	}
 
 }

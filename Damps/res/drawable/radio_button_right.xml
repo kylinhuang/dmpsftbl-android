@@ -7,7 +7,7 @@
     <solid android:color="@color/damps_blau" />
 
     <corners
-        android:bottomLeftRadius="5dp"
-        android:bottomRightRadius="5dp" />
+        android:bottomRightRadius="5dip"
+        android:topRightRadius="5dip" />
 
 </shape>

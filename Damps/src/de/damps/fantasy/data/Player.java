@@ -8,12 +8,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
-public class Player {
-	public int player_id, roster_id, nfl_id, fflteam_id, nflteam_id, starter_id, total;
+public class Player implements Parcelable {
+	public int player_id, roster_id, nfl_id, fflteam_id, nflteam_id,
+			starter_id, total;
 	public boolean active;
-	public String name, pos, nfl_nick, nfl_city, nfl_abr, summary, contract;
+	public String name, pos, nfl_nick, nfl_abr, summary, contract;
 	public int[] scores = new int[17];
 
 	private JSONObject roster, player, nflteam;
@@ -24,7 +27,7 @@ public class Player {
 	public String hours;
 
 	public Player(JSONObject jo) {
-		
+
 		try {
 			locked = !jo.getBoolean("open");
 		} catch (JSONException e2) {
@@ -33,19 +36,20 @@ public class Player {
 				date = ((Integer) jo.getJSONArray("open").get(0)).toString();
 				hours = (String) jo.getJSONArray("open").get(2);
 				int year = Integer.valueOf(date.substring(0, 4));
-				int month = Integer.valueOf(date.substring(4, 6))-1;
+				int month = Integer.valueOf(date.substring(4, 6)) - 1;
 				int day = Integer.valueOf(date.substring(6, 8));
 				int hour = Integer.valueOf(hours.substring(0, 2));
 				int minute = Integer.valueOf(hours.substring(3, 5));
 				int second = Integer.valueOf(hours.substring(6, 8));
-				Calendar cal = new GregorianCalendar(TimeZone.getTimeZone("GMT"));
-				cal.set(year, month, day, hour, minute, second); 
-				kickoff = cal.getTime().getTime(); 
+				Calendar cal = new GregorianCalendar(
+						TimeZone.getTimeZone("GMT"));
+				cal.set(year, month, day, hour, minute, second);
+				kickoff = cal.getTime().getTime();
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		try {
 			starter_id = jo.getInt("id");
 		} catch (JSONException e2) {
@@ -75,14 +79,23 @@ public class Player {
 			pos = player.getString("position");
 		} catch (JSONException e) {
 			try {
-				player = roster.getJSONObject("Player");
+				player = jo.getJSONObject("Roster").getJSONObject("Player");
 
 				String vorname = player.getString("firstname");
 				String nachname = player.getString("name");
 				name = vorname + " " + nachname;
 				pos = player.getString("position");
 			} catch (JSONException e1) {
-				System.err.println("Kein Player Object");
+				try {
+					player = jo.getJSONObject("Playerlist");
+
+					String vorname = player.getString("firstname");
+					String nachname = player.getString("lastname");
+					name = vorname + " " + nachname;
+					pos = player.getString("position");
+				} catch (JSONException e2) {
+					System.err.println("Kein Player Object");
+				}
 			}
 		}
 
@@ -90,14 +103,12 @@ public class Player {
 			nflteam = jo.getJSONObject("Nflteam");
 
 			nfl_nick = nflteam.getString("nickname");
-			nfl_city = nflteam.getString("name");
 			nfl_abr = nflteam.getString("abbr");
 		} catch (JSONException e) {
 			try {
-				nflteam = roster.getJSONObject("Nflteam");
+				nflteam = jo.getJSONObject("Roster").getJSONObject("Nflteam");
 
 				nfl_nick = nflteam.getString("nickname");
-				nfl_city = nflteam.getString("name");
 				nfl_abr = nflteam.getString("abbr");
 			} catch (JSONException e1) {
 				System.err.println("Kein Player Object");
@@ -122,8 +133,6 @@ public class Player {
 		} catch (JSONException e) {
 			System.err.println("Kein Score Object");
 		}
-		
-		
 
 		summary = ((Integer) total).toString();
 	}
@@ -133,5 +142,32 @@ public class Player {
 		name = "";
 		nfl_abr = "";
 	}
+
+	public Player(Parcel in) {
+		name = in.readString();
+		nfl_abr = in.readString();
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(name);
+		dest.writeString(nfl_abr);
+	}
+
+	@SuppressWarnings("rawtypes")
+	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+		public Player createFromParcel(Parcel in) {
+			return new Player(in);
+		}
+
+		public Player[] newArray(int size) {
+			return new Player[size];
+		}
+	};
 
 }

@@ -126,9 +126,7 @@ public class RosterActivity extends Activity {
 			contructRoster();
 			sortPos(null);
 			pb.setVisibility(View.INVISIBLE);
-
 		}
-
 	}
 
 	/*

@@ -14,7 +14,10 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 public class DataPost {
 
@@ -54,5 +57,19 @@ public class DataPost {
 			e.printStackTrace();
 		}
 
+	}
+
+	public boolean checkConnection() {
+		ConnectivityManager conMgr = (ConnectivityManager) de.damps.fantasy.CommonUtilities.context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+		if (conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED
+				|| conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING) {
+			return true;
+		} else if (conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED
+				|| conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED) {
+			return false;
+		}
+		return false;
 	}
 }

@@ -197,8 +197,6 @@
                 <Button
                     android:id="@+id/bu_home_sign"
                     style="@style/button"
-                    android:background="@drawable/button_inactive"
-                    android:enabled="false"
                     android:onClick="signFreeAgent"
                     android:text="@string/sign" />
 

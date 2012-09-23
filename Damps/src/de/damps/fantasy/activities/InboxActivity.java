@@ -26,10 +26,9 @@ public class InboxActivity extends ListActivity {
 		setContentView(R.layout.inbox);
 		url = de.damps.fantasy.CommonUtilities.URL + "/readmessage";
 		messages = getIntent().getExtras().getParcelableArrayList("messages");
-		
+
 		showThreads();
 	}
-
 
 	/*
 	 * fill list
@@ -56,7 +55,7 @@ public class InboxActivity extends ListActivity {
 	 */
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		
+
 		Intent intent = new Intent(getApplicationContext(),
 				MessageActivity.class);
 		message = messages.get(position);
@@ -71,6 +70,7 @@ public class InboxActivity extends ListActivity {
 	 */
 	private class ReadMessage extends AsyncTask<Void, Void, Void> {
 		String[][] data = new String[1][2];
+
 		@Override
 		protected void onPreExecute() {
 			data[0][0] = "id";

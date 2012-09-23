@@ -65,8 +65,8 @@ public class HomeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
 
-		initializePush();
 		initializeApp();
+		initializePush();
 		initializeScreen();
 	}
 
@@ -109,6 +109,7 @@ public class HomeActivity extends Activity {
 	 * initializes App
 	 */
 	private void initializeApp() {
+		de.damps.fantasy.CommonUtilities.context = getApplicationContext();
 		preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		editor = preferences.edit();
 
@@ -142,9 +143,10 @@ public class HomeActivity extends Activity {
 			ss.setClickable(true);
 			rp.setBackgroundResource(R.drawable.button_selector);
 			rp.setClickable(true);
+
+			sp.setBackgroundResource(R.drawable.button_selector);
+			sp.setClickable(true);
 			/*
-			 * sp.setBackgroundResource(R.drawable.button_selector);
-			 * sp.setClickable(true);
 			 * opt.setBackgroundResource(R.drawable.button_selector);
 			 * opt.setClickable(true);
 			 * oft.setBackgroundResource(R.drawable.button_selector);
@@ -313,12 +315,16 @@ public class HomeActivity extends Activity {
 				ReleaseActivity.class);
 		startActivity(intent);
 	}
-
+	
 	public void signFreeAgent(View view) {
-		/*
-		 * Intent intent = new Intent(getApplicationContext(),
-		 * SignFreeAgent.class); startActivity(intent);
-		 */
+		if (android.os.Build.VERSION.SDK_INT >= 11) {
+			Intent intent = new Intent(getApplicationContext(),
+					SignActivity.class);
+			startActivity(intent);
+		} else {
+		    // Do something different to support older versions
+		}
+		
 	}
 
 	public void openTrades(View view) {
@@ -335,7 +341,7 @@ public class HomeActivity extends Activity {
 		 */
 	}
 
-	public void Tradelist(View view) {
+	public void tradelist(View view) {
 		/*
 		 * Intent intent = new Intent(getApplicationContext(),
 		 * OpenTradesActivity.class); startActivity(intent);
@@ -375,9 +381,10 @@ public class HomeActivity extends Activity {
 							rp.setBackgroundResource(R.drawable.button_selector);
 							rp.setClickable(true);
 							// TODO
+
+							sp.setBackgroundResource(R.drawable.button_selector);
+							sp.setClickable(true);
 							/*
-							 * sp.setBackgroundResource(R.drawable.button_selector
-							 * ); sp.setClickable(true);
 							 * opt.setBackgroundResource
 							 * (R.drawable.button_selector);
 							 * opt.setClickable(true);
@@ -447,16 +454,16 @@ public class HomeActivity extends Activity {
 	 */
 	protected boolean login(String[] user) {
 		String[][] data = new String[3][2];
-		
+
 		data[0][0] = "username";
 		data[0][1] = user[0];
 		data[1][0] = "password";
 		data[1][1] = user[1];
 		data[2][0] = "reg_id";
 		data[2][1] = reg_id;
-		
+
 		String responsebody = new DataPost(url_login, data).response;
-		
+
 		if (responsebody.equals("false")) {
 			return false;
 		} else {

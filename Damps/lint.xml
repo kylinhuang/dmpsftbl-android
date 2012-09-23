@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
+    <issue id="ContentDescription" severity="ignore" />
+    <issue id="NewApi" severity="informational" />
     <issue id="SuspiciousImport">
         <ignore path="src\de\damps\fantasy\adapter\OwnerAdapter.java" />
         <ignore path="src\de\damps\fantasy\adapter\TeamAdapter.java" />
     </issue>
+    <issue id="UselessParent" severity="ignore" />
 </lint>

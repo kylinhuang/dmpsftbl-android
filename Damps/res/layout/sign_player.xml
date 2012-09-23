@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/rl_sign_layout1"
+        style="@style/titlebar" >
+
+        <ImageView
+            android:id="@+id/iv_sign_back"
+            style="@style/pic_title_left" />
+
+        <TextView
+            android:id="@+id/tv_sign_title"
+            style="@style/title"
+            android:layout_toRightOf="@+id/iv_sign_back"
+            android:text="@string/sign" />
+
+        <ProgressBar
+            android:id="@+id/pb_sign_bar1"
+            style="@style/progressbar" />
+    </RelativeLayout>
+
+    <RadioGroup
+        android:id="@+id/rg_sign_position"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rl_sign_layout1"
+        android:layout_margin="1dp"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/rb_sign_qb"
+            style="@style/radio_button"
+            android:background="@drawable/radio_selector_left"
+            android:checked="true"
+            android:onClick="getQb"
+            android:text="@string/qb" />
+
+        <RadioButton
+            android:id="@+id/rb_sign_qrb"
+            style="@style/radio_button"
+            android:background="@drawable/radio_selector_mid"
+            android:onClick="getRb"
+            android:text="@string/rb" />
+
+        <RadioButton
+            android:id="@+id/rb_sign_wr"
+            style="@style/radio_button"
+            android:background="@drawable/radio_selector_mid"
+            android:onClick="getWr"
+            android:text="@string/wr" />
+
+        <RadioButton
+            android:id="@+id/rb_sign_te"
+            style="@style/radio_button"
+            android:background="@drawable/radio_selector_mid"
+            android:onClick="getTe"
+            android:text="@string/te" />
+
+        <RadioButton
+            android:id="@+id/rb_sign_k"
+            style="@style/radio_button"
+            android:background="@drawable/radio_selector_mid"
+            android:onClick="getK"
+            android:text="@string/k" />
+
+        <RadioButton
+            android:id="@+id/rb_sign_def"
+            style="@style/radio_button"
+            android:background="@drawable/radio_selector_right"
+            android:onClick="getDef"
+            android:text="@string/def" />
+    </RadioGroup>
+
+    <SearchView
+        android:id="@+id/sv_sign_search_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rg_sign_position"
+        android:inputType="textPersonName" >
+
+        <requestFocus />
+    </SearchView>
+
+    <ListView
+        android:id="@+id/android:list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sv_sign_search_name" >
+    </ListView>
+
+</RelativeLayout>

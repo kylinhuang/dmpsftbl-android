@@ -4,10 +4,6 @@
     android:shape="rectangle" >
 
     <!-- you can use any color you want I used here gray color -->
-    <solid android:color="@color/damps_blau" />
-
-    <corners
-        android:bottomLeftRadius="5dp"
-        android:bottomRightRadius="5dp" />
+    <solid android:color="@color/damps_blau_pressed" />
 
 </shape>

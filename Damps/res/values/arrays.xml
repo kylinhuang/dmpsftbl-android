@@ -32,79 +32,11 @@
     </string-array>
     <string-array name="formations">
         <item>standard</item>
-        <item>3-1-1</item>
-        <item>1-3-1</item>
-        <item>1-2-2</item>
-        <item>2-1-2</item>
-        <item>1-1-3</item>
+        <item>3&#8211;1&#8211;1</item>
+        <item>1&#8211;3&#8211;1</item>
+        <item>1&#8211;2&#8211;2</item>
+        <item>2&#8211;1&#8211;2</item>
+        <item>1&#8211;1&#8211;3</item>
     </string-array>
-    <string-array name="NFLTeams">
-        <item>Buffalo Bills</item>
-        <item>Miami Dolphins</item>
-        <item>New England Patriots</item>
-        <item>New York Jets</item>
-        <item>Baltimore Ravens</item>
-        <item>Cincinnati Bengals</item>
-        <item>Cleveland Browns</item>
-        <item>Pittsburgh Steelers</item>
-        <item>Houston Texans</item>
-        <item>Indianapolis Colts</item>
-        <item>Jacksonville Jaguars</item>
-        <item>Tennesee Titans</item>
-        <item>Denver Broncos</item>
-        <item>Kansas City Chiefs</item>
-        <item>Oakland Raider</item>
-        <item>San Diego Chargers</item>
-        <item>Dallas Cowboys</item>
-        <item>New York Giants</item>
-        <item>Philadelphia Eagles</item>
-        <item>Washington Redskins</item>
-        <item>Chicago Bears</item>
-        <item>Detroit Lions</item>
-        <item>Green Bay Packers</item>
-        <item>Minnesota Vikings</item>
-        <item>Atlanta Falcons</item>
-        <item>Carolina Panthers</item>
-        <item>New Orleans Saints</item>
-        <item>Tampa Bay Buccaneers</item>
-        <item>Arizona Cardinals</item>
-        <item>Saint Louis Rams</item>
-        <item>San Francisco 49ers</item>
-        <item>Seattle Seahawks</item>
-    </string-array>
-    <string-array name="NFLNicks">
-        <item>BUF</item>
-        <item>MIA</item>
-        <item>NE</item>
-        <item>NYJ</item>
-        <item>BAL</item>
-        <item>CIN</item>
-        <item>CLE</item>
-        <item>PIT</item>
-        <item>HOU</item>
-        <item>IND</item>
-        <item>JAC</item>
-        <item>TEN</item>
-        <item>DEN</item>
-        <item>KC</item>
-        <item>OAK</item>
-        <item>SD</item>
-        <item>DAL</item>
-        <item>NYG</item>
-        <item>PHI</item>
-        <item>WAS</item>
-        <item>CHI</item>
-        <item>DET</item>
-        <item>GB</item>
-        <item>MIN</item>
-        <item>ATL</item>
-        <item>CAR</item>
-        <item>NO</item>
-        <item>TB</item>
-        <item>ARI</item>
-        <item>STL</item>
-        <item>SF</item>
-        <item>SEA</item>
-    </string-array>
-
+    
 </resources>
