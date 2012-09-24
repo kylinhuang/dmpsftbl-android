@@ -93,6 +93,7 @@ public class Player implements Parcelable {
 					String nachname = player.getString("lastname");
 					name = vorname + " " + nachname;
 					pos = player.getString("position");
+					player_id = player.getInt("id");
 				} catch (JSONException e2) {
 					System.err.println("Kein Player Object");
 				}
@@ -104,6 +105,7 @@ public class Player implements Parcelable {
 
 			nfl_nick = nflteam.getString("nickname");
 			nfl_abr = nflteam.getString("abbr");
+			nfl_id = nflteam.getInt("id");
 		} catch (JSONException e) {
 			try {
 				nflteam = jo.getJSONObject("Roster").getJSONObject("Nflteam");

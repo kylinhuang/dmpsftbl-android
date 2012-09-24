@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -43,6 +44,8 @@ public class ReleaseActivity extends Activity {
 	private String oid;
 	private String pid;
 	private String rid;
+	private boolean fromSign;
+	private Player toSign;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -51,6 +54,14 @@ public class ReleaseActivity extends Activity {
 		setContentView(R.layout.release);
 
 		inititalizeScreen();
+	}
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 1) {
+			fromSign = true;
+			toSign = data.getExtras().getParcelable("player");
+			inititalizeScreen();
+		}
 	}
 
 	/*
@@ -174,8 +185,6 @@ public class ReleaseActivity extends Activity {
 
 			TableRow newRow = new Row(c, "pos", head).newRow;
 
-			pid = ((Integer) roster.get(i).player_id).toString();
-			rid = ((Integer) roster.get(i).roster_id).toString();
 			final String name1 = roster.get(i).name;
 
 			newRow.setOnClickListener(new OnClickListener() {
@@ -187,6 +196,7 @@ public class ReleaseActivity extends Activity {
 					dialog.setTitle("Confirm Release");
 					dialog.setCancelable(true);
 
+					final int p = tbl.indexOfChild(v);
 					String t = "Release " + name1 + "?\n";
 					TextView tv = (TextView) dialog
 							.findViewById(R.id.tv_confirm_view1);
@@ -200,9 +210,17 @@ public class ReleaseActivity extends Activity {
 					bu_ok.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
+							rid = ((Integer)roster.get(p).roster_id).toString();
+							pid = ((Integer)roster.get(p).player_id).toString();
 							new ReleasePlayer().execute();
-							tbl.removeView(v);
+							tbl.removeViewAt(p);
 							dialog.dismiss();
+							if(fromSign){
+								//TODO Dialog to ask to sign;
+								Intent intent = new Intent(getApplicationContext(), ReleaseActivity.class);
+								intent.putExtra("player", toSign);
+								startActivityForResult(intent, 1);
+							}
 						}
 					});
 

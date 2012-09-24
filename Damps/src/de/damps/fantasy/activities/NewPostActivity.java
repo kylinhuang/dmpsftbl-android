@@ -81,7 +81,7 @@ public class NewPostActivity extends Activity {
 	 */
 	private class Reply extends AsyncTask<Void, Void, Void> {
 		ProgressBar pb;
-		private String[][] data;
+		private String[][] data = new String[2][2];
 
 		@Override
 		protected void onPreExecute() {

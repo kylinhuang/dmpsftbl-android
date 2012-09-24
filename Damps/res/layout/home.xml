@@ -181,10 +181,8 @@
                 <Button
                     android:id="@+id/bu_home_tradelist"
                     style="@style/button"
-                    android:background="@drawable/button_inactive"
-                    android:enabled="false"
-                    android:onClick="tradelist"
-                    android:text="@string/tradelist" />
+                    android:onClick="tradeLog"
+                    android:text="@string/tradelog" />
             </LinearLayout>
 
             <LinearLayout

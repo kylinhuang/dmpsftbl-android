@@ -136,44 +136,9 @@ public class HomeActivity extends Activity {
 		msg = (Button) findViewById(R.id.bu_home_nachrichten);
 
 		if (preferences.contains("token")) {
-			log.setImageResource(R.drawable.logout);
-			mt.setBackgroundResource(R.drawable.button_selector);
-			mt.setClickable(true);
-			ss.setBackgroundResource(R.drawable.button_selector);
-			ss.setClickable(true);
-			rp.setBackgroundResource(R.drawable.button_selector);
-			rp.setClickable(true);
-
-			sp.setBackgroundResource(R.drawable.button_selector);
-			sp.setClickable(true);
-			/*
-			 * opt.setBackgroundResource(R.drawable.button_selector);
-			 * opt.setClickable(true);
-			 * oft.setBackgroundResource(R.drawable.button_selector);
-			 * oft.setClickable(true);
-			 * tl.setBackgroundResource(R.drawable.button_selector);
-			 * tl.setClickable(true);
-			 */
-			msg.setBackgroundResource(R.drawable.button_selector);
-			msg.setClickable(true);
+			activateMemberarea(true);
 		} else {
-			log.setImageResource(R.drawable.login);
-			mt.setBackgroundResource(R.drawable.button_inactive);
-			mt.setClickable(false);
-			ss.setBackgroundResource(R.drawable.button_inactive);
-			ss.setClickable(false);
-			rp.setBackgroundResource(R.drawable.button_inactive);
-			rp.setClickable(false);
-			sp.setBackgroundResource(R.drawable.button_inactive);
-			sp.setClickable(false);
-			opt.setBackgroundResource(R.drawable.button_inactive);
-			opt.setClickable(false);
-			oft.setBackgroundResource(R.drawable.button_inactive);
-			oft.setClickable(false);
-			tl.setBackgroundResource(R.drawable.button_inactive);
-			tl.setClickable(false);
-			msg.setBackgroundResource(R.drawable.button_inactive);
-			msg.setClickable(false);
+			activateMemberarea(false);
 		}
 
 		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
@@ -315,16 +280,16 @@ public class HomeActivity extends Activity {
 				ReleaseActivity.class);
 		startActivity(intent);
 	}
-	
+
 	public void signFreeAgent(View view) {
 		if (android.os.Build.VERSION.SDK_INT >= 11) {
 			Intent intent = new Intent(getApplicationContext(),
 					SignActivity.class);
 			startActivity(intent);
 		} else {
-		    // Do something different to support older versions
+			// Do something different to support older versions
 		}
-		
+
 	}
 
 	public void openTrades(View view) {
@@ -341,11 +306,11 @@ public class HomeActivity extends Activity {
 		 */
 	}
 
-	public void tradelist(View view) {
-		/*
-		 * Intent intent = new Intent(getApplicationContext(),
-		 * OpenTradesActivity.class); startActivity(intent);
-		 */
+	public void tradeLog(View view) {
+		
+		  Intent intent = new Intent(getApplicationContext(),
+		  TradelogActivity.class); startActivity(intent);
+		 
 	}
 
 	/*
@@ -372,31 +337,7 @@ public class HomeActivity extends Activity {
 							et_password.getText().toString() };
 					try {
 						if (new Login().execute(user).get()) {
-
-							log.setImageResource(R.drawable.logout);
-							mt.setBackgroundResource(R.drawable.button_selector);
-							mt.setClickable(true);
-							ss.setBackgroundResource(R.drawable.button_selector);
-							ss.setClickable(true);
-							rp.setBackgroundResource(R.drawable.button_selector);
-							rp.setClickable(true);
-							// TODO
-
-							sp.setBackgroundResource(R.drawable.button_selector);
-							sp.setClickable(true);
-							/*
-							 * opt.setBackgroundResource
-							 * (R.drawable.button_selector);
-							 * opt.setClickable(true);
-							 * oft.setBackgroundResource(
-							 * R.drawable.button_selector);
-							 * oft.setClickable(true);
-							 * tl.setBackgroundResource(R
-							 * .drawable.button_selector);
-							 * tl.setClickable(true);
-							 */
-							msg.setBackgroundResource(R.drawable.button_selector);
-							msg.setClickable(true);
+							activateMemberarea(true);
 
 							if (cb_save.isChecked()) {
 								editor.putBoolean("savelogin", true);
@@ -484,11 +425,6 @@ public class HomeActivity extends Activity {
 
 	}
 
-	/*
-	 * Logging out
-	 * 
-	 * Removes prefs, sets buttons
-	 */
 	public void logout() {
 		editor.remove("token");
 		editor.remove("hash");
@@ -496,6 +432,50 @@ public class HomeActivity extends Activity {
 		editor.remove("savelogin");
 		editor.commit();
 		initializeScreen();
+	}
+
+	private void activateMemberarea(boolean b) {
+		if (b = true) {
+			log.setImageResource(R.drawable.logout);
+			mt.setBackgroundResource(R.drawable.button_selector);
+			mt.setClickable(true);
+			ss.setBackgroundResource(R.drawable.button_selector);
+			ss.setClickable(true);
+			rp.setBackgroundResource(R.drawable.button_selector);
+			rp.setClickable(true);
+
+			sp.setBackgroundResource(R.drawable.button_selector);
+			sp.setClickable(true);
+			/*
+			 * opt.setBackgroundResource(R.drawable.button_selector);
+			 * opt.setClickable(true);
+			 * oft.setBackgroundResource(R.drawable.button_selector);
+			 * oft.setClickable(true);
+			 */
+			tl.setBackgroundResource(R.drawable.button_selector);
+			tl.setClickable(true);
+
+			msg.setBackgroundResource(R.drawable.button_selector);
+			msg.setClickable(true);
+		} else {
+			log.setImageResource(R.drawable.login);
+			mt.setBackgroundResource(R.drawable.button_inactive);
+			mt.setClickable(false);
+			ss.setBackgroundResource(R.drawable.button_inactive);
+			ss.setClickable(false);
+			rp.setBackgroundResource(R.drawable.button_inactive);
+			rp.setClickable(false);
+			sp.setBackgroundResource(R.drawable.button_inactive);
+			sp.setClickable(false);
+			opt.setBackgroundResource(R.drawable.button_inactive);
+			opt.setClickable(false);
+			oft.setBackgroundResource(R.drawable.button_inactive);
+			oft.setClickable(false);
+			tl.setBackgroundResource(R.drawable.button_inactive);
+			tl.setClickable(false);
+			msg.setBackgroundResource(R.drawable.button_inactive);
+			msg.setClickable(false);
+		}
 	}
 
 }

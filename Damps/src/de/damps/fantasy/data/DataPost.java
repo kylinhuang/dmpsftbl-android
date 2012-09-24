@@ -48,6 +48,8 @@ public class DataPost {
 			try {
 				HttpResponse response = client.execute(httppost);
 				this.response = EntityUtils.toString(response.getEntity());
+				@SuppressWarnings("unused")
+				String forbreakpoint = this.response;
 			} catch (ClientProtocolException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
