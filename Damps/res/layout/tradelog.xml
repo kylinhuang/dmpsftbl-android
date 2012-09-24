@@ -15,7 +15,7 @@
             android:id="@+id/tv_tradelog_title"
             style="@style/title"
             android:layout_toRightOf="@+id/iv_tradelog_back"
-            android:text="@string/forum" />
+            android:text="@string/tradelog" />
 
         <ProgressBar
             android:id="@+id/pb_tradelog_bar1"

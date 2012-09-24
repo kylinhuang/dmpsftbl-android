@@ -11,8 +11,8 @@
 
         <ImageView
             android:id="@+id/iv_logitem_action"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center_vertical" />
 
         <LinearLayout

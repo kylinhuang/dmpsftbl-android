@@ -47,10 +47,10 @@ public class LogAdapter extends ArrayAdapter<Log> {
 		// TODO ICONS
 		switch (l.action) {
 		case de.damps.fantasy.data.Log.SIGNED_PLAYER:
-			action.setImageResource(R.drawable.accept);
+			action.setImageResource(R.drawable.sign_player);
 			break;
 		case de.damps.fantasy.data.Log.RELEASED_PLAYER:
-			action.setImageResource(R.drawable.accept);
+			action.setImageResource(R.drawable.release_player);
 			break;
 		case de.damps.fantasy.data.Log.PLACED_PLAYER_ON_TRADELIST:
 			action.setImageResource(R.drawable.list_add);
