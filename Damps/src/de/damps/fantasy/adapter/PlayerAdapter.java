@@ -43,11 +43,18 @@ public class PlayerAdapter extends ArrayAdapter<Player> {
 
 		// Assign the appropriate data from our alert object above
 		name.setText(p.name);
-		if (!p.nfl_abr.equals("-")) {
-			int res = c.getResources().getIdentifier((p.nfl_abr).toLowerCase(),
-					"drawable", "de.damps.fantasy");
-			team.setImageResource(res);
-		}else{
+		if (p.nfl_abr != null) {
+			if (!p.nfl_abr.equals("-")) {
+				int res = c.getResources().getIdentifier(
+						(p.nfl_abr).toLowerCase(), "drawable",
+						"de.damps.fantasy");
+				team.setImageResource(res);
+			} else {
+				int res = c.getResources().getIdentifier(("fa").toLowerCase(),
+						"drawable", "de.damps.fantasy");
+				team.setImageResource(res);
+			}
+		} else {
 			int res = c.getResources().getIdentifier(("fa").toLowerCase(),
 					"drawable", "de.damps.fantasy");
 			team.setImageResource(res);

@@ -83,12 +83,12 @@
         android:layout_below="@+id/rg_sign_position" >
 
         <TextView
+            style="@style/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="@string/sortby"
-           style="@style/text"
-           android:textSize="20dp"
-            android:layout_gravity="center_vertical" />
+            android:textSize="20dp" />
 
         <RadioGroup
             android:id="@+id/rg_sign_sort"
@@ -114,11 +114,21 @@
         </RadioGroup>
     </LinearLayout>
 
+    <SearchView
+        android:id="@+id/sv_sign_search_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_sign_layout1"
+        android:inputType="textPersonName" >
+
+        <requestFocus />
+    </SearchView>
+
     <ListView
         android:id="@+id/android:list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_sign_layout1" >
+        android:layout_below="@+id/sv_sign_search_name" >
     </ListView>
 
 </RelativeLayout>

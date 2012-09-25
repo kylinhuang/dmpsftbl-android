@@ -103,6 +103,9 @@
     <string name="k">K</string>
     <string name="def">DEF</string>
 	<string name="freespot">Kein freier Rosterspot.\n\nSpieler releasen um platz zu machen\n</string>
+	<string name="sortby">Sort by:</string>
+	<string name="sortteam">Team</string>
+    <string name="sortname">Name</string>
     <!-- Tags -->
     <string name="kickoff">kickoff</string>
     

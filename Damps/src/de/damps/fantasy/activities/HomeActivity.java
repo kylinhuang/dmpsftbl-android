@@ -282,14 +282,9 @@ public class HomeActivity extends Activity {
 	}
 
 	public void signFreeAgent(View view) {
-		if (android.os.Build.VERSION.SDK_INT >= 11) {
 			Intent intent = new Intent(getApplicationContext(),
 					SignActivity.class);
 			startActivity(intent);
-		} else {
-			// Do something different to support older versions
-		}
-
 	}
 
 	public void openTrades(View view) {
