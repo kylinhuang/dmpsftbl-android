@@ -435,7 +435,7 @@ public class HomeActivity extends Activity {
 	}
 
 	private void activateMemberarea(boolean b) {
-		if (b = true) {
+		if (b == true) {
 			log.setImageResource(R.drawable.logout);
 			mt.setBackgroundResource(R.drawable.button_selector);
 			mt.setClickable(true);

@@ -52,16 +52,12 @@ public class ReleaseActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.release);
-
-		inititalizeScreen();
-	}
-	
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 1) {
+		Bundle bundle = getIntent().getExtras();
+		if(bundle != null){
 			fromSign = true;
-			toSign = data.getExtras().getParcelable("player");
-			inititalizeScreen();
+			toSign = bundle.getParcelable("player");
 		}
+		inititalizeScreen();
 	}
 
 	/*
@@ -217,9 +213,9 @@ public class ReleaseActivity extends Activity {
 							dialog.dismiss();
 							if(fromSign){
 								//TODO Dialog to ask to sign;
-								Intent intent = new Intent(getApplicationContext(), ReleaseActivity.class);
+								Intent intent = new Intent(getApplicationContext(), SignActivity.class);
 								intent.putExtra("player", toSign);
-								startActivityForResult(intent, 1);
+								setResult(1, intent);
 							}
 						}
 					});

@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 import de.damps.fantasy.R;
 import de.damps.fantasy.adapter.PlayerAdapter;
 import de.damps.fantasy.data.DataGet;
@@ -68,10 +70,26 @@ public class SignActivity extends ListActivity {
 		if (requestCode == 1) {
 			Bundle bundle = data.getExtras();
 			Player p = bundle.getParcelable("player");
-			new SignPlayerFromRelease().execute(p);
-			initializeScreen();
+			String response = null;
+			
+			try {
+				response = new SignPlayerFromRelease().execute(p).get();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+
+			if(response.equals("false")){
+				askForRelease(p);
+			}else{
+				confirmSign(p.name);
+			}
+			
 		}
 	}
+
+	
 
 	/*
 	 * init screen
@@ -204,35 +222,48 @@ public class SignActivity extends ListActivity {
 		}
 		
 		if(response.equals("false")){
-			final Dialog dialog = new Dialog(this);
-			dialog.setContentView(R.layout.freespot);
-			dialog.setTitle("Fehler beim signen");
-			dialog.setCancelable(true);
-
-			// set up button
-			Button bu_cancel = (Button) dialog.findViewById(R.id.bu_freespot_cancel);
-			Button bu_ok = (Button) dialog.findViewById(R.id.bu_freespot_ok);
-
-			bu_ok.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(getApplicationContext(), ReleaseActivity.class);
-					intent.putExtra("player", player.get(position));
-					startActivityForResult(intent, 1);
-				}
-			});
-			bu_cancel.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					dialog.dismiss();
-				}
-			});
-			dialog.show();
+			askForRelease(player.get(position));
 		}else{
-			
+			confirmSign(player.get(position).name);
 		}
 	}
+	
+	private void askForRelease(final Player p) {
+		final Dialog dialog = new Dialog(this);
+		dialog.setContentView(R.layout.freespot);
+		dialog.setTitle("Fehler beim signen");
+		dialog.setCancelable(true);
 
+		// set up button
+		Button bu_cancel = (Button) dialog.findViewById(R.id.bu_freespot_cancel);
+		Button bu_ok = (Button) dialog.findViewById(R.id.bu_freespot_ok);
+
+		bu_ok.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), ReleaseActivity.class);
+				intent.putExtra("player", p);
+				startActivityForResult(intent, 1);
+			}
+		});
+		bu_cancel.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+		dialog.show();
+	}
+
+
+	private void confirmSign(String name) {
+		Toast toast = Toast.makeText(
+				getApplicationContext(),
+				name + " erfolgreich gesigned.",
+				Toast.LENGTH_LONG);
+		toast.setGravity(Gravity.CENTER, 0, 0);
+		toast.show();
+	}
 
 	public void getQb(View view) {
 		url_player = url + "qb";

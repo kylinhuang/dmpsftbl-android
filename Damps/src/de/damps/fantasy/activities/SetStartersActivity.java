@@ -222,12 +222,14 @@ public class SetStartersActivity extends Activity {
 	}
 
 	private void adjustHeader() {
-		((TextView) ((TableRow) tbl.getChildAt(0)).getVirtualChildAt(3))
+		((TextView) ((TableRow) tbl.getChildAt(8)).getVirtualChildAt(3))
 				.measure(0, 0);
-		int width = ((TextView) ((TableRow) tbl.getChildAt(0))
+		int width = ((TextView) ((TableRow) tbl.getChildAt(8))
 				.getVirtualChildAt(3)).getMeasuredWidth();
 		((TextView) ((TableRow) head.getChildAt(0)).getVirtualChildAt(3))
 				.setWidth(width);
+		
+		
 	}
 
 	private void initializeSpinner() {
@@ -250,6 +252,7 @@ public class SetStartersActivity extends Activity {
 				if (init_gd) {
 					String gameday = ((String) sp_gd.getSelectedItem())
 							.substring(8);
+					gd = Integer.valueOf(gameday);
 					url = de.damps.fantasy.CommonUtilities.URL
 							+ "/myteamstarter/" + gameday;
 					f_p1 = null;

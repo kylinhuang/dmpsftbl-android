@@ -12,6 +12,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import android.content.Context;
@@ -38,12 +39,12 @@ public class DataPost {
 		}
 
 		for (int i = 0; i < data.length; i++) {
-
 			postPara.add(new BasicNameValuePair(data[i][0], data[i][1]));
 		}
 
 		try {
-			httppost.setEntity(new UrlEncodedFormEntity(postPara));
+			
+			httppost.setEntity(new UrlEncodedFormEntity(postPara, HTTP.UTF_8));
 
 			try {
 				HttpResponse response = client.execute(httppost);
