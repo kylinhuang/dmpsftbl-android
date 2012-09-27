@@ -118,8 +118,7 @@
         android:id="@+id/sv_sign_search_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_sign_layout1"
-        android:inputType="textPersonName" >
+        android:layout_below="@+id/ll_sign_layout1" >
 
         <requestFocus />
     </SearchView>

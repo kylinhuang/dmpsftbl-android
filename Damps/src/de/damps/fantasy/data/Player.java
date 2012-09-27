@@ -148,6 +148,8 @@ public class Player implements Parcelable {
 	public Player(Parcel in) {
 		name = in.readString();
 		nfl_abr = in.readString();
+		player_id = in.readInt();
+		nfl_id = in.readInt();
 	}
 
 	@Override
@@ -159,6 +161,8 @@ public class Player implements Parcelable {
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(name);
 		dest.writeString(nfl_abr);
+		dest.writeInt(player_id);
+		dest.writeInt(nfl_id);
 	}
 
 	@SuppressWarnings("rawtypes")

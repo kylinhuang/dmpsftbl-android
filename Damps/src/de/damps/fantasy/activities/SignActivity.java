@@ -20,11 +20,13 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import de.damps.fantasy.R;
@@ -40,39 +42,16 @@ public class SignActivity extends ListActivity {
 	private String url;
 	private String url_player;
 	private String url_sign;
+	private SearchView searchView;
+	private SearchManager searchManager;
+	private Player todelete;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (android.os.Build.VERSION.SDK_INT >= 11) {
-			setContentView(R.layout.sign_player11);
 
-			// Associate searchable configuration with the SearchView
-			SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-			SearchView searchView = (SearchView) findViewById(R.id.sv_sign_search_name);
-			searchView.setSearchableInfo(searchManager
-					.getSearchableInfo(getComponentName()));
-			searchView.setIconifiedByDefault(false);
-			searchView.setFocusable(false);
-			// Get the intent, verify the action and get the query
-			Intent intent = getIntent();
-
-			if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-				String query = intent.getStringExtra(SearchManager.QUERY);
-				Bundle bundle = intent.getBundleExtra(SearchManager.APP_DATA);
-				player = bundle.getParcelableArrayList("players");
-				player = searchPlayers(query);
-				showPlayers();
-			} else {
-				initializeScreen();
-				new GetPlayers().execute();
-			}
-		} else {
-			setContentView(R.layout.sign_player);
-			initializeScreen();
-			new GetPlayers().execute();
-		}
+		handleIntent(getIntent());
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -97,6 +76,76 @@ public class SignActivity extends ListActivity {
 		}
 	}
 
+	@Override
+	public boolean onSearchRequested() {
+		if (android.os.Build.VERSION.SDK_INT >= 11) {
+			searchView.requestFocus();
+		}
+		return true;
+	}
+
+	@Override
+	protected void onNewIntent(Intent intent) {
+		setIntent(intent);
+		handleIntent(intent);
+	}
+
+	private void handleIntent(Intent intent) {
+		if (android.os.Build.VERSION.SDK_INT >= 11) {
+			setContentView(R.layout.sign_player11);
+
+			searchView = (SearchView) findViewById(R.id.sv_sign_search_name);
+			searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+			searchView.setSearchableInfo(searchManager
+					.getSearchableInfo(getComponentName()));
+			searchView.setIconifiedByDefault(false);
+			searchView.setFocusable(false);
+			searchView.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+			searchView.setOnQueryTextListener(new OnQueryTextListener() {
+
+				@Override
+				public boolean onQueryTextSubmit(String query) {
+					Bundle appData = new Bundle();
+					appData.putParcelableArrayList("players", player);
+					searchManager
+							.startSearch(null, false, null, appData, false);
+					return false;
+				}
+
+				@Override
+				public boolean onQueryTextChange(String newText) {
+					return false;
+				}
+			});
+
+			// Get the intent, verify the action and get the query
+			if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+				String query = intent.getStringExtra(SearchManager.QUERY);
+				player = searchPlayers(query);
+				showPlayers();
+			} else {
+				initializeScreen();
+				new GetPlayers().execute();
+			}
+		} else {
+			setContentView(R.layout.sign_player);
+			initializeScreen();
+			new GetPlayers().execute();
+		}
+	}
+
+	private ArrayList<Player> searchPlayers(String subName) {
+		ArrayList<Player> oldList = player;
+		ArrayList<Player> newList = new ArrayList<Player>();
+		for (int i = 0; i < oldList.size(); i++) {
+			Player p = oldList.get(i);
+			if (p.name.toLowerCase().contains(subName.toLowerCase())) {
+				newList.add(p);
+			}
+		}
+		return newList;
+	}
+
 	/*
 	 * init screen
 	 */
@@ -107,6 +156,7 @@ public class SignActivity extends ListActivity {
 		url = de.damps.fantasy.CommonUtilities.URL + "/freeagents/";
 		url_player = url + "qb";
 		url_sign = de.damps.fantasy.CommonUtilities.URL + "/signfreeagents";
+
 	}
 
 	/*
@@ -151,7 +201,7 @@ public class SignActivity extends ListActivity {
 			data[0][0] = "id";
 			data[0][1] = ((Integer) player.get(((int) i[0])).player_id)
 					.toString();
-			data[1][0] = "nftlteam_id";
+			data[1][0] = "nflteam_id";
 			data[1][1] = ((Integer) player.get(((int) i[0])).nfl_id).toString();
 
 			String response = new DataPost(url_sign, data).response;
@@ -170,7 +220,7 @@ public class SignActivity extends ListActivity {
 		protected String doInBackground(Player... p) {
 			data[0][0] = "id";
 			data[0][1] = ((Integer) p[0].player_id).toString();
-			data[1][0] = "nftlteam_id";
+			data[1][0] = "nflteam_id";
 			data[1][1] = ((Integer) p[0].nfl_id).toString();
 
 			String response = new DataPost(url_sign, data).response;
@@ -197,37 +247,18 @@ public class SignActivity extends ListActivity {
 	private void showPlayers() {
 		playeradapter = new PlayerAdapter(this, R.layout.playeritem, player);
 		setListAdapter(playeradapter);
-		if(((RadioButton)findViewById(R.id.rb_sign_sortname)).isChecked()){
+		if (((RadioButton) findViewById(R.id.rb_sign_sortname)).isChecked()) {
 			sortName(null);
-		}else{
+		} else {
 			sortTeam(null);
 		}
-	}
-
-	@Override
-	public boolean onSearchRequested() {
-		Bundle appData = new Bundle();
-		appData.putParcelableArrayList("players", player);
-		startSearch(null, false, appData, false);
-		return true;
-	}
-
-	private ArrayList<Player> searchPlayers(String subName) {
-		ArrayList<Player> players = player;
-		for (int i = 0; i < player.size(); i++) {
-			Player p = players.get(i);
-			if (!p.name.contains(subName)) {
-				players.remove(p);
-			}
-		}
-		return player;
 	}
 
 	protected void onListItemClick(ListView l, View v, final int position,
 			long id) {
 		super.onListItemClick(l, v, position, id);
 		String response = null;
-
+		todelete = player.get(position);
 		try {
 			response = new SignPlayer().execute(position).get();
 		} catch (InterruptedException e) {
@@ -257,10 +288,12 @@ public class SignActivity extends ListActivity {
 		bu_ok.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				todelete = p;
 				Intent intent = new Intent(getApplicationContext(),
 						ReleaseActivity.class);
 				intent.putExtra("player", p);
 				startActivityForResult(intent, 1);
+				dialog.dismiss();
 			}
 		});
 		bu_cancel.setOnClickListener(new OnClickListener() {
@@ -273,6 +306,9 @@ public class SignActivity extends ListActivity {
 	}
 
 	private void confirmSign(String name) {
+		player.remove(todelete);
+		showPlayers();
+		
 		Toast toast = Toast.makeText(getApplicationContext(), name
 				+ " erfolgreich gesigned.", Toast.LENGTH_LONG);
 		toast.setGravity(Gravity.CENTER, 0, 0);
@@ -308,16 +344,16 @@ public class SignActivity extends ListActivity {
 		url_player = url + "def";
 		getNewPos();
 	}
-	
+
 	public void sortTeam(View view) {
 		Comparator<Player> comp = new Comparator<Player>() {
 
 			@Override
 			public int compare(Player lhs, Player rhs) {
-				if(lhs.nfl_abr == null || lhs.nfl_abr.equals("-")){
+				if (lhs.nfl_abr == null || lhs.nfl_abr.equals("-")) {
 					return 1;
 				}
-				if(rhs.nfl_abr == null || rhs.nfl_abr.equals("-")){
+				if (rhs.nfl_abr == null || rhs.nfl_abr.equals("-")) {
 					return -1;
 				}
 				return lhs.nfl_abr.compareToIgnoreCase(rhs.nfl_abr);
