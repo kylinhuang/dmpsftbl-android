@@ -83,6 +83,8 @@ public class RosterActivity extends Activity {
 				TableRow newRow = new Row(c, "pos", head).newRow;
 				tbl.addView(newRow, i);
 			}
+			TableRow newRow = new Row(c, head).newRow;
+			tbl.addView(newRow, roster.size());
 		} else {
 			for (int i = 0; i < roster.size() + 1; i++) {
 				if (i == 0) {
@@ -153,9 +155,6 @@ public class RosterActivity extends Activity {
 						gd.setBackgroundDrawable(getResources().getDrawable(
 								R.drawable.column_mid));
 						gd.setPadding(p, p, p, p);
-						gd.setWidth((int) TypedValue.applyDimension(
-								TypedValue.COMPLEX_UNIT_DIP, 24, getResources()
-										.getDisplayMetrics()));
 						gd.setGravity(Gravity.CENTER);
 					}
 
@@ -237,6 +236,10 @@ public class RosterActivity extends Activity {
 					tbl.setColumnCollapsed(3 + j, true);
 				}
 			}
+			TableRow r = (TableRow) tbl.getChildAt(0);
+			r.measure(0, 0);
+			TableRow newRow = new Row(c, r.getMeasuredHeight()).newRow;
+			tbl.addView(newRow, roster.size() + 1);
 		}
 	}
 

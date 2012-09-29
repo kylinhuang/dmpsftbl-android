@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
     <RelativeLayout
         android:id="@+id/rl_roster_layout1"
@@ -42,23 +42,28 @@
             android:text="@string/half2"
             android:textSize="23dp" />
     </LinearLayout>
-    
+
     <ScrollView
         android:id="@+id/sv_roster_view1"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/ll_roster_layout2" >
 
-        <TableLayout
-            android:id="@+id/tl_roster_roster"
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical"
-            android:stretchColumns="2" >
-        </TableLayout>
+            android:layout_height="wrap_content" >
+
+            <TableLayout
+                android:id="@+id/tl_roster_roster"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                android:stretchColumns="2" >
+            </TableLayout>
+        </LinearLayout>
     </ScrollView>
 
 </RelativeLayout>

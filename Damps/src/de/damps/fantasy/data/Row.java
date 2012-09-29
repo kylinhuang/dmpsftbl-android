@@ -12,8 +12,8 @@ import de.damps.fantasy.R;
 public class Row {
 
 	public TableRow newRow;
-	public static int TOP_HEADER = 1;
-	public static int MID_HEADER = 0;
+	public static final int TOP_HEADER = 1;
+	public static final int MID_HEADER = 0;
 
 	public Row(Context c) {
 		// Row
@@ -249,4 +249,34 @@ public class Row {
 		}
 	}
 
+	public Row(Context c, TableLayout head) {
+		TableRow tr = ((TableRow) head.getChildAt(0));
+		// Row
+		newRow = new TableRow(c);
+		TableLayout.LayoutParams parar = new TableLayout.LayoutParams();
+		parar.setMargins(0, (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 1, c.getResources()
+						.getDisplayMetrics()), 0, (int) TypedValue
+				.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, c
+						.getResources().getDisplayMetrics()));
+		parar.height = tr.getHeight();
+		newRow.setPadding(0, tr.getHeight(), 0, 0);
+		newRow.setLayoutParams(parar);
+		newRow.setBackgroundDrawable(c.getResources().getDrawable(R.drawable.column_bottom));
+	}
+	
+	public Row(Context c, int height) {
+		// Row
+		newRow = new TableRow(c);
+		TableLayout.LayoutParams parar = new TableLayout.LayoutParams();
+		parar.setMargins(0, (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 1, c.getResources()
+						.getDisplayMetrics()), 0, (int) TypedValue
+				.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, c
+						.getResources().getDisplayMetrics()));
+		parar.height = height;
+		newRow.setPadding(0, height, 0, 0);
+		newRow.setLayoutParams(parar);
+		newRow.setBackgroundDrawable(c.getResources().getDrawable(R.drawable.column_bottom));
+	}
 }
