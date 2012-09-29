@@ -1,39 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_mes_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:layout_height="match_parent" >
 
     <ImageView
         android:id="@+id/iv_mes_read"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:background="@color/damps_blau"
-        android:contentDescription="@string/pic_read" />
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/damps_blau" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/weis"
-        android:orientation="vertical" >
+    <TextView
+        android:id="@+id/tv_mes_title"
+        style="@style/thr_title"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/iv_mes_delete"
+        android:layout_toRightOf="@+id/iv_mes_read"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" />
 
-        <TextView
-            android:id="@+id/tv_mes_title"
-            style="@style/thr_title"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp" />
+    <TextView
+        android:id="@+id/tv_mes_sender"
+        style="@style/thr_last"
+        android:layout_below="@+id/tv_mes_title"
+        android:layout_toLeftOf="@+id/iv_mes_delete"
+        android:layout_toRightOf="@+id/iv_mes_read"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" />
 
-        <TextView
-            android:id="@+id/tv_mes_sender"
-            style="@style/thr_last"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp" />
+    <ImageView
+        android:id="@+id/iv_mes_delete"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:onClick="deleteMessage"
+        android:src="@drawable/delete" />
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@color/dunkelgrau" />
-    </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/iv_mes_read"
+        android:background="@color/dunkelgrau" />
 
-</LinearLayout>
+</RelativeLayout>
