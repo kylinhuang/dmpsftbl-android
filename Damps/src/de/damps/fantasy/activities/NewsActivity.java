@@ -42,6 +42,7 @@ public class NewsActivity extends Activity {
 		}
 
 	}
+
 	private String url;
 	private String news;
 	private String title;

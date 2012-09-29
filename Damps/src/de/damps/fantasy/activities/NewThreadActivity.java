@@ -52,6 +52,7 @@ public class NewThreadActivity extends Activity {
 		}
 
 	}
+
 	private EditText title;
 	private EditText msg;
 	private CheckBox sticky;

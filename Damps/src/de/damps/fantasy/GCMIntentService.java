@@ -18,6 +18,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 	private static final String TAG = "===GCMIntentService===";
 
 	private static final int HELLO_ID = 1;
+
 	public GCMIntentService() {
 		super(SENDER_ID);
 	}

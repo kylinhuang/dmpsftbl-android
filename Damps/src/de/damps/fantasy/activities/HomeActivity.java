@@ -84,6 +84,7 @@ public class HomeActivity extends Activity {
 		}
 
 	}
+
 	public static Editor editor;
 	private EditText et_username;
 	private EditText et_password;

@@ -69,6 +69,7 @@ public class SetStartersActivity extends Activity {
 			pb.setVisibility(View.VISIBLE);
 		}
 	}
+
 	/*
 	 * start player
 	 */
@@ -88,6 +89,7 @@ public class SetStartersActivity extends Activity {
 		}
 
 	}
+
 	private class SendFormation extends AsyncTask<Void, Void, Void> {
 		String[][] data = new String[2][2];
 
@@ -106,6 +108,7 @@ public class SetStartersActivity extends Activity {
 		}
 
 	}
+
 	/*
 	 * start player
 	 */

@@ -45,6 +45,7 @@ public class NewPostActivity extends Activity {
 			data[1][1] = id;
 		}
 	}
+
 	private String title;
 	private EditText msg;
 	private String url;

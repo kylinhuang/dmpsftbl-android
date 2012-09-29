@@ -55,6 +55,7 @@ public class StartersActivity extends Activity {
 		}
 
 	}
+
 	private String url;
 	private boolean y_init = false, gd_init = false, initialised = false;
 	private Spinner sp_ye, sp_gd;

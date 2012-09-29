@@ -45,6 +45,7 @@ public class TradelogActivity extends ListActivity {
 		}
 
 	}
+
 	private ArrayList<Log> logs = new ArrayList<Log>();
 	private String url;
 

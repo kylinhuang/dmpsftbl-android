@@ -53,6 +53,7 @@ public class RosterActivity extends Activity {
 			pb.setVisibility(View.VISIBLE);
 		}
 	}
+
 	private TableLayout tbl;
 	private ArrayList<Player> roster;
 

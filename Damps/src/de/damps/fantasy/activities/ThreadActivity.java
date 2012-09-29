@@ -50,6 +50,7 @@ public class ThreadActivity extends ListActivity {
 		}
 
 	}
+
 	private String url;
 	private ArrayList<Post> posts = new ArrayList<Post>();
 	private PostAdapter postadapter;

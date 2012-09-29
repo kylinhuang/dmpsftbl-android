@@ -59,6 +59,7 @@ public class ReleaseActivity extends Activity {
 
 		}
 	}
+
 	/*
 	 * release player
 	 */
@@ -83,6 +84,7 @@ public class ReleaseActivity extends Activity {
 			data[1][1] = rid;
 		}
 	}
+
 	private TableLayout tbl;
 
 	private ArrayList<Player> roster;

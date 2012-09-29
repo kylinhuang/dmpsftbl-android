@@ -66,6 +66,7 @@ public class NewMessageActivity extends Activity {
 			data[2][1] = msgtxt;
 		}
 	}
+
 	private EditText title;
 	private EditText msg;
 	private String titletxt;

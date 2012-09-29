@@ -50,6 +50,7 @@ public class StandingsActivity extends Activity {
 		}
 
 	}
+
 	private String url;
 	private String year;
 	private String[] standings;

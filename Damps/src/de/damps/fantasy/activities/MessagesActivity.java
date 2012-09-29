@@ -50,6 +50,7 @@ public class MessagesActivity extends TabActivity {
 		}
 
 	}
+
 	private TabHost tabHost;
 	private ArrayList<Message> outbound = new ArrayList<Message>();
 	private ArrayList<Message> inbound = new ArrayList<Message>();

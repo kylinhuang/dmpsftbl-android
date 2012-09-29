@@ -46,6 +46,7 @@ public class ForumActivity extends ListActivity {
 			pb.setVisibility(View.VISIBLE);
 		}
 	}
+
 	private class LoadList extends AsyncTask<Void, Void, Void> {
 		@Override
 		protected Void doInBackground(Void... params) {
@@ -66,6 +67,7 @@ public class ForumActivity extends ListActivity {
 			de.damps.fantasy.activities.HomeActivity.editor.commit();
 		}
 	}
+
 	private String url;
 
 	private ArrayList<MyThread> threads = new ArrayList<MyThread>();

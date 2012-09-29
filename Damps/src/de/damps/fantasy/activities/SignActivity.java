@@ -59,6 +59,7 @@ public class SignActivity extends ListActivity {
 			player = new ArrayList<Player>();
 		}
 	}
+
 	private class SignPlayer extends AsyncTask<Integer, Void, String> {
 		String[][] data = new String[2][2];
 
@@ -77,6 +78,7 @@ public class SignActivity extends ListActivity {
 		protected void onPreExecute() {
 		}
 	}
+
 	private class SignPlayerFromRelease extends AsyncTask<Player, Void, String> {
 		String[][] data = new String[2][2];
 
@@ -95,6 +97,7 @@ public class SignActivity extends ListActivity {
 		protected void onPreExecute() {
 		}
 	}
+
 	private PlayerAdapter playeradapter;
 	private ArrayList<Player> player;
 	private String url;

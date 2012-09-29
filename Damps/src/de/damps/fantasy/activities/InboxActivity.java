@@ -37,6 +37,7 @@ public class InboxActivity extends ListActivity {
 			data[0][1] = ((Integer) message.id).toString();
 		}
 	}
+
 	private MessageAdapter messageadapter;
 	private ArrayList<Message> messages = new ArrayList<Message>();
 	private String url;
