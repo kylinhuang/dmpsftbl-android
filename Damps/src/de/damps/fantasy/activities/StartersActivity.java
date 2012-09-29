@@ -6,19 +6,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.damps.fantasy.R;
-import de.damps.fantasy.data.DataGet;
-import de.damps.fantasy.data.Player;
-import de.damps.fantasy.data.Row;
-import de.damps.fantasy.data.Team;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -26,47 +20,22 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import de.damps.fantasy.R;
+import de.damps.fantasy.data.DataGet;
+import de.damps.fantasy.data.Player;
+import de.damps.fantasy.data.Row;
+import de.damps.fantasy.data.Team;
 
 public class StartersActivity extends Activity {
-
-	private String url;
-	private boolean y_init = false, gd_init = false, initialised = false;
-	private Spinner sp_ye, sp_gd;
-	private ArrayList<Team> teams;
-	private int year;
-	private int gd;
-	private TableLayout tbl;
-	private TableLayout tbll;
-	private TableLayout tblr;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.starters);
-		url = de.damps.fantasy.CommonUtilities.URL + "/starter/";
-
-		new GetStarters().execute();
-	}
-
-	public void back(View view) {
-		finish();
-	}
 
 	private class GetStarters extends AsyncTask<Void, Void, Void> {
 		ProgressBar pb;
 
 		@Override
-		protected void onPreExecute() {
-			teams = new ArrayList<Team>();
-			pb = (ProgressBar) findViewById(R.id.pb_start_bar1);
-			pb.setVisibility(View.VISIBLE);
-		};
-
-		@Override
 		protected Void doInBackground(Void... params) {
 			parse();
 			return null;
-		}
+		};
 
 		@Override
 		protected void onPostExecute(Void v) {
@@ -78,32 +47,84 @@ public class StartersActivity extends Activity {
 			pb.setVisibility(View.INVISIBLE);
 		}
 
+		@Override
+		protected void onPreExecute() {
+			teams = new ArrayList<Team>();
+			pb = (ProgressBar) findViewById(R.id.pb_start_bar1);
+			pb.setVisibility(View.VISIBLE);
+		}
+
+	}
+	private String url;
+	private boolean y_init = false, gd_init = false, initialised = false;
+	private Spinner sp_ye, sp_gd;
+	private ArrayList<Team> teams;
+	private int year;
+	private int gd;
+	private TableLayout tbl;
+	private TableLayout tbll;
+
+	private TableLayout tblr;
+
+	public void back(View view) {
+		finish();
 	}
 
-	private void parse() {
-		DataGet data = new DataGet(url);
-		JSONObject jo = data.data;
-		JSONArray joa = null;
-		try {
+	public void constructStarters() {
+		int ori = getResources().getConfiguration().orientation;
+		if (ori == 1) {
+			tbl = (TableLayout) findViewById(R.id.tl_start_starting);
 
-			joa = jo.getJSONArray("Starter");
-			year = jo.getJSONArray("Starter").getJSONObject(0)
-					.getJSONObject("Teamstarter").getInt("season");
-			gd = jo.getJSONArray("Starter").getJSONObject(0)
-					.getJSONObject("Teamstarter").getInt("gameday");
-		} catch (JSONException e) {
-			// TODO keine starter
-			e.printStackTrace();
-		}
+			for (int i = 0; i < teams.size(); i++) {
+				TableRow teamRow = new Row(getApplicationContext(),
+						teams.get(i).team, teams.get(i).flex).newRow;
+				tbl.addView(teamRow);
+				for (int j = 0; j < 8; j++) {
+					tbl.addView(createPlayer(i, j));
+				}
 
-		for (int i = 0; i < joa.length(); i++) {
-			try {
-				teams.add(new Team(joa.getJSONObject(i)));
-			} catch (JSONException e) {
-				Log.i("Starter", "Keine Teams aufgestellt");
 			}
+			tbl.setStretchAllColumns(true);
+		} else {
+			tbll = (TableLayout) findViewById(R.id.tl_start_starting_left);
+			tblr = (TableLayout) findViewById(R.id.tl_start_starting_right);
+
+			for (int i = 0; i < teams.size(); i++) {
+				if (i % 2 == 0) {
+					TableRow teamRow = new Row(getApplicationContext(),
+							teams.get(i).team, teams.get(i).flex).newRow;
+					tbll.addView(teamRow);
+
+					for (int j = 0; j < 8; j++) {
+						tbll.addView(createPlayer(i, j));
+					}
+					tbll.setStretchAllColumns(true);
+				} else {
+					TableRow teamRow = new Row(getApplicationContext(),
+							teams.get(i).team, teams.get(i).flex).newRow;
+					tblr.addView(teamRow);
+					for (int j = 0; j < 8; j++) {
+						tblr.addView(createPlayer(i, j));
+					}
+
+					tblr.setStretchAllColumns(true);
+				}
+			}
+
 		}
 
+	}
+
+	private TableRow createPlayer(int i, int j) {
+		TableRow newRow = new Row(getApplicationContext()).newRow;
+		Player p = teams.get(i).starters.get(j);
+		int res = getResources().getIdentifier((p.nfl_abr).toLowerCase(),
+				"drawable", getPackageName());
+		((ImageView) newRow.getVirtualChildAt(0)).setImageResource(res);
+		((TextView) newRow.getVirtualChildAt(1)).setText(p.pos);
+		((TextView) newRow.getVirtualChildAt(2)).setText(p.name);
+
+		return newRow;
 	}
 
 	private void initializeSpinner() {
@@ -162,7 +183,7 @@ public class StartersActivity extends Activity {
 					String year = (String) sp_ye.getSelectedItem();
 					url = de.damps.fantasy.CommonUtilities.URL + "/starter/"
 							+ year + "/" + (position + 1);
-					
+
 					if (tbl != null) {
 						tbl.removeAllViews();
 					}
@@ -184,61 +205,39 @@ public class StartersActivity extends Activity {
 
 	}
 
-	public void constructStarters() {
-		int ori = getResources().getConfiguration().orientation;
-		if (ori == 1) {
-			tbl = (TableLayout) findViewById(R.id.tl_start_starting);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.starters);
+		url = de.damps.fantasy.CommonUtilities.URL + "/starter/";
 
-			for (int i = 0; i < teams.size(); i++) {
-				TableRow teamRow = new Row(getApplicationContext(),
-						teams.get(i).team, teams.get(i).flex).newRow;
-				tbl.addView(teamRow);
-				for (int j = 0; j < 8; j++) {
-					tbl.addView(createPlayer(i, j));
-				}
-
-			}
-			tbl.setStretchAllColumns(true);
-		} else {
-			tbll = (TableLayout) findViewById(R.id.tl_start_starting_left);
-			tblr = (TableLayout) findViewById(R.id.tl_start_starting_right);
-
-			for (int i = 0; i < teams.size(); i++) {
-				if (i % 2 == 0) {
-					TableRow teamRow = new Row(getApplicationContext(),
-							teams.get(i).team, teams.get(i).flex).newRow;
-					tbll.addView(teamRow);
-
-					for (int j = 0; j < 8; j++) {
-						tbll.addView(createPlayer(i, j));
-					}
-					tbll.setStretchAllColumns(true);
-				} else {
-					TableRow teamRow = new Row(getApplicationContext(),
-							teams.get(i).team, teams.get(i).flex).newRow;
-					tblr.addView(teamRow);
-					for (int j = 0; j < 8; j++) {
-						tblr.addView(createPlayer(i, j));
-					}
-
-					tblr.setStretchAllColumns(true);
-				}
-			}
-
-		}
-
+		new GetStarters().execute();
 	}
 
-	private TableRow createPlayer(int i, int j) {
-		TableRow newRow = new Row(getApplicationContext()).newRow;
-		Player p = teams.get(i).starters.get(j);
-		int res = getResources().getIdentifier((p.nfl_abr).toLowerCase(),
-				"drawable", getPackageName());
-		((ImageView) newRow.getVirtualChildAt(0)).setImageResource(res);
-		((TextView) newRow.getVirtualChildAt(1)).setText(p.pos);
-		((TextView) newRow.getVirtualChildAt(2)).setText(p.name);
+	private void parse() {
+		DataGet data = new DataGet(url);
+		JSONObject jo = data.data;
+		JSONArray joa = null;
+		try {
 
-		return newRow;
+			joa = jo.getJSONArray("Starter");
+			year = jo.getJSONArray("Starter").getJSONObject(0)
+					.getJSONObject("Teamstarter").getInt("season");
+			gd = jo.getJSONArray("Starter").getJSONObject(0)
+					.getJSONObject("Teamstarter").getInt("gameday");
+		} catch (JSONException e) {
+			// TODO keine starter
+			e.printStackTrace();
+		}
+
+		for (int i = 0; i < joa.length(); i++) {
+			try {
+				teams.add(new Team(joa.getJSONObject(i)));
+			} catch (JSONException e) {
+				Log.i("Starter", "Keine Teams aufgestellt");
+			}
+		}
+
 	}
 
 }

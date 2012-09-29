@@ -1,12 +1,12 @@
 package de.damps.fantasy.activities;
 
-import de.damps.fantasy.R;
-import de.damps.fantasy.data.Message;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import de.damps.fantasy.R;
+import de.damps.fantasy.data.Message;
 
 public class MessageActivity extends Activity {
 
@@ -17,12 +17,14 @@ public class MessageActivity extends Activity {
 	private TextView mesView;
 	private int pos;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.message);
-
-		inititalizeScreen();
+	/*
+	 * return to last screen
+	 */
+	public void back(View view) {
+		Intent intent = new Intent();
+		intent.putExtra("pos", pos);
+		setResult(1, intent);
+		finish();
 	}
 
 	/*
@@ -46,22 +48,20 @@ public class MessageActivity extends Activity {
 	/*
 	 * return to last screen
 	 */
-	public void back(View view) {
-		Intent intent = new Intent();
-		intent.putExtra("pos", pos);
-		setResult(1, intent);
-		finish();
-	}
-
-	/*
-	 * return to last screen
-	 */
 	@Override
 	public void onBackPressed() {
 		Intent intent = new Intent();
 		intent.putExtra("pos", pos);
 		setResult(1, intent);
 		super.onBackPressed();
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.message);
+
+		inititalizeScreen();
 	}
 
 	/*

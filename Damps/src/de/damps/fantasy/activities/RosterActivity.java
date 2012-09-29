@@ -28,81 +28,6 @@ import de.damps.fantasy.data.Row;
 
 public class RosterActivity extends Activity {
 
-	private TableLayout tbl;
-	private ArrayList<Player> roster;
-	private int anzahl;
-
-	private String url;
-	private TextView team;
-	private String dteam;
-	private String id;
-
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.roster);
-
-		initializeScreen();
-	}
-
-	/*
-	 * init screen
-	 */
-	public void initializeScreen() {
-		final Bundle extra = getIntent().getExtras();
-		if(extra.containsKey("team")){
-			dteam = extra.getString("team");
-			id = de.damps.fantasy.CommonUtilities.league
-					.getTeamidByTeam(dteam);
-		}else{
-			String oid = extra.getString("oid");
-			id = de.damps.fantasy.CommonUtilities.league
-					.getTeamidByOwnerid(oid);
-		}
-		
-		url = de.damps.fantasy.CommonUtilities.URL + "/roster/2012/"
-				+ id;
-		tbl = (TableLayout) findViewById(R.id.tl_roster_roster);
-		team = (TextView) findViewById(R.id.tv_roster_title);
-		team.setText(dteam);
-
-		new GetRoster().execute(url);
-	}
-
-	/*
-	 * return to last screen
-	 */
-	public void back(View view) {
-		finish();
-	}
-
-	/*
-	 * show first half of season
-	 */
-	public void showHalf1(View view) {
-		for (int j = 0; j < 17; j++) {
-			if (j < 9) {
-				tbl.setColumnCollapsed(3 + j, false);
-			} else {
-				tbl.setColumnCollapsed(3 + j, true);
-			}
-		}
-	}
-
-	/*
-	 * show second half of season
-	 */
-	public void showHalf2(View view) {
-		for (int j = 0; j < 17; j++) {
-			if (j < 9) {
-				tbl.setColumnCollapsed(3 + j, true);
-			} else {
-				tbl.setColumnCollapsed(3 + j, false);
-			}
-		}
-	}
-
 	/*
 	 * retrieve roster
 	 */
@@ -110,16 +35,10 @@ public class RosterActivity extends Activity {
 		ProgressBar pb;
 
 		@Override
-		protected void onPreExecute() {
-			pb = (ProgressBar) findViewById(R.id.pb_roster_bar1);
-			pb.setVisibility(View.VISIBLE);
-		};
-
-		@Override
 		protected Void doInBackground(String... params) {
 			parse();
 			return null;
-		}
+		};
 
 		@Override
 		protected void onPostExecute(Void v) {
@@ -127,34 +46,28 @@ public class RosterActivity extends Activity {
 			sortPos(null);
 			pb.setVisibility(View.INVISIBLE);
 		}
+
+		@Override
+		protected void onPreExecute() {
+			pb = (ProgressBar) findViewById(R.id.pb_roster_bar1);
+			pb.setVisibility(View.VISIBLE);
+		}
 	}
+	private TableLayout tbl;
+	private ArrayList<Player> roster;
+
+	private int anzahl;
+	private String url;
+	private TextView team;
+	private String dteam;
+
+	private String id;
 
 	/*
-	 * retrieve data
+	 * return to last screen
 	 */
-	private void parse() {
-		DataGet data = new DataGet(url);
-		JSONObject jo = data.data;
-
-		try {
-			anzahl = jo.getJSONArray("Roster").length();
-			getRoster(jo);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-	}
-
-	// converts String to local Data
-	private void getRoster(JSONObject data) throws JSONException {
-		JSONArray joa = data.getJSONArray("Roster");
-		roster = new ArrayList<Player>();
-
-		for (int i = 0; i < anzahl; i++) {
-			Player p = new Player(joa.getJSONObject(i));
-			if (!p.contract.equals("R")) {
-				roster.add(p);
-			}
-		}
+	public void back(View view) {
+		finish();
 	}
 
 	/*
@@ -166,7 +79,7 @@ public class RosterActivity extends Activity {
 		Context c = getApplicationContext();
 		if (ori == 1) {
 			for (int i = 0; i < roster.size(); i++) {
-				TableRow newRow = new Row(c,"pos",head).newRow;
+				TableRow newRow = new Row(c, "pos", head).newRow;
 				tbl.addView(newRow, i);
 			}
 		} else {
@@ -390,22 +303,89 @@ public class RosterActivity extends Activity {
 		}
 	}
 
-	public void sortTeam(View view) {
-		Comparator<Player> comp = new Comparator<Player>() {
+	// converts String to local Data
+	private void getRoster(JSONObject data) throws JSONException {
+		JSONArray joa = data.getJSONArray("Roster");
+		roster = new ArrayList<Player>();
 
-			@Override
-			public int compare(Player lhs, Player rhs) {
-				return lhs.nfl_abr.compareToIgnoreCase(rhs.nfl_abr);
+		for (int i = 0; i < anzahl; i++) {
+			Player p = new Player(joa.getJSONObject(i));
+			if (!p.contract.equals("R")) {
+				roster.add(p);
 			}
-		};
-		Collections.sort(roster, comp);
-		fillarray();
+		}
 	}
 
-	public void sortPos(View view) {
-		PosComparator comp = new PosComparator();
-		Collections.sort(roster, comp);
-		fillarray();
+	/*
+	 * init screen
+	 */
+	public void initializeScreen() {
+		final Bundle extra = getIntent().getExtras();
+		if (extra.containsKey("team")) {
+			dteam = extra.getString("team");
+			id = de.damps.fantasy.CommonUtilities.league.getTeamidByTeam(dteam);
+		} else {
+			String oid = extra.getString("oid");
+			id = de.damps.fantasy.CommonUtilities.league
+					.getTeamidByOwnerid(oid);
+		}
+
+		url = de.damps.fantasy.CommonUtilities.URL + "/roster/2012/" + id;
+		tbl = (TableLayout) findViewById(R.id.tl_roster_roster);
+		team = (TextView) findViewById(R.id.tv_roster_title);
+		team.setText(dteam);
+
+		new GetRoster().execute(url);
+	}
+
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.roster);
+
+		initializeScreen();
+	}
+
+	/*
+	 * retrieve data
+	 */
+	private void parse() {
+		DataGet data = new DataGet(url);
+		JSONObject jo = data.data;
+
+		try {
+			anzahl = jo.getJSONArray("Roster").length();
+			getRoster(jo);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/*
+	 * show first half of season
+	 */
+	public void showHalf1(View view) {
+		for (int j = 0; j < 17; j++) {
+			if (j < 9) {
+				tbl.setColumnCollapsed(3 + j, false);
+			} else {
+				tbl.setColumnCollapsed(3 + j, true);
+			}
+		}
+	}
+
+	/*
+	 * show second half of season
+	 */
+	public void showHalf2(View view) {
+		for (int j = 0; j < 17; j++) {
+			if (j < 9) {
+				tbl.setColumnCollapsed(3 + j, true);
+			} else {
+				tbl.setColumnCollapsed(3 + j, false);
+			}
+		}
 	}
 
 	public void sortName(View view) {
@@ -416,6 +396,12 @@ public class RosterActivity extends Activity {
 				return lhs.name.compareToIgnoreCase(rhs.name);
 			}
 		};
+		Collections.sort(roster, comp);
+		fillarray();
+	}
+
+	public void sortPos(View view) {
+		PosComparator comp = new PosComparator();
 		Collections.sort(roster, comp);
 		fillarray();
 	}
@@ -432,6 +418,18 @@ public class RosterActivity extends Activity {
 				} else {
 					return 0;
 				}
+			}
+		};
+		Collections.sort(roster, comp);
+		fillarray();
+	}
+
+	public void sortTeam(View view) {
+		Comparator<Player> comp = new Comparator<Player>() {
+
+			@Override
+			public int compare(Player lhs, Player rhs) {
+				return lhs.nfl_abr.compareToIgnoreCase(rhs.nfl_abr);
 			}
 		};
 		Collections.sort(roster, comp);

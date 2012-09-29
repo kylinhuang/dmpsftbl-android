@@ -15,12 +15,12 @@ import de.damps.fantasy.activities.MessagesActivity;
 
 public class GCMIntentService extends GCMBaseIntentService {
 
+	private static final String TAG = "===GCMIntentService===";
+
+	private static final int HELLO_ID = 1;
 	public GCMIntentService() {
 		super(SENDER_ID);
 	}
-
-	private static final String TAG = "===GCMIntentService===";
-	private static final int HELLO_ID = 1;
 
 	@Override
 	protected void onError(Context arg0, String errorId) {
@@ -64,6 +64,11 @@ public class GCMIntentService extends GCMBaseIntentService {
 	}
 
 	@Override
+	protected boolean onRecoverableError(Context context, String errorId) {
+		return super.onRecoverableError(context, errorId);
+	}
+
+	@Override
 	protected void onRegistered(Context arg0, String registrationId) {
 		Log.i(TAG, "Device registered: regId = " + registrationId);
 
@@ -73,11 +78,6 @@ public class GCMIntentService extends GCMBaseIntentService {
 	protected void onUnregistered(Context arg0, String arg1) {
 		Log.i(TAG, "unregistered = " + arg1);
 
-	}
-
-	@Override
-	protected boolean onRecoverableError(Context context, String errorId) {
-		return super.onRecoverableError(context, errorId);
 	}
 
 }

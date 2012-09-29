@@ -15,7 +15,7 @@ public class Post {
 			JSONObject author = jsonObject.getJSONObject("User");
 
 			message = post.getString("message");
-			
+
 			created = parseDate(post.getString("created"));
 			this.author = author.getString("username");
 
@@ -23,12 +23,6 @@ public class Post {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	private String parseDate(String s) {
-		String date = s.substring(8, 10) + "." + s.substring(5, 7) + ". "
-				+ s.substring(11, 16);
-		return date;
 	}
 
 	private String format(String t) {
@@ -45,23 +39,30 @@ public class Post {
 
 			if (text.indexOf("[quote]") < text.indexOf("[/quote]")
 					&& text.contains("[quote]")) {
-				text =  text.replaceFirst(Pattern.quote("[quote]"), "<br/>" + styleb[counter % 5]);
+				text = text.replaceFirst(Pattern.quote("[quote]"), "<br/>"
+						+ styleb[counter % 5]);
 				counter++;
 			}
 			if (text.indexOf("[/quote]") < text.indexOf("[quote]")) {
 				counter--;
-				text = text.replaceFirst(Pattern.quote("[/quote]"), stylee[counter % 5]
-						+ "<br/><br/>");
+				text = text.replaceFirst(Pattern.quote("[/quote]"),
+						stylee[counter % 5] + "<br/><br/>");
 			}
 			if (text.contains("[/quote]") && !text.contains("[quote]")) {
 				counter--;
-				text = text.replaceFirst(Pattern.quote("[/quote]"), stylee[counter % 5]
-						+ "<br/><br/>");
-				
+				text = text.replaceFirst(Pattern.quote("[/quote]"),
+						stylee[counter % 5] + "<br/><br/>");
+
 			}
 		}
 
 		return text;
+	}
+
+	private String parseDate(String s) {
+		String date = s.substring(8, 10) + "." + s.substring(5, 7) + ". "
+				+ s.substring(11, 16);
+		return date;
 	}
 
 }

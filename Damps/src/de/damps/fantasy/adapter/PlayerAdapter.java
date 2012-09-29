@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import de.damps.fantasy.R;
 import de.damps.fantasy.data.Player;
 

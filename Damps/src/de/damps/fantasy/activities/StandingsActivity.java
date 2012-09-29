@@ -4,9 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.damps.fantasy.R;
-import de.damps.fantasy.data.DataGet;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -15,54 +12,26 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
+import de.damps.fantasy.R;
+import de.damps.fantasy.data.DataGet;
 
 public class StandingsActivity extends Activity {
-
-	private String url;
-	private String year;
-	private String[] standings;
-	private int[] points;
-	private Spinner sp_ye;
-	private TableLayout tbl;
-	private ArrayAdapter<CharSequence> ad_ye;
-	private boolean initialised = false;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.standings);
-		url = de.damps.fantasy.CommonUtilities.URL + "/standings";
-		constructStandings();
-
-		new GetScores().execute(url);
-
-	}
-	
-	public void back(View view){
-		finish();
-	} 
 
 	private class GetScores extends AsyncTask<String, Void, Void> {
 		ProgressBar pb;
 
 		@Override
-		protected void onPreExecute() {
-			pb = (ProgressBar) findViewById(R.id.pb_sta_bar1);
-			pb.setVisibility(View.VISIBLE);
-		};
-
-		@Override
 		protected Void doInBackground(String... params) {
 			parse();
 			return null;
-		}
+		};
 
 		@Override
 		protected void onPostExecute(Void v) {
@@ -74,34 +43,25 @@ public class StandingsActivity extends Activity {
 			pb.setVisibility(View.INVISIBLE);
 		}
 
+		@Override
+		protected void onPreExecute() {
+			pb = (ProgressBar) findViewById(R.id.pb_sta_bar1);
+			pb.setVisibility(View.VISIBLE);
+		}
+
 	}
+	private String url;
+	private String year;
+	private String[] standings;
+	private int[] points;
+	private Spinner sp_ye;
+	private TableLayout tbl;
+	private ArrayAdapter<CharSequence> ad_ye;
 
-	private void initializeSpinner() {
-		sp_ye = (Spinner) findViewById(R.id.spi_sta_year);
-		ad_ye = ArrayAdapter.createFromResource(this, R.array.year,
-				android.R.layout.simple_spinner_item);
-		ad_ye.setDropDownViewResource(android.R.layout.simple_spinner_item);
-		sp_ye.setAdapter(ad_ye);
-		sp_ye.setSelection(ad_ye.getPosition(year));
+	private boolean initialised = false;
 
-		sp_ye.setOnItemSelectedListener(new OnItemSelectedListener() {
-
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					int position, long id) {
-				if (initialised) {
-					year = (String) parent.getItemAtPosition(position);
-					url = de.damps.fantasy.CommonUtilities.URL + "/standings/"
-							+ year;
-					new GetScores().execute(url);
-				}
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-			}
-		});
-
+	public void back(View view) {
+		finish();
 	}
 
 	private void constructStandings() {
@@ -152,6 +112,45 @@ public class StandingsActivity extends Activity {
 						.setText(Integer.toString(points[i]));
 			}
 		}
+	}
+
+	private void initializeSpinner() {
+		sp_ye = (Spinner) findViewById(R.id.spi_sta_year);
+		ad_ye = ArrayAdapter.createFromResource(this, R.array.year,
+				android.R.layout.simple_spinner_item);
+		ad_ye.setDropDownViewResource(android.R.layout.simple_spinner_item);
+		sp_ye.setAdapter(ad_ye);
+		sp_ye.setSelection(ad_ye.getPosition(year));
+
+		sp_ye.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				if (initialised) {
+					year = (String) parent.getItemAtPosition(position);
+					url = de.damps.fantasy.CommonUtilities.URL + "/standings/"
+							+ year;
+					new GetScores().execute(url);
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.standings);
+		url = de.damps.fantasy.CommonUtilities.URL + "/standings";
+		constructStandings();
+
+		new GetScores().execute(url);
+
 	}
 
 	private void parse() {

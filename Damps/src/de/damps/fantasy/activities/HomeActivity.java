@@ -1,21 +1,15 @@
 package de.damps.fantasy.activities;
 
 import static de.damps.fantasy.CommonUtilities.SENDER_ID;
-import static de.damps.fantasy.CommonUtilities.preferences;
-import static de.damps.fantasy.CommonUtilities.league;
 import static de.damps.fantasy.CommonUtilities.URL;
+import static de.damps.fantasy.CommonUtilities.league;
+import static de.damps.fantasy.CommonUtilities.preferences;
 
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.android.gcm.GCMRegistrar;
-
-import de.damps.fantasy.R;
-import de.damps.fantasy.data.DataGet;
-import de.damps.fantasy.data.DataPost;
-import de.damps.fantasy.data.League;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -29,6 +23,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -36,12 +31,60 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.View.OnClickListener;
+
+import com.google.android.gcm.GCMRegistrar;
+
+import de.damps.fantasy.R;
+import de.damps.fantasy.data.DataGet;
+import de.damps.fantasy.data.DataPost;
+import de.damps.fantasy.data.League;
 
 public class HomeActivity extends Activity {
 
-	public static Editor editor;
+	/*
+	 * gets FFLTeams
+	 */
+	private class GetLeague extends AsyncTask<Void, Void, Void> {
+		String url = URL + "/userlist";
+		ProgressBar pb;
 
+		@Override
+		protected Void doInBackground(Void... voids) {
+			DataGet data = new DataGet(url);
+			JSONObject jo = data.data;
+			league = new League(jo);
+			return null;
+		};
+
+		@Override
+		protected void onPostExecute(Void v) {
+			pb.setVisibility(View.INVISIBLE);
+		}
+
+		@Override
+		protected void onPreExecute() {
+			pb = (ProgressBar) findViewById(R.id.pb_home_bar1);
+			pb.setVisibility(View.VISIBLE);
+		}
+
+	}
+
+	/*
+	 * retrieve headlines
+	 */
+	private class Login extends AsyncTask<String, Void, Boolean> {
+
+		@Override
+		protected Boolean doInBackground(String... params) {
+			return login(params);
+		}
+
+		@Override
+		protected void onPostExecute(Boolean result) {
+		}
+
+	}
+	public static Editor editor;
 	private EditText et_username;
 	private EditText et_password;
 	private CheckBox cb_save;
@@ -53,37 +96,72 @@ public class HomeActivity extends Activity {
 	private Button rp;
 	private Button sp;
 	private Button opt;
+
 	private Button oft;
 	private Button tl;
 
 	private String TAG = "** Homeactivity **";
+
 	private String reg_id;
 
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.home);
+	private void activateMemberarea(boolean b) {
+		if (b == true) {
+			log.setImageResource(R.drawable.logout);
+			mt.setBackgroundResource(R.drawable.button_selector);
+			mt.setClickable(true);
+			ss.setBackgroundResource(R.drawable.button_selector);
+			ss.setClickable(true);
+			rp.setBackgroundResource(R.drawable.button_selector);
+			rp.setClickable(true);
 
-		initializeApp();
-		initializePush();
-		initializeScreen();
-	}
+			sp.setBackgroundResource(R.drawable.button_selector);
+			sp.setClickable(true);
+			/*
+			 * opt.setBackgroundResource(R.drawable.button_selector);
+			 * opt.setClickable(true);
+			 * oft.setBackgroundResource(R.drawable.button_selector);
+			 * oft.setClickable(true);
+			 */
+			tl.setBackgroundResource(R.drawable.button_selector);
+			tl.setClickable(true);
 
-	@Override
-	public void onResume() {
-		super.onResume();
-		initializeApp();
-		initializeScreen();
-	}
-
-	/** Called when the activity is closed. */
-	public void onDestroy() {
-		if (!preferences.getBoolean("savelogin", false)) {
-			editor.clear();
-			editor.commit();
+			msg.setBackgroundResource(R.drawable.button_selector);
+			msg.setClickable(true);
+		} else {
+			log.setImageResource(R.drawable.login);
+			mt.setBackgroundResource(R.drawable.button_inactive);
+			mt.setClickable(false);
+			ss.setBackgroundResource(R.drawable.button_inactive);
+			ss.setClickable(false);
+			rp.setBackgroundResource(R.drawable.button_inactive);
+			rp.setClickable(false);
+			sp.setBackgroundResource(R.drawable.button_inactive);
+			sp.setClickable(false);
+			opt.setBackgroundResource(R.drawable.button_inactive);
+			opt.setClickable(false);
+			oft.setBackgroundResource(R.drawable.button_inactive);
+			oft.setClickable(false);
+			tl.setBackgroundResource(R.drawable.button_inactive);
+			tl.setClickable(false);
+			msg.setBackgroundResource(R.drawable.button_inactive);
+			msg.setClickable(false);
 		}
-		super.onDestroy();
+	}
+
+	/*
+	 * initializes App
+	 */
+	private void initializeApp() {
+		de.damps.fantasy.CommonUtilities.context = getApplicationContext();
+		preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		editor = preferences.edit();
+
+		URL = preferences.getString("domain", getString(R.string.domain))
+				+ "/json";
+
+		url_login = URL + "/login";
+
+		new GetLeague().execute();
 	}
 
 	/*
@@ -103,22 +181,6 @@ public class HomeActivity extends Activity {
 		} else {
 			Log.v(TAG, "Already registered");
 		}
-	}
-
-	/*
-	 * initializes App
-	 */
-	private void initializeApp() {
-		de.damps.fantasy.CommonUtilities.context = getApplicationContext();
-		preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		editor = preferences.edit();
-
-		URL = preferences.getString("domain", getString(R.string.domain))
-				+ "/json";
-
-		url_login = URL + "/login";
-
-		new GetLeague().execute();
 	}
 
 	/*
@@ -159,153 +221,6 @@ public class HomeActivity extends Activity {
 		tl.setTypeface(font);
 		msg.setTypeface(font);
 
-	}
-
-	/*
-	 * gets FFLTeams
-	 */
-	private class GetLeague extends AsyncTask<Void, Void, Void> {
-		String url = URL + "/userlist";
-		ProgressBar pb;
-
-		@Override
-		protected void onPreExecute() {
-			pb = (ProgressBar) findViewById(R.id.pb_home_bar1);
-			pb.setVisibility(View.VISIBLE);
-		};
-
-		@Override
-		protected Void doInBackground(Void... voids) {
-			DataGet data = new DataGet(url);
-			JSONObject jo = data.data;
-			league = new League(jo);
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Void v) {
-			pb.setVisibility(View.INVISIBLE);
-		}
-
-	}
-
-	/*
-	 * inflate menu
-	 */
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.hauptmenue, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	/*
-	 * press button on menu
-	 */
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		// exit
-		case R.id.bu_menu_exit:
-			finish();
-			return true;
-			// options
-		case R.id.bu_menu_options:
-			Intent intent = new Intent(getApplicationContext(),
-					OptionsActivity.class);
-			startActivity(intent);
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
-
-	public void startNews(View view) {
-		Intent intent = new Intent(getApplicationContext(),
-				HeadlinesActivity.class);
-		startActivity(intent);
-	}
-
-	public void startScores(View view) {
-		Intent intent = new Intent(getApplicationContext(),
-				ScoresActivity.class);
-		startActivity(intent);
-	}
-
-	public void startRoster(View view) {
-		Intent intent = new Intent(getApplicationContext(), TeamsActivity.class);
-		startActivity(intent);
-	}
-
-	public void startForum(View view) {
-		Intent intent = new Intent(getApplicationContext(), ForumActivity.class);
-		startActivity(intent);
-	}
-
-	public void startStandings(View view) {
-		Intent intent = new Intent(getApplicationContext(),
-				StandingsActivity.class);
-		startActivity(intent);
-	}
-
-	public void startStarters(View view) {
-		Intent intent = new Intent(getApplication(), StartersActivity.class);
-		startActivity(intent);
-	}
-
-	public void options(View view) {
-		Intent intent = new Intent(getApplicationContext(),
-				OptionsActivity.class);
-		startActivity(intent);
-	}
-
-	public void startMessages(View view) {
-		Intent intent = new Intent(getApplicationContext(),
-				MessagesActivity.class);
-		startActivity(intent);
-	}
-
-	public void myTeam(View view) {
-		Intent intent = new Intent(getApplicationContext(),
-				RosterActivity.class);
-		intent.putExtra("oid", preferences.getString("id", "0"));
-		startActivity(intent);
-	}
-
-	public void selectStarter(View view) {
-		Intent intent = new Intent(getApplicationContext(),
-				SetStartersActivity.class);
-		startActivity(intent);
-	}
-
-	public void releasePlayer(View view) {
-		Intent intent = new Intent(getApplicationContext(),
-				ReleaseActivity.class);
-		startActivity(intent);
-	}
-
-	public void signFreeAgent(View view) {
-			Intent intent = new Intent(getApplicationContext(),
-					SignActivity.class);
-			startActivity(intent);
-	}
-
-	public void openTrades(View view) {
-		/*
-		 * Intent intent = new Intent(getApplicationContext(),
-		 * OpenTradesActivity.class); startActivity(intent);
-		 */
-	}
-
-	public void offerTrade(View view) {
-		/*
-		 * Intent intent = new Intent(getApplicationContext(),
-		 * SignFreeAgent.class); startActivity(intent);
-		 */
-	}
-
-	public void tradeLog(View view) {
-		
-		  Intent intent = new Intent(getApplicationContext(),
-		  TradelogActivity.class); startActivity(intent);
-		 
 	}
 
 	/*
@@ -370,20 +285,6 @@ public class HomeActivity extends Activity {
 	}
 
 	/*
-	 * retrieve headlines
-	 */
-	private class Login extends AsyncTask<String, Void, Boolean> {
-
-		protected Boolean doInBackground(String... params) {
-			return login(params);
-		}
-
-		protected void onPostExecute(Boolean result) {
-		}
-
-	}
-
-	/*
 	 * loging in
 	 * 
 	 * returns if logged in sets userdata
@@ -429,48 +330,153 @@ public class HomeActivity extends Activity {
 		initializeScreen();
 	}
 
-	private void activateMemberarea(boolean b) {
-		if (b == true) {
-			log.setImageResource(R.drawable.logout);
-			mt.setBackgroundResource(R.drawable.button_selector);
-			mt.setClickable(true);
-			ss.setBackgroundResource(R.drawable.button_selector);
-			ss.setClickable(true);
-			rp.setBackgroundResource(R.drawable.button_selector);
-			rp.setClickable(true);
+	public void myTeam(View view) {
+		Intent intent = new Intent(getApplicationContext(),
+				RosterActivity.class);
+		intent.putExtra("oid", preferences.getString("id", "0"));
+		startActivity(intent);
+	}
 
-			sp.setBackgroundResource(R.drawable.button_selector);
-			sp.setClickable(true);
-			/*
-			 * opt.setBackgroundResource(R.drawable.button_selector);
-			 * opt.setClickable(true);
-			 * oft.setBackgroundResource(R.drawable.button_selector);
-			 * oft.setClickable(true);
-			 */
-			tl.setBackgroundResource(R.drawable.button_selector);
-			tl.setClickable(true);
+	public void offerTrade(View view) {
+		/*
+		 * Intent intent = new Intent(getApplicationContext(),
+		 * SignFreeAgent.class); startActivity(intent);
+		 */
+	}
 
-			msg.setBackgroundResource(R.drawable.button_selector);
-			msg.setClickable(true);
-		} else {
-			log.setImageResource(R.drawable.login);
-			mt.setBackgroundResource(R.drawable.button_inactive);
-			mt.setClickable(false);
-			ss.setBackgroundResource(R.drawable.button_inactive);
-			ss.setClickable(false);
-			rp.setBackgroundResource(R.drawable.button_inactive);
-			rp.setClickable(false);
-			sp.setBackgroundResource(R.drawable.button_inactive);
-			sp.setClickable(false);
-			opt.setBackgroundResource(R.drawable.button_inactive);
-			opt.setClickable(false);
-			oft.setBackgroundResource(R.drawable.button_inactive);
-			oft.setClickable(false);
-			tl.setBackgroundResource(R.drawable.button_inactive);
-			tl.setClickable(false);
-			msg.setBackgroundResource(R.drawable.button_inactive);
-			msg.setClickable(false);
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.home);
+
+		initializeApp();
+		initializePush();
+		initializeScreen();
+	}
+
+	/*
+	 * inflate menu
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.hauptmenue, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	/** Called when the activity is closed. */
+	@Override
+	public void onDestroy() {
+		if (!preferences.getBoolean("savelogin", false)) {
+			editor.clear();
+			editor.commit();
 		}
+		super.onDestroy();
+	}
+
+	/*
+	 * press button on menu
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		// exit
+		case R.id.bu_menu_exit:
+			finish();
+			return true;
+			// options
+		case R.id.bu_menu_options:
+			Intent intent = new Intent(getApplicationContext(),
+					OptionsActivity.class);
+			startActivity(intent);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		initializeApp();
+		initializeScreen();
+	}
+
+	public void openTrades(View view) {
+		/*
+		 * Intent intent = new Intent(getApplicationContext(),
+		 * OpenTradesActivity.class); startActivity(intent);
+		 */
+	}
+
+	public void options(View view) {
+		Intent intent = new Intent(getApplicationContext(),
+				OptionsActivity.class);
+		startActivity(intent);
+	}
+
+	public void releasePlayer(View view) {
+		Intent intent = new Intent(getApplicationContext(),
+				ReleaseActivity.class);
+		startActivity(intent);
+	}
+
+	public void selectStarter(View view) {
+		Intent intent = new Intent(getApplicationContext(),
+				SetStartersActivity.class);
+		startActivity(intent);
+	}
+
+	public void signFreeAgent(View view) {
+		Intent intent = new Intent(getApplicationContext(), SignActivity.class);
+		startActivity(intent);
+	}
+
+	public void startForum(View view) {
+		Intent intent = new Intent(getApplicationContext(), ForumActivity.class);
+		startActivity(intent);
+	}
+
+	public void startMessages(View view) {
+		Intent intent = new Intent(getApplicationContext(),
+				MessagesActivity.class);
+		startActivity(intent);
+	}
+
+	public void startNews(View view) {
+		Intent intent = new Intent(getApplicationContext(),
+				HeadlinesActivity.class);
+		startActivity(intent);
+	}
+
+	public void startRoster(View view) {
+		Intent intent = new Intent(getApplicationContext(), TeamsActivity.class);
+		startActivity(intent);
+	}
+
+	public void startScores(View view) {
+		Intent intent = new Intent(getApplicationContext(),
+				ScoresActivity.class);
+		startActivity(intent);
+	}
+
+	public void startStandings(View view) {
+		Intent intent = new Intent(getApplicationContext(),
+				StandingsActivity.class);
+		startActivity(intent);
+	}
+
+	public void startStarters(View view) {
+		Intent intent = new Intent(getApplication(), StartersActivity.class);
+		startActivity(intent);
+	}
+
+	public void tradeLog(View view) {
+
+		Intent intent = new Intent(getApplicationContext(),
+				TradelogActivity.class);
+		startActivity(intent);
+
 	}
 
 }

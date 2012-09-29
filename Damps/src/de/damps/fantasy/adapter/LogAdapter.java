@@ -2,8 +2,6 @@ package de.damps.fantasy.adapter;
 
 import java.util.ArrayList;
 
-import de.damps.fantasy.R;
-import de.damps.fantasy.data.Log;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import de.damps.fantasy.R;
+import de.damps.fantasy.data.Log;
 
 public class LogAdapter extends ArrayAdapter<Log> {
 
@@ -70,7 +70,7 @@ public class LogAdapter extends ArrayAdapter<Log> {
 		default:
 			break;
 		}
-		
+
 		return v;
 	}
 }

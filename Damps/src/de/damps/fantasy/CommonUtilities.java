@@ -1,8 +1,8 @@
 package de.damps.fantasy;
 
-import de.damps.fantasy.data.League;
 import android.content.Context;
 import android.content.SharedPreferences;
+import de.damps.fantasy.data.League;
 
 public final class CommonUtilities {
 

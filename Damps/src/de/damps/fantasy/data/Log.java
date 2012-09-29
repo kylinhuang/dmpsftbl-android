@@ -12,32 +12,32 @@ public class Log {
 	final public static int CANCELED_TRADE = -3;
 	final public static int REJECTED_TRADE = -3;
 	final public static int ACCEPTED_TRADE = 0;
-	
+
 	public int action;
 	public String data;
 	public String time;
-	
+
 	public Log(JSONObject jo) {
 		try {
 			JSONObject l = jo.getJSONObject("Tradelog");
 			data = l.getString("logdata");
 			time = parseDate(l.getString("created"));
-			
-			if(data.contains("signed")){
+
+			if (data.contains("signed")) {
 				action = SIGNED_PLAYER;
-			}else if(data.contains("released")){
+			} else if (data.contains("released")) {
 				action = RELEASED_PLAYER;
-			}else if(data.contains("placed")){
+			} else if (data.contains("placed")) {
 				action = PLACED_PLAYER_ON_TRADELIST;
-			}else if(data.contains("removed")){
+			} else if (data.contains("removed")) {
 				action = REMOVED_PLAYER_FROM_TRADELIST;
-			}else if(data.contains("offered")){
+			} else if (data.contains("offered")) {
 				action = OFFERED_TRADE;
-			}else if(data.contains("canceled")){
+			} else if (data.contains("canceled")) {
 				action = CANCELED_TRADE;
-			}else if(data.contains("rejected")){
+			} else if (data.contains("rejected")) {
 				action = REJECTED_TRADE;
-			}else if(data.contains("accepted")){
+			} else if (data.contains("accepted")) {
 				action = ACCEPTED_TRADE;
 			}
 		} catch (JSONException e) {
@@ -45,7 +45,7 @@ public class Log {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private String parseDate(String s) {
 		String date = s.substring(8, 10) + "." + s.substring(5, 7) + ". "
 				+ s.substring(11, 16);

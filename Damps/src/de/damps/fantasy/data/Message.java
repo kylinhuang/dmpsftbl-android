@@ -14,6 +14,19 @@ public class Message implements Parcelable {
 	public int id;
 	private int from_id;
 
+	@SuppressWarnings("rawtypes")
+	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+		@Override
+		public Message createFromParcel(Parcel in) {
+			return new Message(in);
+		}
+
+		@Override
+		public Message[] newArray(int size) {
+			return new Message[size];
+		}
+	};
+
 	public Message(JSONObject jsonObject) {
 		SharedPreferences pref = de.damps.fantasy.CommonUtilities.preferences;
 		try {
@@ -38,19 +51,19 @@ public class Message implements Parcelable {
 
 	}
 
-	public Message(String t, String m, String to) {
-		read[1] = true;
-		title = t;
-		message = m;
-		this.to = to;
-	}
-
 	public Message(Parcel in) {
 		title = in.readString();
 		message = in.readString();
 		from = in.readString();
 		to = in.readString();
 		in.readBooleanArray(read);
+	}
+
+	public Message(String t, String m, String to) {
+		read[1] = true;
+		title = t;
+		message = m;
+		this.to = to;
 	}
 
 	@Override
@@ -67,16 +80,5 @@ public class Message implements Parcelable {
 		dest.writeString(to);
 		dest.writeBooleanArray(read);
 	}
-
-	@SuppressWarnings("rawtypes")
-	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-		public Message createFromParcel(Parcel in) {
-			return new Message(in);
-		}
-
-		public Message[] newArray(int size) {
-			return new Message[size];
-		}
-	};
 
 }

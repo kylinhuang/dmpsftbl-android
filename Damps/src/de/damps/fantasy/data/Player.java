@@ -26,6 +26,19 @@ public class Player implements Parcelable {
 	public String date;
 	public String hours;
 
+	@SuppressWarnings("rawtypes")
+	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+		@Override
+		public Player createFromParcel(Parcel in) {
+			return new Player(in);
+		}
+
+		@Override
+		public Player[] newArray(int size) {
+			return new Player[size];
+		}
+	};
+
 	public Player(JSONObject jo) {
 
 		try {
@@ -139,17 +152,17 @@ public class Player implements Parcelable {
 		summary = ((Integer) total).toString();
 	}
 
-	public Player(String s) {
-		pos = s;
-		name = "";
-		nfl_abr = "";
-	}
-
 	public Player(Parcel in) {
 		name = in.readString();
 		nfl_abr = in.readString();
 		player_id = in.readInt();
 		nfl_id = in.readInt();
+	}
+
+	public Player(String s) {
+		pos = s;
+		name = "";
+		nfl_abr = "";
 	}
 
 	@Override
@@ -164,16 +177,5 @@ public class Player implements Parcelable {
 		dest.writeInt(player_id);
 		dest.writeInt(nfl_id);
 	}
-
-	@SuppressWarnings("rawtypes")
-	public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-		public Player createFromParcel(Parcel in) {
-			return new Player(in);
-		}
-
-		public Player[] newArray(int size) {
-			return new Player[size];
-		}
-	};
 
 }

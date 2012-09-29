@@ -3,6 +3,7 @@ package de.damps.fantasy.activities;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,17 +25,68 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import de.damps.fantasy.R;
-import de.damps.fantasy.data.DataPost;
 import de.damps.fantasy.data.DataGet;
+import de.damps.fantasy.data.DataPost;
 import de.damps.fantasy.data.Player;
 import de.damps.fantasy.data.Row;
 
 public class ReleaseActivity extends Activity {
 
+	/*
+	 * retrieve current roster
+	 */
+	private class GetRoster extends AsyncTask<Void, Void, Void> {
+		ProgressBar pb;
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			parse();
+			return null;
+		};
+
+		@Override
+		protected void onPostExecute(Void v) {
+			contructRoster();
+			fillarray();
+			pb.setVisibility(View.INVISIBLE);
+
+		}
+
+		@Override
+		protected void onPreExecute() {
+			pb = (ProgressBar) findViewById(R.id.pb_release_bar1);
+			pb.setVisibility(View.VISIBLE);
+
+		}
+	}
+	/*
+	 * release player
+	 */
+	private class ReleasePlayer extends AsyncTask<Void, Void, Void> {
+		String[][] data = new String[2][2];
+
+		@Override
+		protected Void doInBackground(Void... v) {
+			new DataPost(url_release, data);
+			return null;
+		};
+
+		@Override
+		protected void onPostExecute(Void v) {
+		}
+
+		@Override
+		protected void onPreExecute() {
+			data[0][0] = "player_id";
+			data[0][1] = pid;
+			data[1][0] = "roster_id";
+			data[1][1] = rid;
+		}
+	}
 	private TableLayout tbl;
+
 	private ArrayList<Player> roster;
 	private int anzahl;
-
 	private String url;
 	private String url_release;
 	private TextView team;
@@ -44,131 +96,16 @@ public class ReleaseActivity extends Activity {
 	private String oid;
 	private String pid;
 	private String rid;
+
 	private boolean fromSign;
+
 	private Player toSign;
-
-	/** Called when the activity is first created. */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.release);
-		Bundle bundle = getIntent().getExtras();
-		if(bundle != null){
-			fromSign = true;
-			toSign = bundle.getParcelable("player");
-		}
-		inititalizeScreen();
-	}
-
-	/*
-	 * init screen
-	 */
-	private void inititalizeScreen() {
-		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
-		((TextView) findViewById(R.id.tv_release_title)).setTypeface(font);
-
-		pref = de.damps.fantasy.CommonUtilities.preferences;
-		oid = pref.getString("id", "X");
-		id = de.damps.fantasy.CommonUtilities.league
-				.getTeamidByOwnerid(oid);
-		url = de.damps.fantasy.CommonUtilities.URL + "/roster/2012/"
-				+ id;
-		url_release = de.damps.fantasy.CommonUtilities.URL + "/release";
-
-		tbl = (TableLayout) findViewById(R.id.tl_release_roster);
-		team = (TextView) findViewById(R.id.tv_release_title);
-		dteam = de.damps.fantasy.CommonUtilities.league
-				.getTeamByOwnerid(oid);
-		team.setText(dteam);
-
-		new GetRoster().execute();
-	}
 
 	/*
 	 * return to last screen
 	 */
 	public void back(View view) {
 		finish();
-	}
-
-	/*
-	 * retrieve current roster
-	 */
-	private class GetRoster extends AsyncTask<Void, Void, Void> {
-		ProgressBar pb;
-
-		@Override
-		protected void onPreExecute() {
-			pb = (ProgressBar) findViewById(R.id.pb_release_bar1);
-			pb.setVisibility(View.VISIBLE);
-
-		};
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			parse();
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Void v) {
-			contructRoster();
-			fillarray();
-			pb.setVisibility(View.INVISIBLE);
-
-		}
-	}
-
-	/*
-	 * release player
-	 */
-	private class ReleasePlayer extends AsyncTask<Void, Void, Void> {
-		String[][] data = new String[2][2];
-
-		@Override
-		protected void onPreExecute() {
-			data[0][0] = "player_id";
-			data[0][1] = pid;
-			data[1][0] = "roster_id";
-			data[1][1] = rid;
-		};
-
-		@Override
-		protected Void doInBackground(Void... v) {
-			new DataPost(url_release,data);
-			return null;
-		}
-
-		protected void onPostExecute(Void v) {
-		}
-	}
-
-	/*
-	 * retrieve data
-	 */
-	private void parse() {
-		DataGet data = new DataGet(url);
-		JSONObject jo = data.data;
-
-		try {
-			anzahl = jo.getJSONArray("Roster").length();
-			getRoster(jo);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-	}
-
-	// converts String to local Data
-	private void getRoster(JSONObject data) throws JSONException {
-		JSONArray joa = data.getJSONArray("Roster");
-		roster = new ArrayList<Player>();
-
-		for (int i = 0; i < anzahl; i++) {
-			Player p = new Player(joa.getJSONObject(i));
-			if (!p.contract.equals("R")) {
-				roster.add(p);
-			}
-		}
 	}
 
 	/*
@@ -206,14 +143,18 @@ public class ReleaseActivity extends Activity {
 					bu_ok.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							rid = ((Integer)roster.get(p).roster_id).toString();
-							pid = ((Integer)roster.get(p).player_id).toString();
+							rid = ((Integer) roster.get(p).roster_id)
+									.toString();
+							pid = ((Integer) roster.get(p).player_id)
+									.toString();
 							new ReleasePlayer().execute();
 							tbl.removeViewAt(p);
 							dialog.dismiss();
-							if(fromSign){
-								//TODO Dialog to ask to sign;
-								Intent intent = new Intent(getApplicationContext(), SignActivity.class);
+							if (fromSign) {
+								// TODO Dialog to ask to sign;
+								Intent intent = new Intent(
+										getApplicationContext(),
+										SignActivity.class);
 								intent.putExtra("player", toSign);
 								setResult(1, intent);
 							}
@@ -259,12 +200,74 @@ public class ReleaseActivity extends Activity {
 		}
 	}
 
-	public void sortTeam(View view) {
+	// converts String to local Data
+	private void getRoster(JSONObject data) throws JSONException {
+		JSONArray joa = data.getJSONArray("Roster");
+		roster = new ArrayList<Player>();
+
+		for (int i = 0; i < anzahl; i++) {
+			Player p = new Player(joa.getJSONObject(i));
+			if (!p.contract.equals("R")) {
+				roster.add(p);
+			}
+		}
+	}
+
+	/*
+	 * init screen
+	 */
+	private void inititalizeScreen() {
+		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
+		((TextView) findViewById(R.id.tv_release_title)).setTypeface(font);
+
+		pref = de.damps.fantasy.CommonUtilities.preferences;
+		oid = pref.getString("id", "X");
+		id = de.damps.fantasy.CommonUtilities.league.getTeamidByOwnerid(oid);
+		url = de.damps.fantasy.CommonUtilities.URL + "/roster/2012/" + id;
+		url_release = de.damps.fantasy.CommonUtilities.URL + "/release";
+
+		tbl = (TableLayout) findViewById(R.id.tl_release_roster);
+		team = (TextView) findViewById(R.id.tv_release_title);
+		dteam = de.damps.fantasy.CommonUtilities.league.getTeamByOwnerid(oid);
+		team.setText(dteam);
+
+		new GetRoster().execute();
+	}
+
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.release);
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null) {
+			fromSign = true;
+			toSign = bundle.getParcelable("player");
+		}
+		inititalizeScreen();
+	}
+
+	/*
+	 * retrieve data
+	 */
+	private void parse() {
+		DataGet data = new DataGet(url);
+		JSONObject jo = data.data;
+
+		try {
+			anzahl = jo.getJSONArray("Roster").length();
+			getRoster(jo);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void sortName(View view) {
 		Comparator<Player> comp = new Comparator<Player>() {
 
 			@Override
 			public int compare(Player lhs, Player rhs) {
-				return lhs.nfl_abr.compareToIgnoreCase(rhs.nfl_abr);
+				return lhs.name.compareToIgnoreCase(rhs.name);
 			}
 		};
 		Collections.sort(roster, comp);
@@ -283,18 +286,6 @@ public class ReleaseActivity extends Activity {
 		fillarray();
 	}
 
-	public void sortName(View view) {
-		Comparator<Player> comp = new Comparator<Player>() {
-
-			@Override
-			public int compare(Player lhs, Player rhs) {
-				return lhs.name.compareToIgnoreCase(rhs.name);
-			}
-		};
-		Collections.sort(roster, comp);
-		fillarray();
-	}
-
 	public void sortScore(View view) {
 		Comparator<Player> comp = new Comparator<Player>() {
 
@@ -307,6 +298,18 @@ public class ReleaseActivity extends Activity {
 				} else {
 					return 0;
 				}
+			}
+		};
+		Collections.sort(roster, comp);
+		fillarray();
+	}
+
+	public void sortTeam(View view) {
+		Comparator<Player> comp = new Comparator<Player>() {
+
+			@Override
+			public int compare(Player lhs, Player rhs) {
+				return lhs.nfl_abr.compareToIgnoreCase(rhs.nfl_abr);
 			}
 		};
 		Collections.sort(roster, comp);

@@ -1,7 +1,5 @@
 package de.damps.fantasy.activities;
 
-import de.damps.fantasy.R;
-import de.damps.fantasy.data.DataPost;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -14,66 +12,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import de.damps.fantasy.R;
+import de.damps.fantasy.data.DataPost;
 
-public class NewThreadActivity extends Activity{
+public class NewThreadActivity extends Activity {
 
-	private EditText title;
-	private EditText msg;
-	private CheckBox sticky;
-	private CheckBox member;
-	private String url;
-	private String titletxt;
-	private String msgtxt;
-	private String stickystring = "0";
-	private String memberstring = "0";
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.new_thread);
-		
-		
-		inititalizeScreen();
-	}
-	
-	public void back(View view){
-		finish();
-	} 
-	
-	private void inititalizeScreen() {
-		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
-		((TextView) findViewById(R.id.tv_newthread_title1)).setTypeface(font);
-
-		url = de.damps.fantasy.CommonUtilities.URL + "/openthread";
-	}
-	
-	/*
-	 * posts the new thread
-	 */
-	public void postThread(View view){
-		title = (EditText)findViewById(R.id.et_newthread_title);
-		msg = (EditText)findViewById(R.id.et_newthread_msg);
-		sticky = (CheckBox)findViewById(R.id.cb_newthread_sticky);
-		member = (CheckBox)findViewById(R.id.cb_newthread_member);
-		
-		titletxt = title.getText().toString();
-		msgtxt = msg.getText().toString();
-		if(sticky.isChecked()){
-			stickystring = "1";
-		}
-		if(member.isChecked()){
-			memberstring = "1";
-		}
-		
-		if(titletxt.equals("") || msgtxt.equals("")){
-			Toast toast = Toast.makeText(getApplicationContext(), "Bitte Titel und Nachricht eingeben.", Toast.LENGTH_LONG);
-			toast.setGravity(Gravity.CENTER, 0, 0);
-			toast.show();
-		}else{
-			new CreateThread().execute();
-		}
-	}
-	
 	/*
 	 * create new thread
 	 */
@@ -81,6 +24,18 @@ public class NewThreadActivity extends Activity{
 		ProgressBar pb;
 		private String id;
 		String[][] data = new String[4][2];
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			id = new DataPost(url, data).response;
+			return null;
+		};
+
+		@Override
+		protected void onPostExecute(Void v) {
+			openThread(id);
+			pb.setVisibility(View.INVISIBLE);
+		}
 
 		@Override
 		protected void onPreExecute() {
@@ -94,30 +49,75 @@ public class NewThreadActivity extends Activity{
 			data[2][1] = titletxt;
 			data[3][0] = "message";
 			data[3][1] = msgtxt;
-		};
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			id = new DataPost(url,data).response;
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Void v) {
-			openThread(id);
-			pb.setVisibility(View.INVISIBLE);
 		}
 
 	}
-	
+	private EditText title;
+	private EditText msg;
+	private CheckBox sticky;
+	private CheckBox member;
+	private String url;
+	private String titletxt;
+	private String msgtxt;
+	private String stickystring = "0";
+
+	private String memberstring = "0";
+
+	public void back(View view) {
+		finish();
+	}
+
+	private void inititalizeScreen() {
+		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
+		((TextView) findViewById(R.id.tv_newthread_title1)).setTypeface(font);
+
+		url = de.damps.fantasy.CommonUtilities.URL + "/openthread";
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.new_thread);
+
+		inititalizeScreen();
+	}
+
 	/*
 	 * opens the new thread
 	 */
-	public void openThread(String id){
+	public void openThread(String id) {
 		Intent intent = new Intent(getApplicationContext(),
 				ThreadActivity.class);
-		intent.putExtra("ID",id);
+		intent.putExtra("ID", id);
 		intent.putExtra("title", titletxt);
 		startActivity(intent);
+	}
+
+	/*
+	 * posts the new thread
+	 */
+	public void postThread(View view) {
+		title = (EditText) findViewById(R.id.et_newthread_title);
+		msg = (EditText) findViewById(R.id.et_newthread_msg);
+		sticky = (CheckBox) findViewById(R.id.cb_newthread_sticky);
+		member = (CheckBox) findViewById(R.id.cb_newthread_member);
+
+		titletxt = title.getText().toString();
+		msgtxt = msg.getText().toString();
+		if (sticky.isChecked()) {
+			stickystring = "1";
+		}
+		if (member.isChecked()) {
+			memberstring = "1";
+		}
+
+		if (titletxt.equals("") || msgtxt.equals("")) {
+			Toast toast = Toast.makeText(getApplicationContext(),
+					"Bitte Titel und Nachricht eingeben.", Toast.LENGTH_LONG);
+			toast.setGravity(Gravity.CENTER, 0, 0);
+			toast.show();
+		} else {
+			new CreateThread().execute();
+		}
 	}
 }

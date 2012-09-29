@@ -2,15 +2,14 @@ package de.damps.fantasy.adapter;
 
 import java.util.ArrayList;
 
-import de.damps.fantasy.*;
-import de.damps.fantasy.data.Post;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import de.damps.fantasy.R;
+import de.damps.fantasy.data.Post;
 
 public class PostAdapter extends ArrayAdapter<Post> {
 

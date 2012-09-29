@@ -8,12 +8,11 @@ import de.damps.fantasy.data.Player;
 
 public class PosComparator implements Comparator<Player> {
 
-	private  Map<String, Integer> orderIndex;
+	private Map<String, Integer> orderIndex;
 
-	
 	public PosComparator() {
 
-		orderIndex = new HashMap<String,Integer>();
+		orderIndex = new HashMap<String, Integer>();
 
 		orderIndex.put("QB", 0);
 		orderIndex.put("RB", 1);

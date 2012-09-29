@@ -4,9 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.damps.fantasy.R;
-import de.damps.fantasy.data.DataGet;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -22,49 +19,19 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import de.damps.fantasy.R;
+import de.damps.fantasy.data.DataGet;
 
 public class ScoresActivity extends Activity {
-
-	private String url;
-
-	private Spinner sp_ye, sp_gd;
-	private int year, gd;
-
-	private String[] standings;
-	private int[] points;
-	private boolean y_init = false,gd_init = false,initialised = false;
-
-	private TableLayout tbl;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.scores);
-		url = de.damps.fantasy.CommonUtilities.URL + "/weekly";
-		constructStandings();
-
-		new GetScores().execute(url);
-
-	}
-	
-	public void back(View view){
-		finish();
-	} 
 
 	private class GetScores extends AsyncTask<String, Void, Void> {
 		ProgressBar pb;
 
 		@Override
-		protected void onPreExecute() {
-			pb = (ProgressBar) findViewById(R.id.pb_wee_bar1);
-			pb.setVisibility(View.VISIBLE);
-		};
-
-		@Override
 		protected Void doInBackground(String... params) {
 			parse();
 			return null;
-		}
+		};
 
 		@Override
 		protected void onPostExecute(Void v) {
@@ -76,65 +43,27 @@ public class ScoresActivity extends Activity {
 			pb.setVisibility(View.INVISIBLE);
 		}
 
+		@Override
+		protected void onPreExecute() {
+			pb = (ProgressBar) findViewById(R.id.pb_wee_bar1);
+			pb.setVisibility(View.VISIBLE);
+		}
+
 	}
 
-	private void initializeSpinner() {
-		// Spinner Season
-		sp_ye = (Spinner) findViewById(R.id.spi_sco_year);
-		ArrayAdapter<CharSequence> ad_ye = ArrayAdapter.createFromResource(
-				this, R.array.year, android.R.layout.simple_spinner_item);
-		ad_ye.setDropDownViewResource(android.R.layout.simple_spinner_item);
-		sp_ye.setAdapter(ad_ye);
-		int pos = ad_ye.getPosition(((Integer) year).toString());
-		sp_ye.setSelection(pos);
+	private String url;
+	private Spinner sp_ye, sp_gd;
 
-		sp_ye.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					int position, long id) {
-				if (y_init) {
-					int gd = sp_gd.getSelectedItemPosition() + 1;
-					String year = (String) parent.getItemAtPosition(position);
-					url = de.damps.fantasy.CommonUtilities.URL + "/weekly/" + year
-							+ "/" + gd;
-					new GetScores().execute(url);
-				}
-				y_init = true;
+	private int year, gd;
+	private String[] standings;
+	private int[] points;
 
-			}
+	private boolean y_init = false, gd_init = false, initialised = false;
 
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-			}
-		});
+	private TableLayout tbl;
 
-		// Spinner Gameday
-		sp_gd = (Spinner) findViewById(R.id.spi_sco_gameday);
-		ArrayAdapter<CharSequence> ad_gd = ArrayAdapter.createFromResource(
-				this, R.array.gameday, android.R.layout.simple_spinner_item);
-		ad_gd.setDropDownViewResource(android.R.layout.simple_spinner_item);
-		sp_gd.setAdapter(ad_gd);
-		int pos1 = ad_gd.getPosition("Gameday " + ((Integer) gd).toString());
-		sp_gd.setSelection(pos1);
-
-		sp_gd.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					int position, long id) {
-				if (gd_init) {
-					String year = (String) sp_ye.getSelectedItem();
-					url = de.damps.fantasy.CommonUtilities.URL + "/weekly/" + year
-							+ "/" + (position + 1);
-					new GetScores().execute(url);
-				}
-				gd_init = true;
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-			}
-		});
-
+	public void back(View view) {
+		finish();
 	}
 
 	private void constructStandings() {
@@ -173,8 +102,8 @@ public class ScoresActivity extends Activity {
 		for (int i = 0; i < standings.length; i++) {
 			if (!standings[i].equals("null")) {
 				if (i % 2 == 1) {
-					tbl.getChildAt(i).setBackgroundColor(getResources().getColor(
-							R.color.hellhellgrau));
+					tbl.getChildAt(i).setBackgroundColor(
+							getResources().getColor(R.color.hellhellgrau));
 				}
 				((TextView) ((TableRow) tbl.getChildAt(i)).getVirtualChildAt(0))
 						.setText((i + 1) + ".");
@@ -184,6 +113,76 @@ public class ScoresActivity extends Activity {
 						.setText(Integer.toString(points[i]));
 			}
 		}
+	}
+
+	private void initializeSpinner() {
+		// Spinner Season
+		sp_ye = (Spinner) findViewById(R.id.spi_sco_year);
+		ArrayAdapter<CharSequence> ad_ye = ArrayAdapter.createFromResource(
+				this, R.array.year, android.R.layout.simple_spinner_item);
+		ad_ye.setDropDownViewResource(android.R.layout.simple_spinner_item);
+		sp_ye.setAdapter(ad_ye);
+		int pos = ad_ye.getPosition(((Integer) year).toString());
+		sp_ye.setSelection(pos);
+
+		sp_ye.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				if (y_init) {
+					int gd = sp_gd.getSelectedItemPosition() + 1;
+					String year = (String) parent.getItemAtPosition(position);
+					url = de.damps.fantasy.CommonUtilities.URL + "/weekly/"
+							+ year + "/" + gd;
+					new GetScores().execute(url);
+				}
+				y_init = true;
+
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+
+		// Spinner Gameday
+		sp_gd = (Spinner) findViewById(R.id.spi_sco_gameday);
+		ArrayAdapter<CharSequence> ad_gd = ArrayAdapter.createFromResource(
+				this, R.array.gameday, android.R.layout.simple_spinner_item);
+		ad_gd.setDropDownViewResource(android.R.layout.simple_spinner_item);
+		sp_gd.setAdapter(ad_gd);
+		int pos1 = ad_gd.getPosition("Gameday " + ((Integer) gd).toString());
+		sp_gd.setSelection(pos1);
+
+		sp_gd.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				if (gd_init) {
+					String year = (String) sp_ye.getSelectedItem();
+					url = de.damps.fantasy.CommonUtilities.URL + "/weekly/"
+							+ year + "/" + (position + 1);
+					new GetScores().execute(url);
+				}
+				gd_init = true;
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			}
+		});
+
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.scores);
+		url = de.damps.fantasy.CommonUtilities.URL + "/weekly";
+		constructStandings();
+
+		new GetScores().execute(url);
+
 	}
 
 	private void parse() {
@@ -205,7 +204,7 @@ public class ScoresActivity extends Activity {
 			try {
 				standings[i] = joa.getJSONObject(i).getString("name");
 				points[i] = joa.getJSONObject(i).getInt("score");
-				
+
 			} catch (Exception e) {
 			}
 		}

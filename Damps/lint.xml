@@ -6,5 +6,6 @@
         <ignore path="src\de\damps\fantasy\adapter\OwnerAdapter.java" />
         <ignore path="src\de\damps\fantasy\adapter\TeamAdapter.java" />
     </issue>
+    <issue id="UnusedResources" severity="ignore" />
     <issue id="UselessParent" severity="ignore" />
 </lint>

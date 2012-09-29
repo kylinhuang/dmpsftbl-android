@@ -6,63 +6,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.damps.fantasy.R;
-import de.damps.fantasy.data.DataGet;
-import de.damps.fantasy.data.Message;
-
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
+import de.damps.fantasy.R;
+import de.damps.fantasy.data.DataGet;
+import de.damps.fantasy.data.Message;
 
 public class MessagesActivity extends TabActivity {
-
-	private TabHost tabHost;
-	private ArrayList<Message> outbound = new ArrayList<Message>();
-	private ArrayList<Message> inbound = new ArrayList<Message>();
-	private String urlin;
-	private String urlout;
-	private String token;
-	private String hash;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.messages);
-		
-		initializeScreen();
-	}
-	
-	/*
-	 * init screen
-	 */
-	private void initializeScreen(){
-		urlin = de.damps.fantasy.CommonUtilities.URL + "/messages/to";
-		urlout = de.damps.fantasy.CommonUtilities.URL + "/messages/from";
-		
-		SharedPreferences pref = de.damps.fantasy.CommonUtilities.preferences;
-		token = pref.getString("token", "");
-		hash = pref.getString("hash", "");
-		
-		tabHost = getTabHost();
-
-		new GetMessages().execute();
-
-	}
-	
-	/*
-	 * refresh messages
-	 */
-	public void refresh(View view){
-	}
 
 	/*
 	 * retrieve messages
@@ -71,17 +31,11 @@ public class MessagesActivity extends TabActivity {
 		ProgressBar pb;
 
 		@Override
-		protected void onPreExecute() {
-			pb = (ProgressBar) findViewById(R.id.pb_mes_bar1);
-			pb.setVisibility(View.VISIBLE);
-		};
-
-		@Override
 		protected Void doInBackground(Void... voids) {
 			inbound = parse(urlin);
 			outbound = parse(urlout);
 			return null;
-		}
+		};
 
 		@Override
 		protected void onPostExecute(Void v) {
@@ -89,29 +43,27 @@ public class MessagesActivity extends TabActivity {
 			createTabs();
 		}
 
+		@Override
+		protected void onPreExecute() {
+			pb = (ProgressBar) findViewById(R.id.pb_mes_bar1);
+			pb.setVisibility(View.VISIBLE);
+		}
+
 	}
+	private TabHost tabHost;
+	private ArrayList<Message> outbound = new ArrayList<Message>();
+	private ArrayList<Message> inbound = new ArrayList<Message>();
+	private String urlin;
+	private String urlout;
+	private String token;
+
+	private String hash;
 
 	/*
-	 * retrieve data
+	 * return to last screen
 	 */
-	private ArrayList<Message> parse(String url) {
-		DataGet data = new DataGet(url, token, hash);
-		JSONObject jo = data.data;
-		JSONArray joa = null;
-		ArrayList<Message> list = new ArrayList<Message>();
-		try {
-			joa = jo.getJSONArray("Messages");
-
-			for (int i = 0; i < joa.length(); i++) {
-				Message m = new Message(joa.getJSONObject(i));
-
-				list.add(m);
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return list;
-
+	public void back(View view) {
+		finish();
 	}
 
 	/*
@@ -151,18 +103,65 @@ public class MessagesActivity extends TabActivity {
 	}
 
 	/*
+	 * init screen
+	 */
+	private void initializeScreen() {
+		urlin = de.damps.fantasy.CommonUtilities.URL + "/messages/to";
+		urlout = de.damps.fantasy.CommonUtilities.URL + "/messages/from";
+
+		SharedPreferences pref = de.damps.fantasy.CommonUtilities.preferences;
+		token = pref.getString("token", "");
+		hash = pref.getString("hash", "");
+
+		tabHost = getTabHost();
+
+		new GetMessages().execute();
+
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.messages);
+
+		initializeScreen();
+	}
+
+	/*
+	 * retrieve data
+	 */
+	private ArrayList<Message> parse(String url) {
+		DataGet data = new DataGet(url, token, hash);
+		JSONObject jo = data.data;
+		JSONArray joa = null;
+		ArrayList<Message> list = new ArrayList<Message>();
+		try {
+			joa = jo.getJSONArray("Messages");
+
+			for (int i = 0; i < joa.length(); i++) {
+				Message m = new Message(joa.getJSONObject(i));
+
+				list.add(m);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return list;
+
+	}
+
+	/*
+	 * refresh messages
+	 */
+	public void refresh(View view) {
+	}
+
+	/*
 	 * send message
 	 */
 	public void sendMessage(View view) {
 		Intent intent = new Intent(getApplicationContext(),
 				NewMessageActivity.class);
 		startActivity(intent);
-	}
-
-	/*
-	 * return to last screen
-	 */
-	public void back(View view) {
-		finish();
 	}
 }

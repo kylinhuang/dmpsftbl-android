@@ -6,10 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.damps.fantasy.R;
-import de.damps.fantasy.adapter.LogAdapter;
-import de.damps.fantasy.data.DataGet;
-import de.damps.fantasy.data.Log;
 import android.app.ListActivity;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -17,19 +13,48 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import de.damps.fantasy.R;
+import de.damps.fantasy.adapter.LogAdapter;
+import de.damps.fantasy.data.DataGet;
+import de.damps.fantasy.data.Log;
 
 public class TradelogActivity extends ListActivity {
 
+	/*
+	 * retrieve headlines
+	 */
+	private class GetLog extends AsyncTask<Void, Void, Void> {
+		ProgressBar pb;
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			parse();
+			return null;
+		};
+
+		@Override
+		protected void onPostExecute(Void v) {
+			showLog();
+			pb.setVisibility(View.INVISIBLE);
+		}
+
+		@Override
+		protected void onPreExecute() {
+			pb = (ProgressBar) findViewById(R.id.pb_tradelog_bar1);
+			pb.setVisibility(View.VISIBLE);
+		}
+
+	}
 	private ArrayList<Log> logs = new ArrayList<Log>();
 	private String url;
+
 	private LogAdapter logAdapter;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.tradelog);
-
-		inititalizeScreen();
+	/*
+	 * return to last screen
+	 */
+	public void back(View view) {
+		finish();
 	}
 
 	private void inititalizeScreen() {
@@ -40,38 +65,13 @@ public class TradelogActivity extends ListActivity {
 
 		new GetLog().execute();
 	}
-	
-	/*
-	 * return to last screen
-	 */
-	public void back(View view) {
-		finish();
-	}
 
-	/*
-	 * retrieve headlines
-	 */
-	private class GetLog extends AsyncTask<Void, Void, Void> {
-		ProgressBar pb;
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.tradelog);
 
-		@Override
-		protected void onPreExecute() {
-			pb = (ProgressBar) findViewById(R.id.pb_tradelog_bar1);
-			pb.setVisibility(View.VISIBLE);
-		};
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			parse();
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Void v) {
-			showLog();
-			pb.setVisibility(View.INVISIBLE);
-		}
-
+		inititalizeScreen();
 	}
 
 	/*
@@ -95,8 +95,7 @@ public class TradelogActivity extends ListActivity {
 	 * fill list
 	 */
 	private void showLog() {
-		logAdapter = new LogAdapter(this,
-				R.layout.logitem, logs);
+		logAdapter = new LogAdapter(this, R.layout.logitem, logs);
 		setListAdapter(logAdapter);
 	}
 

@@ -77,7 +77,8 @@
         <activity android:name=".activities.SetStartersActivity" />
         <activity
             android:name=".activities.SignActivity"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop"
+            android:exported="false" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>

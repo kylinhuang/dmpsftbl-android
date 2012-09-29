@@ -27,6 +27,29 @@ import android.net.NetworkInfo;
 
 public class DataGet {
 
+	// reads Stream
+	private static String convertStreamToString(InputStream is)
+			throws UnsupportedEncodingException {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(is,
+				"UTF-8"));
+		StringBuilder sb = new StringBuilder();
+		String line = null;
+		try {
+			while ((line = reader.readLine()) != null) {
+				sb.append(line + "\n");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				is.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return sb.toString();
+	}
+
 	public JSONObject data;
 
 	public DataGet(String url) {
@@ -45,6 +68,20 @@ public class DataGet {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public boolean checkConnection() {
+		ConnectivityManager conMgr = (ConnectivityManager) de.damps.fantasy.CommonUtilities.context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+		if (conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED
+				|| conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING) {
+			return true;
+		} else if (conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED
+				|| conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED) {
+			return false;
+		}
+		return false;
 	}
 
 	private String getStringFromWeb(String url, String token, String hash) {
@@ -90,43 +127,6 @@ public class DataGet {
 			e.printStackTrace();
 		}
 		return string;
-	}
-
-	// reads Stream
-	private static String convertStreamToString(InputStream is)
-			throws UnsupportedEncodingException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(is,
-				"UTF-8"));
-		StringBuilder sb = new StringBuilder();
-		String line = null;
-		try {
-			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				is.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return sb.toString();
-	}
-	
-	public boolean checkConnection() {
-		ConnectivityManager conMgr = (ConnectivityManager) de.damps.fantasy.CommonUtilities.context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-		if (conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED
-				|| conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING) {
-			return true;
-		} else if (conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED
-				|| conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED) {
-			return false;
-		}
-		return false;
 	}
 
 }
