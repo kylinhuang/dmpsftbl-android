@@ -51,9 +51,7 @@ public class HomeActivity extends Activity {
 
 		@Override
 		protected Void doInBackground(Void... voids) {
-			DataGet data = null;
-
-			data = new DataGet(url);
+			DataGet data = new DataGet(url);
 			JSONObject jo = data.data;
 			league = new League(jo);
 			return null;
@@ -356,9 +354,9 @@ public class HomeActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
-
-		initializeScreen();
 		initializeApp();
+		initializeScreen();
+		
 	}
 
 	/*
@@ -402,17 +400,18 @@ public class HomeActivity extends Activity {
 		}
 	}
 	
-	@Override
+	/*@Override
 	protected void onPause(){
 		unregisterReceiver(mReceiver);
 		super.onPause();
-	}
+	}*/
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		initializeScreen();
+		
 		initializeApp();
+		initializeScreen();
 	}
 
 	public void openTrades(View view) {
