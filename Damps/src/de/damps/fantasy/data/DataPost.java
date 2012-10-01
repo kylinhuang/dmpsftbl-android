@@ -25,54 +25,47 @@ public class DataPost {
 	public String response;
 
 	public DataPost(String url, String[][] data) {
-		SharedPreferences pref = de.damps.fantasy.CommonUtilities.preferences;
-		String token = pref.getString("token", "");
-		String hash = pref.getString("hash", "");
-
-		final DefaultHttpClient client = new DefaultHttpClient();
-		final HttpPost httppost = new HttpPost(url);
-		final List<NameValuePair> postPara = new ArrayList<NameValuePair>();
-
-		if (token != null) {
-			postPara.add(new BasicNameValuePair("token", token));
-			postPara.add(new BasicNameValuePair("hash", hash));
-		}
-
-		for (int i = 0; i < data.length; i++) {
-			postPara.add(new BasicNameValuePair(data[i][0], data[i][1]));
-		}
-
-		try {
-
-			httppost.setEntity(new UrlEncodedFormEntity(postPara, HTTP.UTF_8));
-
+			SharedPreferences pref = de.damps.fantasy.CommonUtilities.preferences;
+			String token = pref.getString("token", "");
+			String hash = pref.getString("hash", "");
+			final DefaultHttpClient client = new DefaultHttpClient();
+			final HttpPost httppost = new HttpPost(url);
+			final List<NameValuePair> postPara = new ArrayList<NameValuePair>();
+			if (token != null) {
+				postPara.add(new BasicNameValuePair("token", token));
+				postPara.add(new BasicNameValuePair("hash", hash));
+			}
+			for (int i = 0; i < data.length; i++) {
+				postPara.add(new BasicNameValuePair(data[i][0], data[i][1]));
+			}
 			try {
-				HttpResponse response = client.execute(httppost);
-				this.response = EntityUtils.toString(response.getEntity());
-				@SuppressWarnings("unused")
-				String forbreakpoint = this.response;
-			} catch (ClientProtocolException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
+
+				httppost.setEntity(new UrlEncodedFormEntity(postPara,
+						HTTP.UTF_8));
+
+				try {
+					HttpResponse response = client.execute(httppost);
+					this.response = EntityUtils.toString(response.getEntity());
+
+					@SuppressWarnings("unused")
+					String forbreakpoint = this.response;
+
+				} catch (ClientProtocolException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-
 	}
 
-	public boolean checkConnection() {
-		ConnectivityManager conMgr = (ConnectivityManager) de.damps.fantasy.CommonUtilities.context
+	private boolean isNetworkConnected() {
+		final ConnectivityManager conMgr = (ConnectivityManager) de.damps.fantasy.CommonUtilities.context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-		if (conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED
-				|| conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING) {
-			return true;
-		} else if (conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED
-				|| conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED) {
-			return false;
-		}
-		return false;
+		final NetworkInfo activeNetwork = conMgr.getActiveNetworkInfo();
+		return activeNetwork != null
+				&& activeNetwork.getState() == NetworkInfo.State.CONNECTED;
 	}
+
 }

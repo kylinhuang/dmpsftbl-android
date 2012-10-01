@@ -51,6 +51,7 @@ public class DataGet {
 	}
 
 	public JSONObject data;
+	public boolean isConnected;
 
 	public DataGet(String url) {
 		String dataRaw = readUrl(url);
@@ -59,6 +60,7 @@ public class DataGet {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+
 	}
 
 	public DataGet(String url, String token, String hash) {
@@ -68,20 +70,7 @@ public class DataGet {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-	}
 
-	public boolean checkConnection() {
-		ConnectivityManager conMgr = (ConnectivityManager) de.damps.fantasy.CommonUtilities.context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-		if (conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED
-				|| conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING) {
-			return true;
-		} else if (conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED
-				|| conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED) {
-			return false;
-		}
-		return false;
 	}
 
 	private String getStringFromWeb(String url, String token, String hash) {
@@ -109,7 +98,6 @@ public class DataGet {
 		return responsebody;
 	}
 
-	// reads URL
 	private String readUrl(String url) {
 		String string = new String();
 		URL feedUrl = null;
@@ -127,6 +115,14 @@ public class DataGet {
 			e.printStackTrace();
 		}
 		return string;
+	}
+
+	private boolean isNetworkConnected() {
+		final ConnectivityManager conMgr = (ConnectivityManager) de.damps.fantasy.CommonUtilities.context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		final NetworkInfo activeNetwork = conMgr.getActiveNetworkInfo();
+		return activeNetwork != null
+				&& activeNetwork.getState() == NetworkInfo.State.CONNECTED;
 	}
 
 }

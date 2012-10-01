@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
@@ -50,10 +51,13 @@ public class HomeActivity extends Activity {
 
 		@Override
 		protected Void doInBackground(Void... voids) {
-			DataGet data = new DataGet(url);
+			DataGet data = null;
+
+			data = new DataGet(url);
 			JSONObject jo = data.data;
 			league = new League(jo);
 			return null;
+
 		};
 
 		@Override
@@ -97,13 +101,15 @@ public class HomeActivity extends Activity {
 	private Button rp;
 	private Button sp;
 	private Button opt;
-
 	private Button oft;
 	private Button tl;
+
+	private boolean isConnected;
 
 	private String TAG = "** Homeactivity **";
 
 	private String reg_id;
+	private BroadcastReceiver mReceiver;
 
 	private void activateMemberarea(boolean b) {
 		if (b == true) {
@@ -351,9 +357,8 @@ public class HomeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
 
-		initializeApp();
-		initializePush();
 		initializeScreen();
+		initializeApp();
 	}
 
 	/*
@@ -372,6 +377,7 @@ public class HomeActivity extends Activity {
 			editor.clear();
 			editor.commit();
 		}
+		unregisterReceiver(mReceiver);
 		super.onDestroy();
 	}
 
@@ -395,12 +401,18 @@ public class HomeActivity extends Activity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	@Override
+	protected void onPause(){
+		unregisterReceiver(mReceiver);
+		super.onPause();
+	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		initializeApp();
 		initializeScreen();
+		initializeApp();
 	}
 
 	public void openTrades(View view) {
