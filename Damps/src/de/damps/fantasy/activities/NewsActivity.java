@@ -47,20 +47,15 @@ public class NewsActivity extends Activity {
 	private String news;
 	private String title;
 	private TextView titleView;
-
 	private TextView newsView;
+	private int category;
+	private String url_news = "";
 
-	/*
-	 * return to last screen
-	 */
 	public void back(View view) {
 		finish();
 	}
 
-	/*
-	 * init screen
-	 */
-	private void inititalizeScreen() {
+	private void inititalizeTVScreen() {
 		Typeface font = Typeface.createFromAsset(getAssets(), "Ubuntu-C.ttf");
 		((TextView) findViewById(R.id.tv_news_title1)).setTypeface(font);
 
@@ -79,20 +74,22 @@ public class NewsActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.news);
-
-		inititalizeScreen();
+		inititalizeTVScreen();
 	}
 
-	/*
-	 * retrieve data
-	 */
 	private void parse() {
 		DataGet data = new DataGet(url);
 		JSONObject jo = data.data;
 		try {
 			jo = jo.getJSONObject("News");
 			title = jo.getString("title");
-			news = jo.getString("story");
+			category = jo.getInt("category");
+			if(category == 1){
+				news = jo.getString("story");
+			}else{
+				news = jo.getString("synopsis");
+				url_news = jo.getString("url");
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -103,8 +100,8 @@ public class NewsActivity extends Activity {
 	 */
 	private void showNews() {
 		titleView.setText(Html.fromHtml(this.title));
+		news = news + "<br><br>" + url_news;
 		newsView.setText(Html.fromHtml(this.news));
 		newsView.setMovementMethod(LinkMovementMethod.getInstance());
 	}
-
 }

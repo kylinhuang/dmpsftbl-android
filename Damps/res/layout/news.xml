@@ -35,7 +35,8 @@
 
         <TextView
             android:id="@+id/tv_news_news"
-            style="@style/text" />
+            style="@style/text"
+            android:autoLink="web" />
     </ScrollView>
 
 </RelativeLayout>

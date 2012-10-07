@@ -8,11 +8,13 @@ public class News {
 	public String title;
 	public String date;
 	public String id;
+	public String category;
 
 	public News(JSONObject jsonObject) throws JSONException {
 		id = ((Integer) jsonObject.getInt("id")).toString();
 		title = jsonObject.getString("title");
 		date = parseDate(jsonObject.getString("created"));
+		category = ((Integer) jsonObject.getInt("category")).toString();
 	}
 
 	private String parseDate(String s) {
