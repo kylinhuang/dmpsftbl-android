@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import de.damps.fantasy.R;
 import de.damps.fantasy.data.Message;
@@ -46,13 +45,13 @@ public class MessageAdapter extends ArrayAdapter<Message> {
 		title.setText(m.title);
 		
 		if (m.read[1]) {	//Outbox
-			RelativeLayout rl = (RelativeLayout) v.findViewById(R.id.rl_mes_view);
 			sender.setText(m.to);
-			rl.removeView(delete);
 		} else {	//Inbox
-			sender.setText(m.from);
-			delete.setTag(m.id);
+			sender.setText(m.from);	
 		}
+		
+		delete.setTag(m.id);
+		
 		if (m.read[0]) {
 			image.setImageResource(R.drawable.content_read);
 		} else {

@@ -35,7 +35,6 @@ import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
 
-import de.damps.fantasy.NetworkReceiver;
 import de.damps.fantasy.R;
 import de.damps.fantasy.data.DataGet;
 import de.damps.fantasy.data.DataPost;
@@ -102,8 +101,6 @@ public class HomeActivity extends Activity {
 	private Button opt;
 	private Button oft;
 	private Button tl;
-
-	private boolean isConnected;
 
 	private String TAG = "** Homeactivity **";
 
@@ -356,6 +353,7 @@ public class HomeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
 		initializeApp();
+		initializePush();
 		initializeScreen();
 		
 	}
