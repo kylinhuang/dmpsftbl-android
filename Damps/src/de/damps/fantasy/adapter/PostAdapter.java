@@ -3,6 +3,7 @@ package de.damps.fantasy.adapter;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
 		TextView date = (TextView) v.findViewById(R.id.tv_pos_date);
 
 		author.setText(p.author);
-		msg.setText(p.message);
+		msg.setText(Html.fromHtml(p.message));
 		date.setText(p.created);
 		return v;
 	}

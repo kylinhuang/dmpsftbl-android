@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.google.android.gcm.GCMRegistrar;
 
+import de.damps.fantasy.NetworkReceiver;
 import de.damps.fantasy.R;
 import de.damps.fantasy.data.DataGet;
 import de.damps.fantasy.data.DataPost;

@@ -65,7 +65,7 @@ public class LogAdapter extends ArrayAdapter<Log> {
 			action.setImageResource(R.drawable.cancel_trade);
 			break;
 		case de.damps.fantasy.data.Log.ACCEPTED_TRADE:
-			action.setImageResource(R.drawable.accept);
+			action.setImageResource(R.drawable.accept_trade);
 			break;
 		default:
 			break;
