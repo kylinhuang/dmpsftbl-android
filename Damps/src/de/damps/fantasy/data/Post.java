@@ -31,7 +31,7 @@ public class Post {
 		text = text.replace("[i]", "<i>");
 		text = text.replace("[/i]", "</i>");
 		text = text.replace("\n", "<br>");
-		text = text.replace("[quote]", "<blockquote");
+		text = text.replace("[quote]", "<blockquote>");
 		text = text.replace("[/quote]", "</blockquote>");
 
 		return text;
